@@ -8,8 +8,6 @@
 #include "player.h"
 #include "goomba.h"
 
-char pos[4];
-
 EntityKind entities[ENTITY_TABLE_SIZE];
 PlayerData *player_data;
 EntityData entity_data[ENTITY_TABLE_SIZE];
