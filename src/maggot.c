@@ -67,7 +67,7 @@ void update_maggot(char ix) {
       data->dir = player_data->y.hl.h < data->y.hl.h ? DirUp : DirDown;
       data->charging = true;
     } else {
-      data->dir = rand_direction();                                              \
+      data->dir = rand_direction();
       data->charging = false;
     }
   }
