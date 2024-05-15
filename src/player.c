@@ -30,7 +30,7 @@ void draw_player(char ix) {
 
   data = *((PlayerData *) &entity_data[ix]);
 
-  draw_box(data.x.hl.h, data.y.hl.h, 6, 6, 92);
+  draw_box(data.x.hl.h, data.y.hl.h, PLAYER_SIZE, PLAYER_SIZE, 92);
 }
 
 void update_player(char ix) {

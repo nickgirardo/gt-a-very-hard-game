@@ -8,6 +8,7 @@
 #define PLAYER_ACCEL 12
 #define PLAYER_MIN_V 0x0020
 #define PLAYER_MIN_V_NEG -0x0020
+#define PLAYER_SIZE 6
 
 void init_player();
 void draw_player(char ix);
