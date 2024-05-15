@@ -10,7 +10,7 @@
 #define PLAYER_MIN_V_NEG -0x0020
 #define PLAYER_SIZE 6
 
-void init_player();
+void init_player(char x, char y);
 void draw_player(char ix);
 void update_player(char ix);
 

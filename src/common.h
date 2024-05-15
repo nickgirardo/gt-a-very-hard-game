@@ -25,7 +25,7 @@ typedef union CoordU {
 
 typedef enum { DirLeft = 0, DirRight, DirUp, DirDown } Direction;
 
-typedef enum { EntityEmpty = 0, EntityPlayer, EntityGoomba, EntityMaggot } EntityKind;
+typedef enum { EntityEmpty = 0, EntityPlayer, EntityGoomba, EntityMaggot, EntityShooter, EntityBullet } EntityKind;
 
 typedef struct PlayerDataT {
   Coord x;
@@ -49,10 +49,26 @@ typedef struct MaggotDataT {
   bool charging;
 } MaggotData;
 
+typedef struct ShooterDataT {
+  Coord x;
+  Coord y;
+  char timer;
+} ShooterData;
+
+typedef struct BulletDataT {
+  Coord x;
+  Coord y;
+  Coord vx;
+  Coord vy;
+  char ttl;
+} BulletData;
+
 typedef union EntityDataU {
   PlayerData pd;
   GoombaData gd;
   MaggotData md;
+  ShooterData sd;
+  BulletData bd;
 } EntityData;
 
 extern EntityKind entities[ENTITY_TABLE_SIZE];

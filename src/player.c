@@ -1,7 +1,7 @@
 #include "player.h"
 #include "common.h"
 
-void init_player() {
+void init_player(char x, char y) {
   PlayerData *data;
   char i;
 
@@ -11,8 +11,10 @@ void init_player() {
 
       data = (PlayerData *) &entity_data[i];
 
-      data->x.c = 0x3000;
-      data->y.c = 0x3000;
+      data->x.hl.h = x;
+      data->x.hl.l = 0;
+      data->y.hl.h = y;
+      data->y.hl.l = 0;
       data->vx.c = 0;
       data->vy.c = 0;
 

@@ -8,6 +8,8 @@
 #include "player.h"
 #include "goomba.h"
 #include "maggot.h"
+#include "shooter.h"
+#include "bullet.h"
 
 EntityKind entities[ENTITY_TABLE_SIZE];
 PlayerData *player_data;
@@ -21,14 +23,18 @@ void (*const drawing_fns[])(char) = {
   noop,
   draw_player,
   draw_goomba,
-  draw_maggot
+  draw_maggot,
+  draw_shooter,
+  draw_bullet
 };
 
 void (*const update_fns[])(char) = {
   noop,
   update_player,
   update_goomba,
-  update_maggot
+  update_maggot,
+  update_shooter,
+  update_bullet
 };
 
 int main() {
@@ -45,11 +51,11 @@ int main() {
 
   change_rom_bank(SAVE_BANK_NUM);
 
-  init_player();
-  // init_goomba(80, 80);
-  init_goomba(10, 80);
-  init_maggot(30, 30);
-  init_maggot(90, 90);
+  init_player(40, 90);
+  // init_goomba(10, 80);
+  // init_maggot(30, 30);
+  // init_maggot(90, 90);
+  init_shooter(50, 50);
 
   // Run forever
   while (1) {
