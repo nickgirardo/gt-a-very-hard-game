@@ -6,7 +6,8 @@
 #define MAGGOT_VEL 0x40
 #define MAGGOT_CHARGE_VEL 0xC0
 #define MAGGOT_CHANGE_DIR_TIMER 60
-#define MAGGOT_SEARCH_SIZE 10
+#define MAGGOT_SEARCH_SIZE_MAJOR 24
+#define MAGGOT_SEARCH_SIZE_MINOR 4
 #define MAGGOT_SIZE 4
 
 void init_maggot(char x, char y);

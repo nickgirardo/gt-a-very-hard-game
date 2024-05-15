@@ -36,46 +36,21 @@ void draw_maggot(char ix) {
   draw_box(data.x.hl.h, data.y.hl.h, MAGGOT_SIZE, MAGGOT_SIZE, 0x73);
 }
 
-#define DEBUG_DRAW_L()                                                         \
-  (draw_box(data->x.hl.h - 24, data->y.hl.h - 4, 24, 12, 23))
+#define CHARGE_CHECK_X()                                                       \
+  (box_collision(data->x.hl.h - MAGGOT_SEARCH_SIZE_MAJOR,                      \
+                 data->x.hl.h + MAGGOT_SEARCH_SIZE_MAJOR + MAGGOT_SIZE,        \
+                 data->y.hl.h - MAGGOT_SEARCH_SIZE_MINOR,                      \
+                 data->y.hl.h + MAGGOT_SEARCH_SIZE_MINOR + MAGGOT_SIZE,        \
+                 player_data->x.hl.h, player_data->x.hl.h + PLAYER_SIZE,       \
+                 player_data->y.hl.h, player_data->y.hl.h + PLAYER_SIZE))
 
-#define DEBUG_DRAW_R()                                                         \
-  (draw_box(data->x.hl.h + 4, data->y.hl.h - 4, 24, 12, 23))
-
-#define DEBUG_DRAW_U()                                                         \
-  (draw_box(data->x.hl.h - 4, data->y.hl.h - 24, 12, 24, 23))
-
-#define DEBUG_DRAW_D()                                                         \
-  (draw_box(data->x.hl.h - 4, data->y.hl.h + 4, 12, 24, 23))
-
-#define CHARGE_CHECK_L()                                                       \
-  (box_collision(data->x.hl.h - 24, data->x.hl.h, data->y.hl.h - 4,            \
-                 data->y.hl.h + 8, player_data->x.hl.h,                        \
-                 player_data->x.hl.h + PLAYER_SIZE, player_data->y.hl.h,       \
-                 player_data->y.hl.h + PLAYER_SIZE))
-
-#define CHARGE_CHECK_R()                                                       \
-  (box_collision(data->x.hl.h + 4, data->x.hl.h + 28, data->y.hl.h - 4,        \
-                 data->y.hl.h + 8, player_data->x.hl.h,                        \
-                 player_data->x.hl.h + PLAYER_SIZE, player_data->y.hl.h,       \
-                 player_data->y.hl.h + PLAYER_SIZE))
-
-#define CHARGE_CHECK_U()                                                       \
-  (box_collision(data->x.hl.h - 4, data->x.hl.h + 8, data->y.hl.h - 24,        \
-                 data->y.hl.h, player_data->x.hl.h,                            \
-                 player_data->x.hl.h + PLAYER_SIZE, player_data->y.hl.h,       \
-                 player_data->y.hl.h + PLAYER_SIZE))
-
-#define CHARGE_CHECK_D()                                                       \
-  (box_collision(data->x.hl.h - 4, data->x.hl.h + 8, data->y.hl.h + 4,         \
-                 data->y.hl.h + 28, player_data->x.hl.h,                       \
-                 player_data->x.hl.h + PLAYER_SIZE, player_data->y.hl.h,       \
-                 player_data->y.hl.h + PLAYER_SIZE))
-
-#define NO_CHARGE()                                                            \
-  if (1) {                                                                     \
-    data->dir = rand_direction();                                              \
-  }
+#define CHARGE_CHECK_Y()                                                       \
+  (box_collision(data->x.hl.h - MAGGOT_SEARCH_SIZE_MINOR,                      \
+                 data->x.hl.h + MAGGOT_SEARCH_SIZE_MINOR + MAGGOT_SIZE,        \
+                 data->y.hl.h - MAGGOT_SEARCH_SIZE_MAJOR,                      \
+                 data->y.hl.h + MAGGOT_SEARCH_SIZE_MAJOR + MAGGOT_SIZE,        \
+                 player_data->x.hl.h, player_data->x.hl.h + PLAYER_SIZE,       \
+                 player_data->y.hl.h, player_data->y.hl.h + PLAYER_SIZE))
 
 void update_maggot(char ix) {
   MaggotData *data;
@@ -83,51 +58,17 @@ void update_maggot(char ix) {
   data = (MaggotData *)&entity_data[ix];
 
   if (data->timer == 0) {
-    data->charging = false;
     data->timer = MAGGOT_CHANGE_DIR_TIMER;
 
-    if (player_data->x.hl.h < data->x.hl.h) {
-      if (CHARGE_CHECK_L()) {
-        data->dir = DirLeft;
-        data->charging = true;
-      } else {
-        if (player_data->y.hl.h < data->y.hl.h) {
-          if (CHARGE_CHECK_U()) {
-            data->dir = DirUp;
-            data->charging = true;
-          } else {
-            NO_CHARGE();
-          }
-        } else {
-          if (CHARGE_CHECK_D()) {
-            data->dir = DirDown;
-            data->charging = true;
-          } else {
-            NO_CHARGE();
-          }
-        }
-      }
+    if (CHARGE_CHECK_X()) {
+      data->dir = player_data->x.hl.h < data->x.hl.h ? DirLeft : DirRight;
+      data->charging = true;
+    } else if (CHARGE_CHECK_Y()) {
+      data->dir = player_data->y.hl.h < data->y.hl.h ? DirUp : DirDown;
+      data->charging = true;
     } else {
-      if (CHARGE_CHECK_R()) {
-        data->dir = DirRight;
-        data->charging = true;
-      } else {
-        if (player_data->y.hl.h < data->y.hl.h) {
-          if (CHARGE_CHECK_U()) {
-            data->dir = DirUp;
-            data->charging = true;
-          } else {
-            NO_CHARGE();
-          }
-        } else {
-          if (CHARGE_CHECK_D()) {
-            data->dir = DirDown;
-            data->charging = true;
-          } else {
-            NO_CHARGE();
-          }
-        }
-      }
+      data->dir = rand_direction();                                              \
+      data->charging = false;
     }
   }
 
