@@ -5,6 +5,12 @@
 
 #define ENTITY_TABLE_SIZE 8
 
+// Tilemap related definitions
+#define TILE_SIZE 8
+#define TILEMAP_WIDTH 16
+#define TILEMAP_HEIGHT 16
+#define TILEMAP_SIZE (TILEMAP_HEIGHT * TILEMAP_WIDTH)
+
 #define rand_direction() (rnd() & 3)
 
 #define box_collision(L1, R1, U1, D1, L2, R2, U2, D2) \
@@ -74,5 +80,6 @@ typedef union EntityDataU {
 extern EntityKind entities[ENTITY_TABLE_SIZE];
 extern PlayerData *player_data;
 extern EntityData entity_data[ENTITY_TABLE_SIZE];
+extern unsigned char tilemap[TILEMAP_SIZE];
 
 #endif // COMMON_H_

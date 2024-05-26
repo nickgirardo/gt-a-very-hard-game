@@ -10,10 +10,31 @@
 #include "maggot.h"
 #include "shooter.h"
 #include "bullet.h"
+#include "tilemap.h"
 
 EntityKind entities[ENTITY_TABLE_SIZE];
 PlayerData *player_data;
 EntityData entity_data[ENTITY_TABLE_SIZE];
+unsigned char tilemap[TILEMAP_SIZE];
+
+unsigned char level_one[TILEMAP_SIZE] = {
+1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1,
+1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1,
+1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1,
+1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1,
+1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1,
+1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1,
+1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1,
+1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1,
+1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1,
+1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1,
+1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+};
 
 void noop(char ix) {
   return;
@@ -51,17 +72,18 @@ int main() {
 
   change_rom_bank(SAVE_BANK_NUM);
 
+  init_tilemap(level_one);
   init_player(40, 90);
-  // init_goomba(10, 80);
-  // init_maggot(30, 30);
+  init_goomba(10, 80);
+  init_maggot(30, 30);
   // init_maggot(90, 90);
-  init_shooter(50, 50);
+  // init_shooter(50, 50);
 
   // Run forever
   while (1) {
     update_inputs();
-    clear_screen(3);
-    clear_border(3);
+
+    draw_tilemap();
 
     for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
       update_fns[entities[i]](i);
