@@ -2,7 +2,6 @@
 #include "drawing_funcs.h"
 #include "gametank.h"
 #include "input.h"
-#include "persist.h"
 
 #include "common.h"
 #include "player.h"
@@ -69,8 +68,6 @@ int main() {
   flip_pages();
   await_draw_queue();
   clear_border(0);
-
-  change_rom_bank(SAVE_BANK_NUM);
 
   init_tilemap(level_one);
   init_player(40, 90);
