@@ -60,8 +60,8 @@ void update_player(char ix) {
     data->vy.c = 0;
   }
 
-  data->vx.c -= data->vx.c >> 4;
-  data->vy.c -= data->vy.c >> 4;
+  data->vx.c -= data->vx.c >> PLAYER_FRICTION_COEFF;
+  data->vy.c -= data->vy.c >> PLAYER_FRICTION_COEFF;
 
   data->x.c += data->vx.c;
   data->y.c += data->vy.c;
