@@ -85,6 +85,7 @@ extern EntityKind entities[ENTITY_TABLE_SIZE];
 extern PlayerData *player_data;
 extern EntityData entity_data[ENTITY_TABLE_SIZE];
 extern unsigned char tilemap[TILEMAP_SIZE];
+extern unsigned char tilemap_decor[24];
 extern void reset_level();
 
 #endif // COMMON_H_

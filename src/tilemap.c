@@ -6,7 +6,7 @@
 #include "banking.h"
 #include "gt/drawing_funcs.h"
 
-void init_tilemap(const unsigned char *map) {
+void init_tilemap(const unsigned char *map, const unsigned char *decor) {
     register unsigned char ix;
 
     ix = 0;
@@ -15,6 +15,10 @@ void init_tilemap(const unsigned char *map) {
         tilemap[ix] = map[ix];
         ix++;
     } while(ix != (char) TILEMAP_SIZE);
+
+    for (ix = 0; ix < decor[0]+1; ix++) {
+        tilemap_decor[ix] = decor[ix];
+    }
 
 }
 
@@ -35,7 +39,7 @@ void init_tilemap(const unsigned char *map) {
     vram[START] = 1;                                              \
 } while (0)
 
-void draw_tilemap() {
+void draw_tilemap_full() {
     register unsigned char i;
     register unsigned char x;
     register unsigned char y;
@@ -43,6 +47,7 @@ void draw_tilemap() {
     x = 0;
     y = 0;
     i = 0;
+
     PREP_DRAW_TILE();
 
     do {
@@ -74,5 +79,54 @@ void draw_tilemap() {
         asm("nop");
         asm("nop");
         asm("nop");
+    } while(i != (char) TILEMAP_SIZE);
+
+    for (i = 1; i <= tilemap_decor[0];) {
+        draw_box(tilemap_decor[i++], tilemap_decor[i++], tilemap_decor[i++], tilemap_decor[i++], 5);
+    }
+}
+
+void draw_tilemap_partial() {
+    register unsigned char i;
+    register unsigned char x;
+    register unsigned char y;
+
+    x = 0;
+    y = 0;
+    i = 0;
+
+    PREP_DRAW_TILE();
+
+    do {
+        if (tilemap[i] != 0) {
+            DRAW_TILE(x, y, tilemap[i]);
+            // NOTE the blitter takes 1 cycle per pixel
+            // Without these nops the blitter would not be finished before we queue
+            // another blit operation
+            // In the future we might want to use these cycles more usefully?
+            asm("nop");
+            asm("nop");
+            asm("nop");
+            asm("nop");
+            asm("nop");
+            asm("nop");
+            asm("nop");
+            asm("nop");
+            asm("nop");
+            asm("nop");
+            asm("nop");
+            asm("nop");
+            asm("nop");
+            asm("nop");
+        }
+        i++;
+
+        x += TILE_SIZE;
+        if (x == TILE_SIZE * TILEMAP_WIDTH) {
+            x = 0;
+            y += TILE_SIZE;
+            vram[VY] = y;
+        }
+
     } while(i != (char) TILEMAP_SIZE);
 }
