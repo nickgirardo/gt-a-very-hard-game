@@ -69,13 +69,44 @@ void update_player(char ix) {
   if (data->vx.c > 0 && (data->x.hl.h & (TILE_SIZE - 1)) == (TILE_SIZE - PLAYER_SIZE)) {
     char tx = (data->x.hl.h >> 3) + 1;
     char ty = data->y.hl.h >> 3;
+    unsigned char tile = tilemap[tx + (ty << 4)];
+    unsigned char tileB;
 
-    if (tilemap[tx + (ty << 4)] == TILE_WALL) {
+    switch (tile) {
+      case TILE_WALL:
         data->vx.c = 0;
-    } else if ((data->y.hl.h & (TILE_SIZE - 1)) > (TILE_SIZE - PLAYER_SIZE)) {
-      if (tilemap[tx + ((ty + 1)<< 4)] == TILE_WALL) {
-        data->vx.c = 0;
-      }
+        break;
+
+      case TILE_KILL:
+        reset_level();
+        break;
+
+      case TILE_GOAL:
+        reset_level();
+        break;
+
+      default:
+        tileB = tilemap[tx + ((ty + 1) << 4)];
+
+        if ((data->y.hl.h & (TILE_SIZE - 1)) <= (TILE_SIZE - PLAYER_SIZE))
+          break;
+
+        switch (tileB) {
+          case TILE_WALL:
+            data->vx.c = 0;
+            break;
+
+          case TILE_KILL:
+            reset_level();
+            break;
+
+          case TILE_GOAL:
+            reset_level();
+            break;
+
+          default: break;
+        }
+        break;
     }
   }
 
@@ -83,13 +114,44 @@ void update_player(char ix) {
   if (data->vx.c < 0 && (data->x.hl.h & (TILE_SIZE - 1)) == 0) {
     char tx = (data->x.hl.h >> 3) - 1;
     char ty = data->y.hl.h >> 3;
+    unsigned char tile = tilemap[tx + (ty << 4)];
+    unsigned char tileB;
 
-    if (tilemap[tx + (ty << 4)] == TILE_WALL) {
+    switch (tile) {
+      case TILE_WALL:
         data->vx.c = 0;
-    } else if ((data->y.hl.h & (TILE_SIZE - 1)) > (TILE_SIZE - PLAYER_SIZE)) {
-      if (tilemap[tx + ((ty + 1)<< 4)] == TILE_WALL) {
-        data->vx.c = 0;
-      }
+        break;
+
+      case TILE_KILL:
+        reset_level();
+        break;
+
+      case TILE_GOAL:
+        reset_level();
+        break;
+
+      default:
+        tileB = tilemap[tx + ((ty + 1) << 4)];
+
+        if ((data->y.hl.h & (TILE_SIZE - 1)) <= (TILE_SIZE - PLAYER_SIZE))
+          break;
+
+        switch (tileB) {
+          case TILE_WALL:
+            data->vx.c = 0;
+            break;
+
+          case TILE_KILL:
+            reset_level();
+            break;
+
+          case TILE_GOAL:
+            reset_level();
+            break;
+
+          default: break;
+        }
+        break;
     }
   }
 
@@ -99,13 +161,44 @@ void update_player(char ix) {
   if (data->vy.c > 0 && (data->y.hl.h & (TILE_SIZE - 1)) == (TILE_SIZE - PLAYER_SIZE)) {
     char tx = data->x.hl.h >> 3;
     char ty = (data->y.hl.h >> 3) + 1;
+    unsigned char tile = tilemap[tx + (ty << 4)];
+    unsigned char tileB;
 
-    if (tilemap[tx + (ty << 4)] == TILE_WALL) {
+    switch (tile) {
+      case TILE_WALL:
         data->vy.c = 0;
-    } else if ((data->x.hl.h & (TILE_SIZE - 1)) > (TILE_SIZE - PLAYER_SIZE)) {
-      if (tilemap[(tx + 1) + (ty << 4)] == TILE_WALL) {
-        data->vy.c = 0;
-      }
+        break;
+
+      case TILE_KILL:
+        reset_level();
+        break;
+
+      case TILE_GOAL:
+        reset_level();
+        break;
+
+      default:
+        tileB = tilemap[tx + ((ty + 1) << 4)];
+
+        if ((data->y.hl.h & (TILE_SIZE - 1)) <= (TILE_SIZE - PLAYER_SIZE))
+          break;
+
+        switch (tileB) {
+          case TILE_WALL:
+            data->vy.c = 0;
+            break;
+
+          case TILE_KILL:
+            reset_level();
+            break;
+
+          case TILE_GOAL:
+            reset_level();
+            break;
+
+          default: break;
+        }
+        break;
     }
   }
 
@@ -113,13 +206,44 @@ void update_player(char ix) {
   if (data->vy.c < 0 && (data->y.hl.h & (TILE_SIZE - 1)) == 0) {
     char tx = data->x.hl.h >> 3;
     char ty = (data->y.hl.h >> 3) - 1;
+    unsigned char tile = tilemap[tx + (ty << 4)];
+    unsigned char tileB;
 
-    if (tilemap[tx + (ty << 4)] == TILE_WALL) {
+    switch (tile) {
+      case TILE_WALL:
         data->vy.c = 0;
-    } else if ((data->x.hl.h & (TILE_SIZE - 1)) > (TILE_SIZE - PLAYER_SIZE)) {
-      if (tilemap[(tx + 1) + (ty << 4)] == TILE_WALL) {
-        data->vy.c = 0;
-      }
+        break;
+
+      case TILE_KILL:
+        reset_level();
+        break;
+
+      case TILE_GOAL:
+        reset_level();
+        break;
+
+      default:
+        tileB = tilemap[tx + ((ty + 1) << 4)];
+
+        if ((data->y.hl.h & (TILE_SIZE - 1)) <= (TILE_SIZE - PLAYER_SIZE))
+          break;
+
+        switch (tileB) {
+          case TILE_WALL:
+            data->vy.c = 0;
+            break;
+
+          case TILE_KILL:
+            reset_level();
+            break;
+
+          case TILE_GOAL:
+            reset_level();
+            break;
+
+          default: break;
+        }
+        break;
     }
   }
 

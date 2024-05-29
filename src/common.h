@@ -12,6 +12,8 @@
 #define TILEMAP_SIZE (TILEMAP_HEIGHT * TILEMAP_WIDTH)
 
 #define TILE_WALL 0
+#define TILE_KILL 0xBB
+#define TILE_GOAL 0x14
 
 #define rand_direction() (rnd() & 3)
 
@@ -83,5 +85,6 @@ extern EntityKind entities[ENTITY_TABLE_SIZE];
 extern PlayerData *player_data;
 extern EntityData entity_data[ENTITY_TABLE_SIZE];
 extern unsigned char tilemap[TILEMAP_SIZE];
+extern void reset_level();
 
 #endif // COMMON_H_
