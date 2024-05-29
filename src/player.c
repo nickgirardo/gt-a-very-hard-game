@@ -178,9 +178,9 @@ void update_player(char ix) {
         break;
 
       default:
-        tileB = tilemap[tx + ((ty + 1) << 4)];
+        tileB = tilemap[(tx + 1) + (ty  << 4)];
 
-        if ((data->y.hl.h & (TILE_SIZE - 1)) <= (TILE_SIZE - PLAYER_SIZE))
+        if ((data->x.hl.h & (TILE_SIZE - 1)) <= (TILE_SIZE - PLAYER_SIZE))
           break;
 
         switch (tileB) {
@@ -223,9 +223,9 @@ void update_player(char ix) {
         break;
 
       default:
-        tileB = tilemap[tx + ((ty + 1) << 4)];
+        tileB = tilemap[(tx + 1) + (ty << 4)];
 
-        if ((data->y.hl.h & (TILE_SIZE - 1)) <= (TILE_SIZE - PLAYER_SIZE))
+        if ((data->x.hl.h & (TILE_SIZE - 1)) <= (TILE_SIZE - PLAYER_SIZE))
           break;
 
         switch (tileB) {
