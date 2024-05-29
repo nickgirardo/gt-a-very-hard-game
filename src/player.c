@@ -93,6 +93,8 @@ void update_player(char ix) {
     }
   }
 
+  data->x.c += data->vx.c;
+
   // Are wrossing a tile boundry on the bottom?
   if (data->vy.c > 0 && (data->y.hl.h & (TILE_SIZE - 1)) == (TILE_SIZE - PLAYER_SIZE)) {
     char tx = data->x.hl.h >> 3;
@@ -121,6 +123,5 @@ void update_player(char ix) {
     }
   }
 
-  data->x.c += data->vx.c;
   data->y.c += data->vy.c;
 }
