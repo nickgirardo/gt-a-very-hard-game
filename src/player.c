@@ -1,5 +1,6 @@
 #include "player.h"
 #include "common.h"
+#include "gametank.h"
 
 void init_player(char x, char y) {
   PlayerData *data;
@@ -62,6 +63,63 @@ void update_player(char ix) {
 
   data->vx.c -= data->vx.c >> PLAYER_FRICTION_COEFF;
   data->vy.c -= data->vy.c >> PLAYER_FRICTION_COEFF;
+
+  // TILEMAP COLLISIONS
+  // Are wrossing a tile boundry on the right?
+  if (data->vx.c > 0 && (data->x.hl.h & (TILE_SIZE - 1)) == (TILE_SIZE - PLAYER_SIZE)) {
+    char tx = (data->x.hl.h >> 3) + 1;
+    char ty = data->y.hl.h >> 3;
+
+    if (tilemap[tx + (ty << 4)] == TILE_WALL) {
+        data->vx.c = 0;
+    } else if ((data->y.hl.h & (TILE_SIZE - 1)) > (TILE_SIZE - PLAYER_SIZE)) {
+      if (tilemap[tx + ((ty + 1)<< 4)] == TILE_WALL) {
+        data->vx.c = 0;
+      }
+    }
+  }
+
+  // Are wrossing a tile boundry on the left?
+  if (data->vx.c < 0 && (data->x.hl.h & (TILE_SIZE - 1)) == 0) {
+    char tx = (data->x.hl.h >> 3) - 1;
+    char ty = data->y.hl.h >> 3;
+
+    if (tilemap[tx + (ty << 4)] == TILE_WALL) {
+        data->vx.c = 0;
+    } else if ((data->y.hl.h & (TILE_SIZE - 1)) > (TILE_SIZE - PLAYER_SIZE)) {
+      if (tilemap[tx + ((ty + 1)<< 4)] == TILE_WALL) {
+        data->vx.c = 0;
+      }
+    }
+  }
+
+  // Are wrossing a tile boundry on the bottom?
+  if (data->vy.c > 0 && (data->y.hl.h & (TILE_SIZE - 1)) == (TILE_SIZE - PLAYER_SIZE)) {
+    char tx = data->x.hl.h >> 3;
+    char ty = (data->y.hl.h >> 3) + 1;
+
+    if (tilemap[tx + (ty << 4)] == TILE_WALL) {
+        data->vy.c = 0;
+    } else if ((data->x.hl.h & (TILE_SIZE - 1)) > (TILE_SIZE - PLAYER_SIZE)) {
+      if (tilemap[(tx + 1) + (ty << 4)] == TILE_WALL) {
+        data->vy.c = 0;
+      }
+    }
+  }
+
+  // Are wrossing a tile boundry on the top?
+  if (data->vy.c < 0 && (data->y.hl.h & (TILE_SIZE - 1)) == 0) {
+    char tx = data->x.hl.h >> 3;
+    char ty = (data->y.hl.h >> 3) - 1;
+
+    if (tilemap[tx + (ty << 4)] == TILE_WALL) {
+        data->vy.c = 0;
+    } else if ((data->x.hl.h & (TILE_SIZE - 1)) > (TILE_SIZE - PLAYER_SIZE)) {
+      if (tilemap[(tx + 1) + (ty << 4)] == TILE_WALL) {
+        data->vy.c = 0;
+      }
+    }
+  }
 
   data->x.c += data->vx.c;
   data->y.c += data->vy.c;

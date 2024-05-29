@@ -11,6 +11,8 @@
 #define TILEMAP_HEIGHT 16
 #define TILEMAP_SIZE (TILEMAP_HEIGHT * TILEMAP_WIDTH)
 
+#define TILE_WALL 0
+
 #define rand_direction() (rnd() & 3)
 
 #define box_collision(L1, R1, U1, D1, L2, R2, U2, D2) \
