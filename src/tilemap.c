@@ -39,7 +39,7 @@ void init_tilemap(const unsigned char *map, const unsigned char *decor) {
     vram[START] = 1;                                              \
 } while (0)
 
-void draw_tilemap_full() {
+void draw_tilemap_full_inner() {
     register unsigned char i;
     register unsigned char x;
     register unsigned char y;
@@ -129,4 +129,13 @@ void draw_tilemap_partial() {
         }
 
     } while(i != (char) TILEMAP_SIZE);
+}
+
+void draw_tilemap_full() {
+    // Draw the tilemap to both pages
+    draw_tilemap_full_inner();
+    sleep(1);
+    flip_pages();
+    draw_tilemap_full_inner();
+    await_draw_queue();
 }

@@ -86,12 +86,7 @@ void init_entities(const unsigned char *data) {
 void reset_level() {
   init_tilemap(level_one, level_one_decor);
 
-  // Draw the tilemap to both pages
   draw_tilemap_full();
-  sleep(1);
-  flip_pages();
-  draw_tilemap_full();
-  await_draw_queue();
 
   init_entities(level_one_entities);
 }
