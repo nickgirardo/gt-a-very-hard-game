@@ -2,6 +2,7 @@
 #include "drawing_funcs.h"
 #include "gametank.h"
 #include "gt/drawing_funcs.h"
+#include "hblockgroup.h"
 #include "input.h"
 
 #include "common.h"
@@ -24,7 +25,7 @@ unsigned char level_one[TILEMAP_SIZE] = {
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0xbb, 4, 0xbb, 4, 0xbb, 4, 0xbb, 4, 5, 0x14, 0x14, 0,
+0, 0, 0, 0, 5, 4, 5, 4, 5, 4, 5, 4, 5, 0x14, 0x14, 0,
 0, 0, 0, 0, 4, 5, 4, 5, 4, 5, 4, 5, 4, 0x14, 0x14, 0,
 0, 0, 0, 0, 5, 4, 5, 4, 5, 4, 5, 4, 0, 0, 0, 0,
 0, 0, 0, 0, 4, 5, 4, 5, 4, 5, 4, 5, 0, 0, 0, 0,
@@ -32,7 +33,7 @@ unsigned char level_one[TILEMAP_SIZE] = {
 0, 0, 0, 0, 4, 5, 4, 5, 4, 5, 4, 5, 0, 0, 0, 0,
 0, 0, 0, 0, 5, 4, 5, 4, 5, 4, 5, 4, 0, 0, 0, 0,
 0, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 0, 0, 0, 0,
-0, 4, 5, 4, 5, 0xbb, 5, 0xbb, 5, 0xbb, 5, 0xbb, 0, 0, 0, 0,
+0, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 0, 0, 0, 0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
 
@@ -47,8 +48,10 @@ unsigned char level_one_decor[] = {
 };
 
 unsigned char level_one_entities[] = {
-1,12,100,
-0,
+EntityPlayer,12,100,
+EntityHBlockGroup, 41, 41, 4, 64,
+EntityHBlockGroup, 33, 105, 4, -64,
+EntityEmpty,
 };
 
 void noop(char ix) {
@@ -72,6 +75,9 @@ void init_entities(const unsigned char *data) {
         break;
       case EntityGoomba:
         init_goomba(*(++data), *(++data));
+        break;
+      case EntityHBlockGroup:
+        init_hblockgroup(*(++data), *(++data), *(++data), *(++data));
         break;
       default:
         // We shouldn't ever hit this branch if our levels are crafted correctly
@@ -97,7 +103,8 @@ void (*const drawing_fns[])(char) = {
   draw_goomba,
   draw_maggot,
   draw_shooter,
-  draw_bullet
+  draw_bullet,
+  draw_hblockgroup,
 };
 
 void (*const update_fns[])(char) = {
@@ -106,7 +113,8 @@ void (*const update_fns[])(char) = {
   update_goomba,
   update_maggot,
   update_shooter,
-  update_bullet
+  update_bullet,
+  update_hblockgroup,
 };
 
 int main() {

@@ -35,7 +35,7 @@ typedef union CoordU {
 
 typedef enum { DirLeft = 0, DirRight, DirUp, DirDown } Direction;
 
-typedef enum { EntityEmpty = 0, EntityPlayer, EntityGoomba, EntityMaggot, EntityShooter, EntityBullet } EntityKind;
+typedef enum { EntityEmpty = 0, EntityPlayer, EntityGoomba, EntityMaggot, EntityShooter, EntityBullet, EntityHBlockGroup } EntityKind;
 
 typedef struct PlayerDataT {
   Coord x;
@@ -73,12 +73,21 @@ typedef struct BulletDataT {
   char ttl;
 } BulletData;
 
+typedef struct HBlockGroupDataT {
+  Coord x;
+  Coord y;
+  char n;
+  char d_total;
+  char d_remaining;
+} HBlockGroupData;
+
 typedef union EntityDataU {
   PlayerData pd;
   GoombaData gd;
   MaggotData md;
   ShooterData sd;
   BulletData bd;
+  HBlockGroupData hbgd;
 } EntityData;
 
 extern EntityKind entities[ENTITY_TABLE_SIZE];
