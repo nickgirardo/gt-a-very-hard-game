@@ -46,6 +46,10 @@ unsigned char level_one_decor[] = {
 97, 57, 30, 56,
 };
 
+unsigned char level_one_entities[] = {
+1,12,100,
+0,
+};
 
 void noop(char ix) {
   return;
@@ -59,6 +63,26 @@ void clear_entities() {
   }
 }
 
+void init_entities(const unsigned char *data) {
+  clear_entities();
+  while(*data != 0) {
+    switch (*data) {
+      case EntityPlayer:
+        init_player(*(++data), *(++data));
+        break;
+      case EntityGoomba:
+        init_goomba(*(++data), *(++data));
+        break;
+      default:
+        // We shouldn't ever hit this branch if our levels are crafted correctly
+        // Just hard-lock
+        while (1) {}
+    }
+    data++;
+  }
+}
+
+
 void reset_level() {
   init_tilemap(level_one, level_one_decor);
 
@@ -69,9 +93,7 @@ void reset_level() {
   draw_tilemap_full();
   await_draw_queue();
 
-  clear_entities();
-
-  init_player(12, 100);
+  init_entities(level_one_entities);
 }
 
 void (*const drawing_fns[])(char) = {
