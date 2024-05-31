@@ -28,6 +28,13 @@ void init_player(char x, char y) {
   // This should never be reached!!
 }
 
+void reset_player(char x, char y) {
+  player_data->x.hl.h = x;
+  player_data->x.hl.l = 0;
+  player_data->y.hl.h = y;
+  player_data->y.hl.l = 0;
+}
+
 void draw_player(char ix) {
   PlayerData data;
 
@@ -36,7 +43,7 @@ void draw_player(char ix) {
   draw_box(data.x.hl.h, data.y.hl.h, PLAYER_SIZE, PLAYER_SIZE, 92);
 }
 
-void update_player(char ix) {
+UpdateResult update_player(char ix) {
   PlayerData *data;
 
   data = (PlayerData *) &entity_data[ix];
@@ -78,12 +85,10 @@ void update_player(char ix) {
         break;
 
       case TILE_KILL:
-        reset_level();
-        break;
+        return ResultFail;
 
       case TILE_GOAL:
-        reset_level();
-        break;
+        return ResultWin;
 
       default:
         tileB = tilemap[tx + ((ty + 1) << 4)];
@@ -97,12 +102,10 @@ void update_player(char ix) {
             break;
 
           case TILE_KILL:
-            reset_level();
-            break;
+            return ResultFail;
 
           case TILE_GOAL:
-            reset_level();
-            break;
+            return ResultWin;
 
           default: break;
         }
@@ -123,12 +126,11 @@ void update_player(char ix) {
         break;
 
       case TILE_KILL:
-        reset_level();
-        break;
+        return ResultFail;
 
       case TILE_GOAL:
-        reset_level();
-        break;
+        return ResultWin;
+
 
       default:
         tileB = tilemap[tx + ((ty + 1) << 4)];
@@ -142,12 +144,10 @@ void update_player(char ix) {
             break;
 
           case TILE_KILL:
-            reset_level();
-            break;
+            return ResultFail;
 
           case TILE_GOAL:
-            reset_level();
-            break;
+            return ResultWin;
 
           default: break;
         }
@@ -169,13 +169,11 @@ void update_player(char ix) {
         data->vy.c = 0;
         break;
 
-      case TILE_KILL:
-        reset_level();
-        break;
+        case TILE_KILL:
+          return ResultFail;
 
-      case TILE_GOAL:
-        reset_level();
-        break;
+        case TILE_GOAL:
+          return ResultWin;
 
       default:
         tileB = tilemap[(tx + 1) + (ty  << 4)];
@@ -189,12 +187,10 @@ void update_player(char ix) {
             break;
 
           case TILE_KILL:
-            reset_level();
-            break;
+            return ResultFail;
 
           case TILE_GOAL:
-            reset_level();
-            break;
+            return ResultWin;
 
           default: break;
         }
@@ -214,13 +210,11 @@ void update_player(char ix) {
         data->vy.c = 0;
         break;
 
-      case TILE_KILL:
-        reset_level();
-        break;
+        case TILE_KILL:
+          return ResultFail;
 
-      case TILE_GOAL:
-        reset_level();
-        break;
+        case TILE_GOAL:
+          return ResultWin;
 
       default:
         tileB = tilemap[(tx + 1) + (ty << 4)];
@@ -234,12 +228,10 @@ void update_player(char ix) {
             break;
 
           case TILE_KILL:
-            reset_level();
-            break;
+            return ResultFail;
 
           case TILE_GOAL:
-            reset_level();
-            break;
+            return ResultWin;
 
           default: break;
         }
@@ -248,4 +240,6 @@ void update_player(char ix) {
   }
 
   data->y.c += data->vy.c;
+
+  return ResultOk;
 }

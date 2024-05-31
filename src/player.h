@@ -12,8 +12,9 @@
 #define PLAYER_SIZE 6
 
 void init_player(char x, char y);
+void reset_player(char x, char y);
 void draw_player(char ix);
-void update_player(char ix);
+UpdateResult update_player(char ix);
 
 
 #endif //  PLAYER_H

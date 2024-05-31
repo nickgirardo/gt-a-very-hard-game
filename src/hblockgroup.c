@@ -64,7 +64,7 @@ void draw_hblockgroup(char ix) {
   }
 }
 
-void update_hblockgroup(char ix) {
+UpdateResult update_hblockgroup(char ix) {
   HBlockGroupData *data;
   char i;
 
@@ -90,8 +90,7 @@ void update_hblockgroup(char ix) {
                 data->x.hl.h + (i * HBLOCK_OFFSET) + HBLOCK_SIZE,
                 player_data->x.hl.h,
                 player_data->x.hl.h + PLAYER_SIZE)) {
-            reset_level();
-            return;
+            return ResultFail;
         }
     }
   }
@@ -109,4 +108,5 @@ void update_hblockgroup(char ix) {
       data->d_remaining = data->d_total;
   }
 
+  return ResultOk;
 }

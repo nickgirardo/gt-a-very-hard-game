@@ -24,6 +24,15 @@
   box_collision_x(L1, R1, L2, R2) && \\
   box_collision_y(U1, D1, U2, D2)
 
+typedef enum { ResultOk = 0, ResultFail, ResultWin } UpdateResult;
+
+typedef struct LevelDataT {
+  unsigned char *tilemap;
+  unsigned char *tilemap_decor;
+  unsigned char *entities;
+  unsigned char *reset_data;
+} LevelData;
+
 typedef struct HLT {
   char l;
   char h;
