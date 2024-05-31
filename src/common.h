@@ -17,11 +17,12 @@
 
 #define rand_direction() (rnd() & 3)
 
+#define box_collision_x(L1, R1, L2, R2) (L1 < R2 && R1 > L2)
+#define box_collision_y(U1, D1, U2, D2) (U1 < D2 && D1 > U2)
+
 #define box_collision(L1, R1, U1, D1, L2, R2, U2, D2) \
-  (L1 < R2 && \
-            R1 > L2 && \
-            U1 < D2 && \
-            D1 > U2)
+  box_collision_x(L1, R1, L2, R2) && \\
+  box_collision_y(U1, D1, U2, D2)
 
 typedef struct HLT {
   char l;

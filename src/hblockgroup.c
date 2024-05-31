@@ -5,6 +5,7 @@
 #include "gametank.h"
 #include "banking.h"
 #include "gt/drawing_funcs.h"
+#include "player.h"
 
 void init_hblockgroup(char x, char y, char n, char d) {
   HBlockGroupData *data;
@@ -65,8 +66,37 @@ void draw_hblockgroup(char ix) {
 
 void update_hblockgroup(char ix) {
   HBlockGroupData *data;
+  char i;
 
   data = (HBlockGroupData *) &entity_data[ix];
+
+  // Test for collisions with the player
+  // All blocks in an hblockgroup are horizontally aligned so only one y check is needed
+  if (box_collision_y(
+          data->y.hl.h,
+          data->y.hl.h + HBLOCK_SIZE,
+          player_data->y.hl.h,
+          player_data->y.hl.h + PLAYER_SIZE) &&
+      box_collision_x(
+          data->x.hl.h,
+          (data->x.hl.h + (HBLOCK_OFFSET * (data->n - 1))) + HBLOCK_SIZE,
+          player_data->x.hl.h,
+          player_data->x.hl.h + PLAYER_SIZE)
+  ) {
+    // TODO I think with some bit cleverness we can avoid a lot of work here
+    for (i = 0; i < data->n; i++) {
+        if (box_collision_x(
+                data->x.hl.h + (i * HBLOCK_OFFSET),
+                data->x.hl.h + (i * HBLOCK_OFFSET) + HBLOCK_SIZE,
+                player_data->x.hl.h,
+                player_data->x.hl.h + PLAYER_SIZE)) {
+            reset_level();
+            return;
+        }
+    }
+  }
+
+
 
   if ((signed char) data->d_remaining > 0) {
       data->y.hl.h++;
