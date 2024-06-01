@@ -45,15 +45,34 @@ const unsigned char level_two[TILEMAP_SIZE] = {
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0,
 0, 0, 0, 0, 5, 6, 5, 6, 5, 6, 5, 6, 5, 0, 0, 0,
-0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0,
+0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0,
 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0,
 0, 0x14, 0x14, 5, 6, 0, 0, 0, 0, 0, 6, 5, 6, 0, 0, 0,
 0, 0x14, 0x14, 6, 5, 0, 0, 0, 0, 0, 5, 6, 5, 0, 0, 0,
 0, 0x14, 0x14, 5, 6, 0, 0, 0, 0, 0, 6, 5, 6, 0, 0, 0,
 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0,
 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0,
-0, 0, 0, 0, 6, 5, 6, 5, 6, 5, 6, 5, 6, 0, 0, 0,
-0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0,
+0, 0, 0, 0, 5, 6, 5, 6, 5, 6, 5, 6, 5, 0, 0, 0,
+0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+};
+
+const unsigned char level_gg[TILEMAP_SIZE] = {
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 0, 0, 0,
+0, 0, 5, 0x5d, 0x3d, 0x1d, 5, 6, 5, 6, 5, 6, 5, 0, 0, 0,
+0, 0, 6, 0x7d, 6, 5, 6, 5, 0xfd, 0xdd, 0xbd, 5, 6, 0, 0, 0,
+0, 0, 5, 0x9d, 5, 6, 5, 6, 0x1d, 6, 5, 6, 5, 0, 0, 0,
+0, 0, 6, 0xBd, 6, 0x5d, 0x9d, 5, 0x3d, 5, 6, 5, 6, 0, 0, 0,
+0, 0, 5, 0xDd, 5, 6, 0x7d, 6, 0x5d, 6, 0x9d, 0x3d, 5, 0, 0, 0,
+0, 0, 6, 0xFd, 0x1d, 0x3d, 0x5d, 5, 0x7d, 5, 6, 0x1d, 6, 0, 0, 0,
+0, 0, 5, 6, 5, 6, 5, 6, 0x9d, 0xbd, 0xdd, 0xfd, 5, 0, 0, 0,
+0, 0, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
 
@@ -69,6 +88,21 @@ const unsigned char level_one_decor[] = {
 
 const unsigned char level_two_decor[] = {
 44,
+1, 24, 126, 7,
+1, 31, 30, 32,
+1, 63, 6, 26,
+1, 89, 30, 32,
+1, 121, 126, 6,
+105, 31, 22, 90,
+41, 31, 54, 8,
+41, 113, 54, 8,
+79, 49, 16, 14,
+79, 89, 16, 14,
+41, 49, 38, 54,
+};
+
+const unsigned char level_gg_decor[] = {
+0,
 1, 24, 126, 7,
 1, 31, 30, 32,
 1, 63, 6, 26,
@@ -98,6 +132,11 @@ EntityLoopBoyH, 97, 41, 6, LoopBoyUp,
 EntityEmpty,
 };
 
+const unsigned char level_gg_entities[] = {
+EntityPlayer,84,73,
+EntityEmpty,
+};
+
 const unsigned char level_one_reset_data[] = {
 12,100,
 };
@@ -106,9 +145,13 @@ const unsigned char level_two_reset_data[] = {
 84,73,
 };
 
+const unsigned char level_gg_reset_data[] = {
+84,73,
+};
+
 #pragma rodata-name (pop)
 
-LevelData levels[2];
+LevelData levels[3];
 
 void noop(char ix) {
   return;
@@ -202,6 +245,11 @@ int main() {
   levels[1].tilemap_decor = level_two_decor;
   levels[1].entities = level_two_entities;
   levels[1].reset_data = level_two_reset_data;
+
+  levels[2].tilemap = level_gg;
+  levels[2].tilemap_decor = level_gg_decor;
+  levels[2].entities = level_gg_entities;
+  levels[2].reset_data = level_gg_reset_data;
 
 init_new_level:
   init_level();
