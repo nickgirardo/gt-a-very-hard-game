@@ -7,7 +7,7 @@
 #include "common.h"
 #include "player.h"
 #include "hblockgroup.h"
-#include "loopboyh.h"
+#include "loopboy.h"
 #include "tilemap.h"
 
 EntityKind entities[ENTITY_TABLE_SIZE];
@@ -138,7 +138,7 @@ void init_entities(const unsigned char *data) {
         init_hblockgroup(*(++data), *(++data), *(++data), *(++data));
         break;
       case EntityLoopBoyH:
-        init_loopboyh(*(++data), *(++data), *(++data), *(++data));
+        init_loopboy(*(++data), *(++data), *(++data), *(++data));
         break;
       default:
         // We shouldn't ever hit this branch if our levels are crafted correctly
@@ -169,23 +169,15 @@ void reset_level() {
 void (*const drawing_fns[])(char) = {
   noop,
   draw_player,
-  noop,
-  noop,
-  noop,
-  noop,
   draw_hblockgroup,
-  draw_loopboyh,
+  draw_loopboy,
 };
 
 UpdateResult (*const update_fns[])(char) = {
   noop_update,
   update_player,
-  noop_update,
-  noop_update,
-  noop_update,
-  noop_update,
   update_hblockgroup,
-  update_loopboyh,
+  update_loopboy,
 };
 
 int main() {

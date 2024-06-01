@@ -11,9 +11,9 @@
 
 #define LOOPBOY_WRAPPING_FACTOR 0x7F
 
-void init_loopboyh(char x, char y, char n, LoopBoyDirection dir);
-void draw_loopboyh(char ix);
-UpdateResult update_loopboyh(char ix);
+void init_loopboy(char x, char y, char n, LoopBoyDirection dir);
+void draw_loopboy(char ix);
+UpdateResult update_loopboy(char ix);
 
 
 #endif // LOOPBOYH_H_

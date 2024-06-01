@@ -6,15 +6,15 @@
 #include "gt/drawing_funcs.h"
 #include "player.h"
 
-void init_loopboyh(char x, char y, char n, LoopBoyDirection dir) {
-  LoopBoyHData *data;
+void init_loopboy(char x, char y, char n, LoopBoyDirection dir) {
+  LoopBoyData *data;
   char i;
 
   for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
     if (entities[i] == EntityEmpty) {
       entities[i] = EntityLoopBoyH;
 
-      data = (LoopBoyHData *) &entity_data[i];
+      data = (LoopBoyData *) &entity_data[i];
 
       data->x.hl.h = x;
       data->x.hl.l = 0;
@@ -53,11 +53,11 @@ void init_loopboyh(char x, char y, char n, LoopBoyDirection dir) {
     vram[START] = 1;                                        \
 } while (0)
 
-void draw_loopboyh(char ix) {
-  LoopBoyHData data;
+void draw_loopboy(char ix) {
+  LoopBoyData data;
   char i, j;
 
-  data = *((LoopBoyHData *) &entity_data[ix]);
+  data = *((LoopBoyData *) &entity_data[ix]);
 
   await_draw_queue();
 
@@ -89,12 +89,12 @@ void draw_loopboyh(char ix) {
   }
 }
 
-UpdateResult update_loopboyh(char ix) {
-  LoopBoyHData *data;
+UpdateResult update_loopboy(char ix) {
+  LoopBoyData *data;
   register char i;
   register char j;
 
-  data = (LoopBoyHData *) &entity_data[ix];
+  data = (LoopBoyData *) &entity_data[ix];
 
 
   await_draw_queue();

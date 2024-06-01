@@ -50,10 +50,6 @@ typedef enum { DirLeft = 0, DirRight, DirUp, DirDown } Direction;
 typedef enum {
 EntityEmpty = 0,
 EntityPlayer,
-EntityGoomba,
-EntityMaggot,
-EntityShooter,
-EntityBullet,
 EntityHBlockGroup,
 EntityLoopBoyH,
 } EntityKind;
@@ -65,35 +61,6 @@ typedef struct PlayerDataT {
   Coord vy;
 } PlayerData;
 
-typedef struct GoombaDataT {
-  Coord x;
-  Coord y;
-  Coord vx;
-  Coord vy;
-} GoombaData;
-
-typedef struct MaggotDataT {
-  Coord x;
-  Coord y;
-  Direction dir;
-  char timer;
-  bool charging;
-} MaggotData;
-
-typedef struct ShooterDataT {
-  Coord x;
-  Coord y;
-  char timer;
-} ShooterData;
-
-typedef struct BulletDataT {
-  Coord x;
-  Coord y;
-  Coord vx;
-  Coord vy;
-  char ttl;
-} BulletData;
-
 typedef struct HBlockGroupDataT {
   Coord x;
   Coord y;
@@ -102,22 +69,18 @@ typedef struct HBlockGroupDataT {
   char d_remaining;
 } HBlockGroupData;
 
-typedef struct LoopBoyHDataT {
+typedef struct LoopBoyDataT {
   Coord x;
   Coord y;
   char n;
   char d;
   char direction;
-} LoopBoyHData;
+} LoopBoyData;
 
 typedef union EntityDataU {
   PlayerData pd;
-  GoombaData gd;
-  MaggotData md;
-  ShooterData sd;
-  BulletData bd;
   HBlockGroupData hbgd;
-  LoopBoyHData lbhd;
+  LoopBoyData lbhd;
 } EntityData;
 
 extern EntityKind entities[ENTITY_TABLE_SIZE];
