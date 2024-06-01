@@ -1,8 +1,7 @@
-#include "banking.h"
-#include "drawing_funcs.h"
-#include "gametank.h"
+#include "gt/banking.h"
+#include "gt/gametank.h"
 #include "gt/drawing_funcs.h"
-#include "input.h"
+#include "gt/input.h"
 
 #include "common.h"
 #include "player.h"
@@ -16,7 +15,7 @@ EntityData entity_data[ENTITY_TABLE_SIZE];
 unsigned char tilemap[TILEMAP_SIZE];
 unsigned char tilemap_decor[24];
 
-unsigned char current_level = 1;
+unsigned char current_level = 0;
 
 #pragma rodata-name (push, "PROG0")
 
@@ -63,15 +62,15 @@ const unsigned char level_gg[TILEMAP_SIZE] = {
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 0, 0, 0,
-0, 0, 5, 0x5d, 0x3d, 0x1d, 5, 6, 5, 6, 5, 6, 5, 0, 0, 0,
-0, 0, 6, 0x7d, 6, 5, 6, 5, 0xfd, 0xdd, 0xbd, 5, 6, 0, 0, 0,
-0, 0, 5, 0x9d, 5, 6, 5, 6, 0x1d, 6, 5, 6, 5, 0, 0, 0,
-0, 0, 6, 0xBd, 6, 0x5d, 0x9d, 5, 0x3d, 5, 6, 5, 6, 0, 0, 0,
-0, 0, 5, 0xDd, 5, 6, 0x7d, 6, 0x5d, 6, 0x9d, 0x3d, 5, 0, 0, 0,
-0, 0, 6, 0xFd, 0x1d, 0x3d, 0x5d, 5, 0x7d, 5, 6, 0x1d, 6, 0, 0, 0,
-0, 0, 5, 6, 5, 6, 5, 6, 0x9d, 0xbd, 0xdd, 0xfd, 5, 0, 0, 0,
-0, 0, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 0, 0, 0,
+0, 0, 6, 5, 6, 5, 6, 5, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 5, 0x5d, 0x3d, 0x1d, 5, 6, 5, 6, 5, 6, 5, 6, 0, 0,
+0, 0, 6, 0x7d, 6, 5, 6, 5, 6, 0xfd, 0xdd, 0xbd, 6, 5, 0, 0,
+0, 0, 5, 0x9d, 5, 6, 5, 6, 5, 0x1d, 5, 6, 5, 6, 0, 0,
+0, 0, 6, 0xBd, 6, 0x5d, 0x9d, 5, 6, 0x3d, 6, 5, 6, 5, 0, 0,
+0, 0, 5, 0xDd, 5, 6, 0x7d, 6, 5, 0x5d, 5, 0x9d, 0x3d, 6, 0, 0,
+0, 0, 6, 0xFd, 0x1d, 0x3d, 0x5d, 5, 6, 0x7d, 6, 5, 0x1d, 5, 0, 0,
+0, 0, 5, 6, 5, 6, 5, 6, 5, 0x9d, 0xbd, 0xdd, 0xfd, 6, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 6, 5, 6, 5, 6, 5, 0, 0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
@@ -102,38 +101,33 @@ const unsigned char level_two_decor[] = {
 };
 
 const unsigned char level_gg_decor[] = {
-0,
-1, 24, 126, 7,
-1, 31, 30, 32,
-1, 63, 6, 26,
-1, 89, 30, 32,
-1, 121, 126, 6,
-105, 31, 22, 90,
-41, 31, 54, 8,
-41, 113, 54, 8,
-79, 49, 16, 14,
-79, 89, 16, 14,
-41, 49, 38, 54,
+24,
+1, 24, 126, 15,
+1, 39, 14, 74,
+113, 39, 14, 74,
+1, 113, 126, 14,
+15, 105, 48, 8,
+65, 39, 48, 8,
 };
 
 const unsigned char level_one_entities[] = {
 EntityPlayer,12,100,
-EntityHBlockGroup, 41, 41, 4, 64,
-EntityHBlockGroup, 33, 105, 4, -64,
+// EntityHBlockGroup, 41, 41, 4, 64,
+// EntityHBlockGroup, 33, 105, 4, -64,
 EntityEmpty,
 };
 
 const unsigned char level_two_entities[] = {
 EntityPlayer,84,73,
-EntityLoopBoyH, 33, 41, 6, LoopBoyLeft,
+// // EntityLoopBoyH, 33, 41, 6, LoopBoyLeft,
 EntityLoopBoyH, 97, 105, 6, LoopBoyRight,
-EntityLoopBoyH, 33, 105, 6, LoopBoyDown,
-EntityLoopBoyH, 97, 41, 6, LoopBoyUp,
+// EntityLoopBoyH, 33, 105, 6, LoopBoyDown,
+// EntityLoopBoyH, 97, 41, 6, LoopBoyUp,
 EntityEmpty,
 };
 
 const unsigned char level_gg_entities[] = {
-EntityPlayer,84,73,
+EntityPlayer,59,61,
 EntityEmpty,
 };
 
@@ -203,10 +197,10 @@ void init_level() {
 }
 
 void reset_level() {
-  LevelData l;
-  l = levels[current_level];
+  LevelData *l;
+  l = &levels[current_level];
 
-  reset_player(l.reset_data[0], l.reset_data[1]);
+  reset_player(l->reset_data[0], l->reset_data[1]);
 }
 
 void (*const drawing_fns[])(char) = {
