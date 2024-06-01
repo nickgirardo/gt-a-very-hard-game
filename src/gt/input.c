@@ -11,9 +11,8 @@ short player2_buttons = 0, player2_old_buttons = 0;
 void update_inputs(){
     char inputsA, inputsB;
 
-#ifdef TWO_PLAYER_INPUT
+    // Reading one gamepad causes the other to be refreshed
     inputsA = *gamepad_2;
-#endif
 
     inputsA = *gamepad_1;
     inputsB = *gamepad_1;
