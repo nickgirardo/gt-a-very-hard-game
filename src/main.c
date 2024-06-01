@@ -9,6 +9,10 @@
 #include "loopboy.h"
 #include "tilemap.h"
 
+#include "levels/level_one.h"
+#include "levels/level_two.h"
+#include "levels/level_gg.h"
+
 EntityKind entities[ENTITY_TABLE_SIZE];
 PlayerData *player_data;
 EntityData entity_data[ENTITY_TABLE_SIZE];
@@ -16,134 +20,6 @@ unsigned char tilemap[TILEMAP_SIZE];
 unsigned char tilemap_decor[24];
 
 unsigned char current_level = 0;
-
-#pragma rodata-name (push, "PROG0")
-
-const unsigned char level_one[TILEMAP_SIZE] = {
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 5, 6, 5, 6, 5, 6, 5, 6, 5, 0x14, 0x14, 0,
-0, 0, 0, 0, 6, 5, 6, 5, 6, 5, 6, 5, 6, 0x14, 0x14, 0,
-0, 0, 0, 0, 5, 6, 5, 6, 5, 6, 5, 6, 0, 0, 0, 0,
-0, 0, 0, 0, 6, 5, 6, 5, 6, 5, 6, 5, 0, 0, 0, 0,
-0, 0, 0, 0, 5, 6, 5, 6, 5, 6, 5, 6, 0, 0, 0, 0,
-0, 0, 0, 0, 6, 5, 6, 5, 6, 5, 6, 5, 0, 0, 0, 0,
-0, 0, 0, 0, 5, 6, 5, 6, 5, 6, 5, 6, 0, 0, 0, 0,
-0, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 0, 0, 0, 0,
-0, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-};
-
-const unsigned char level_two[TILEMAP_SIZE] = {
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0,
-0, 0, 0, 0, 5, 6, 5, 6, 5, 6, 5, 6, 5, 0, 0, 0,
-0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0,
-0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0,
-0, 0x14, 0x14, 5, 6, 0, 0, 0, 0, 0, 6, 5, 6, 0, 0, 0,
-0, 0x14, 0x14, 6, 5, 0, 0, 0, 0, 0, 5, 6, 5, 0, 0, 0,
-0, 0x14, 0x14, 5, 6, 0, 0, 0, 0, 0, 6, 5, 6, 0, 0, 0,
-0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0,
-0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0,
-0, 0, 0, 0, 5, 6, 5, 6, 5, 6, 5, 6, 5, 0, 0, 0,
-0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-};
-
-const unsigned char level_gg[TILEMAP_SIZE] = {
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 6, 5, 6, 5, 6, 5, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 5, 0x5d, 0x3d, 0x1d, 5, 6, 5, 6, 5, 6, 5, 6, 0, 0,
-0, 0, 6, 0x7d, 6, 5, 6, 5, 6, 0xfd, 0xdd, 0xbd, 6, 5, 0, 0,
-0, 0, 5, 0x9d, 5, 6, 5, 6, 5, 0x1d, 5, 6, 5, 6, 0, 0,
-0, 0, 6, 0xBd, 6, 0x5d, 0x9d, 5, 6, 0x3d, 6, 5, 6, 5, 0, 0,
-0, 0, 5, 0xDd, 5, 6, 0x7d, 6, 5, 0x5d, 5, 0x9d, 0x3d, 6, 0, 0,
-0, 0, 6, 0xFd, 0x1d, 0x3d, 0x5d, 5, 6, 0x7d, 6, 5, 0x1d, 5, 0, 0,
-0, 0, 5, 6, 5, 6, 5, 6, 5, 0x9d, 0xbd, 0xdd, 0xfd, 6, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 6, 5, 6, 5, 6, 5, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-};
-
-const unsigned char level_one_decor[] = {
-24,
-1, 24, 126, 15,
-1, 39, 30, 56,
-1, 95, 6, 18,
-1, 113, 126, 14,
-121, 39, 6, 18,
-97, 57, 30, 56,
-};
-
-const unsigned char level_two_decor[] = {
-44,
-1, 24, 126, 7,
-1, 31, 30, 32,
-1, 63, 6, 26,
-1, 89, 30, 32,
-1, 121, 126, 6,
-105, 31, 22, 90,
-41, 31, 54, 8,
-41, 113, 54, 8,
-79, 49, 16, 14,
-79, 89, 16, 14,
-41, 49, 38, 54,
-};
-
-const unsigned char level_gg_decor[] = {
-24,
-1, 24, 126, 15,
-1, 39, 14, 74,
-113, 39, 14, 74,
-1, 113, 126, 14,
-15, 105, 48, 8,
-65, 39, 48, 8,
-};
-
-const unsigned char level_one_entities[] = {
-EntityPlayer,12,100,
-// EntityHBlockGroup, 41, 41, 4, 64,
-// EntityHBlockGroup, 33, 105, 4, -64,
-EntityEmpty,
-};
-
-const unsigned char level_two_entities[] = {
-EntityPlayer,84,73,
-// // EntityLoopBoyH, 33, 41, 6, LoopBoyLeft,
-EntityLoopBoyH, 97, 105, 6, LoopBoyRight,
-// EntityLoopBoyH, 33, 105, 6, LoopBoyDown,
-// EntityLoopBoyH, 97, 41, 6, LoopBoyUp,
-EntityEmpty,
-};
-
-const unsigned char level_gg_entities[] = {
-EntityPlayer,59,61,
-EntityEmpty,
-};
-
-const unsigned char level_one_reset_data[] = {
-12,100,
-};
-
-const unsigned char level_two_reset_data[] = {
-84,73,
-};
-
-const unsigned char level_gg_reset_data[] = {
-84,73,
-};
-
-#pragma rodata-name (pop)
 
 LevelData levels[3];
 
