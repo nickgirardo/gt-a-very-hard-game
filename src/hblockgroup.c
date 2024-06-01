@@ -38,8 +38,8 @@ void init_hblockgroup(char x, char y, char n, char d) {
         vram[VY] = y;                         \
         vram[GX] = 0;                         \
         vram[GY] = 0;                         \
-        vram[WIDTH] = 6;                      \
-        vram[HEIGHT] = 6;                     \
+        vram[WIDTH] = HBLOCK_SIZE;            \
+        vram[HEIGHT] = HBLOCK_SIZE;           \
         vram[COLOR] = ~HBLOCK_COLOR;          \
     } while (0)
 

@@ -2,15 +2,12 @@
 #include "drawing_funcs.h"
 #include "gametank.h"
 #include "gt/drawing_funcs.h"
-#include "hblockgroup.h"
 #include "input.h"
 
 #include "common.h"
 #include "player.h"
-#include "goomba.h"
-#include "maggot.h"
-#include "shooter.h"
-#include "bullet.h"
+#include "hblockgroup.h"
+#include "loopboyh.h"
 #include "tilemap.h"
 
 EntityKind entities[ENTITY_TABLE_SIZE];
@@ -19,27 +16,48 @@ EntityData entity_data[ENTITY_TABLE_SIZE];
 unsigned char tilemap[TILEMAP_SIZE];
 unsigned char tilemap_decor[24];
 
-unsigned char current_level = 0;
+unsigned char current_level = 1;
 
-unsigned char level_one[TILEMAP_SIZE] = {
+#pragma rodata-name (push, "PROG0")
+
+const unsigned char level_one[TILEMAP_SIZE] = {
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 5, 4, 5, 4, 5, 4, 5, 4, 5, 0x14, 0x14, 0,
-0, 0, 0, 0, 4, 5, 4, 5, 4, 5, 4, 5, 4, 0x14, 0x14, 0,
-0, 0, 0, 0, 5, 4, 5, 4, 5, 4, 5, 4, 0, 0, 0, 0,
-0, 0, 0, 0, 4, 5, 4, 5, 4, 5, 4, 5, 0, 0, 0, 0,
-0, 0, 0, 0, 5, 4, 5, 4, 5, 4, 5, 4, 0, 0, 0, 0,
-0, 0, 0, 0, 4, 5, 4, 5, 4, 5, 4, 5, 0, 0, 0, 0,
-0, 0, 0, 0, 5, 4, 5, 4, 5, 4, 5, 4, 0, 0, 0, 0,
-0, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 0, 0, 0, 0,
-0, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 0, 0, 0, 0,
+0, 0, 0, 0, 5, 6, 5, 6, 5, 6, 5, 6, 5, 0x14, 0x14, 0,
+0, 0, 0, 0, 6, 5, 6, 5, 6, 5, 6, 5, 6, 0x14, 0x14, 0,
+0, 0, 0, 0, 5, 6, 5, 6, 5, 6, 5, 6, 0, 0, 0, 0,
+0, 0, 0, 0, 6, 5, 6, 5, 6, 5, 6, 5, 0, 0, 0, 0,
+0, 0, 0, 0, 5, 6, 5, 6, 5, 6, 5, 6, 0, 0, 0, 0,
+0, 0, 0, 0, 6, 5, 6, 5, 6, 5, 6, 5, 0, 0, 0, 0,
+0, 0, 0, 0, 5, 6, 5, 6, 5, 6, 5, 6, 0, 0, 0, 0,
+0, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 0, 0, 0, 0,
+0, 6, 5, 6, 5, 6, 5, 6, 5, 6, 5, 6, 0, 0, 0, 0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
 
-unsigned char level_one_decor[] = {
+const unsigned char level_two[TILEMAP_SIZE] = {
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0,
+0, 0, 0, 0, 5, 6, 5, 6, 5, 6, 5, 6, 5, 0, 0, 0,
+0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0,
+0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0,
+0, 0x14, 0x14, 5, 6, 0, 0, 0, 0, 0, 6, 5, 6, 0, 0, 0,
+0, 0x14, 0x14, 6, 5, 0, 0, 0, 0, 0, 5, 6, 5, 0, 0, 0,
+0, 0x14, 0x14, 5, 6, 0, 0, 0, 0, 0, 6, 5, 6, 0, 0, 0,
+0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0,
+0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0,
+0, 0, 0, 0, 6, 5, 6, 5, 6, 5, 6, 5, 6, 0, 0, 0,
+0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+};
+
+const unsigned char level_one_decor[] = {
 24,
 1, 24, 126, 15,
 1, 39, 30, 56,
@@ -49,23 +67,46 @@ unsigned char level_one_decor[] = {
 97, 57, 30, 56,
 };
 
-unsigned char level_one_entities[] = {
+const unsigned char level_two_decor[] = {
+44,
+1, 24, 126, 7,
+1, 31, 30, 32,
+1, 63, 6, 26,
+1, 89, 30, 32,
+1, 121, 126, 6,
+105, 31, 22, 90,
+41, 31, 54, 8,
+41, 113, 54, 8,
+79, 49, 16, 14,
+79, 89, 16, 14,
+41, 49, 38, 54,
+};
+
+const unsigned char level_one_entities[] = {
 EntityPlayer,12,100,
 EntityHBlockGroup, 41, 41, 4, 64,
 EntityHBlockGroup, 33, 105, 4, -64,
 EntityEmpty,
 };
 
-unsigned char level_two_entities[] = {
-EntityPlayer,12,100,
-EntityHBlockGroup, 41, 41, 4, 14,
-EntityHBlockGroup, 33, 105, 4, -14,
+const unsigned char level_two_entities[] = {
+EntityPlayer,84,73,
+EntityLoopBoyH, 33, 41, 6, LoopBoyLeft,
+EntityLoopBoyH, 97, 105, 6, LoopBoyRight,
+EntityLoopBoyH, 33, 105, 6, LoopBoyDown,
+EntityLoopBoyH, 97, 41, 6, LoopBoyUp,
 EntityEmpty,
 };
 
-unsigned char level_one_reset_data[] = {
+const unsigned char level_one_reset_data[] = {
 12,100,
 };
+
+const unsigned char level_two_reset_data[] = {
+84,73,
+};
+
+#pragma rodata-name (pop)
 
 LevelData levels[2];
 
@@ -96,6 +137,9 @@ void init_entities(const unsigned char *data) {
       case EntityHBlockGroup:
         init_hblockgroup(*(++data), *(++data), *(++data), *(++data));
         break;
+      case EntityLoopBoyH:
+        init_loopboyh(*(++data), *(++data), *(++data), *(++data));
+        break;
       default:
         // We shouldn't ever hit this branch if our levels are crafted correctly
         // Just hard-lock
@@ -125,11 +169,12 @@ void reset_level() {
 void (*const drawing_fns[])(char) = {
   noop,
   draw_player,
-  draw_goomba,
-  draw_maggot,
-  draw_shooter,
-  draw_bullet,
+  noop,
+  noop,
+  noop,
+  noop,
   draw_hblockgroup,
+  draw_loopboyh,
 };
 
 UpdateResult (*const update_fns[])(char) = {
@@ -140,10 +185,13 @@ UpdateResult (*const update_fns[])(char) = {
   noop_update,
   noop_update,
   update_hblockgroup,
+  update_loopboyh,
 };
 
 int main() {
   char i;
+
+  change_rom_bank(BANK_PROG0);
 
   init_graphics();
 
@@ -158,10 +206,10 @@ int main() {
   levels[0].entities = level_one_entities;
   levels[0].reset_data = level_one_reset_data;
 
-  levels[1].tilemap = level_one;
-  levels[1].tilemap_decor = level_one_decor;
+  levels[1].tilemap = level_two;
+  levels[1].tilemap_decor = level_two_decor;
   levels[1].entities = level_two_entities;
-  levels[1].reset_data = level_one_reset_data;
+  levels[1].reset_data = level_two_reset_data;
 
 init_new_level:
   init_level();

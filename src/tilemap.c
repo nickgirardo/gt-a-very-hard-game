@@ -82,7 +82,7 @@ void draw_tilemap_full_inner() {
     } while(i != (char) TILEMAP_SIZE);
 
     for (i = 1; i <= tilemap_decor[0];) {
-        draw_box(tilemap_decor[i++], tilemap_decor[i++], tilemap_decor[i++], tilemap_decor[i++], 5);
+        draw_box(tilemap_decor[i++], tilemap_decor[i++], tilemap_decor[i++], tilemap_decor[i++], 6);
     }
 }
 

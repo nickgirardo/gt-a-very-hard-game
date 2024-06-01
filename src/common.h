@@ -15,6 +15,8 @@
 #define TILE_KILL 0xBB
 #define TILE_GOAL 0x14
 
+typedef enum { LoopBoyLeft, LoopBoyRight, LoopBoyUp, LoopBoyDown } LoopBoyDirection;
+
 #define rand_direction() (rnd() & 3)
 
 #define box_collision_x(L1, R1, L2, R2) (L1 < R2 && R1 > L2)
@@ -45,7 +47,16 @@ typedef union CoordU {
 
 typedef enum { DirLeft = 0, DirRight, DirUp, DirDown } Direction;
 
-typedef enum { EntityEmpty = 0, EntityPlayer, EntityGoomba, EntityMaggot, EntityShooter, EntityBullet, EntityHBlockGroup } EntityKind;
+typedef enum {
+EntityEmpty = 0,
+EntityPlayer,
+EntityGoomba,
+EntityMaggot,
+EntityShooter,
+EntityBullet,
+EntityHBlockGroup,
+EntityLoopBoyH,
+} EntityKind;
 
 typedef struct PlayerDataT {
   Coord x;
@@ -91,6 +102,14 @@ typedef struct HBlockGroupDataT {
   char d_remaining;
 } HBlockGroupData;
 
+typedef struct LoopBoyHDataT {
+  Coord x;
+  Coord y;
+  char n;
+  char d;
+  char direction;
+} LoopBoyHData;
+
 typedef union EntityDataU {
   PlayerData pd;
   GoombaData gd;
@@ -98,6 +117,7 @@ typedef union EntityDataU {
   ShooterData sd;
   BulletData bd;
   HBlockGroupData hbgd;
+  LoopBoyHData lbhd;
 } EntityData;
 
 extern EntityKind entities[ENTITY_TABLE_SIZE];
