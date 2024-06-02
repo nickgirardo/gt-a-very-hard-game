@@ -23,6 +23,8 @@ unsigned char tilemap_decor[64];
 unsigned char current_level = 0;
 unsigned short fail_count = 0;
 
+unsigned char needs_draw_fail_count = 2;
+
 LevelData levels[3];
 
 void noop(char ix) {
@@ -121,19 +123,6 @@ void print_bcd(unsigned short n) {
 }
 
 void draw_fail_count() {
-  char i;
-
-  draw_box(1, 16, 126, 8, 0);
-  await_draw_queue();
-  init_text();
-  text_cursor_x = 1;
-  text_cursor_y = 16;
-  text_use_alt_color = 1;
-  print_text("Fails ");
-  print_bcd(fail_count);
-
-  flip_pages();
-
   draw_box(1, 16, 126, 8, 0);
   await_draw_queue();
   init_text();
@@ -152,7 +141,6 @@ void init_level() {
   draw_tilemap_full();
 
   draw_level_name(l.name);
-  draw_fail_count();
 
   init_entities(l.entities);
 }
@@ -233,11 +221,12 @@ main_loop:
       switch (test_collision[entities[i]](i)) {
         case ResultFail:
           fail_count = inc_bcd(fail_count);
-          draw_fail_count();
+          needs_draw_fail_count = 2;
           reset_level();
           goto main_loop;
         case ResultWin:
           current_level++;
+          needs_draw_fail_count = 2;
           goto init_new_level;
       }
     }
@@ -246,6 +235,10 @@ main_loop:
       update_fns[entities[i]](i);
     }
 
+    if (needs_draw_fail_count > 0) {
+          draw_fail_count();
+          needs_draw_fail_count--;
+    }
     for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
       drawing_fns[entities[i]](i);
     }
