@@ -5,9 +5,9 @@
 #include "gt/input.h"
 
 #include "common.h"
-#include "player.h"
-#include "hblockgroup.h"
-#include "loopboy.h"
+#include "entities/player.h"
+#include "entities/hblockgroup.h"
+#include "entities/loopboy.h"
 #include "tilemap.h"
 
 #include "levels/level_one.h"

@@ -1,7 +1,7 @@
 #ifndef HBLOCKGROUP_H_
 #define HBLOCKGROUP_H_
 
-#include "common.h"
+#include "../common.h"
 
 #define HBLOCK_SIZE 6
 #define HBLOCK_COLOR 0xBB

@@ -1,9 +1,7 @@
 #include "loopboy.h"
-#include "common.h"
 
-#include "drawing_funcs.h"
-#include "gametank.h"
-#include "gt/drawing_funcs.h"
+#include "../gt/drawing_funcs.h"
+#include "../gt/gametank.h"
 #include "player.h"
 
 void init_loopboy(char x, char y, char n, LoopBoyDirection dir) {

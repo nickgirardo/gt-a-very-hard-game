@@ -1,10 +1,8 @@
 #include "hblockgroup.h"
-#include "common.h"
-#include "drawing_funcs.h"
 
-#include "gametank.h"
-#include "banking.h"
-#include "gt/drawing_funcs.h"
+#include "../gt/gametank.h"
+#include "../gt/drawing_funcs.h"
+#include "../gt/banking.h"
 #include "player.h"
 
 void init_hblockgroup(char x, char y, char n, char d) {

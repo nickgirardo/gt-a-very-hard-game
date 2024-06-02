@@ -1,7 +1,7 @@
 #ifndef LOOPBOYH_H_
 #define LOOPBOYH_H_
 
-#include "common.h"
+#include "../common.h"
 
 #define LOOPBOY_SIZE 6
 #define LOOPBOY_COLOR 0xBB

@@ -1,6 +1,6 @@
 #include "player.h"
-#include "common.h"
-#include "gt/gametank.h"
+
+#include "../gt/gametank.h"
 
 void init_player(char x, char y) {
   PlayerData *data;
