@@ -87,7 +87,7 @@ void draw_loopboy(char ix) {
   }
 }
 
-UpdateResult update_loopboy(char ix) {
+CollisionResult collision_loopboy(char ix) {
   LoopBoyData *data;
   register char i;
   register char j;
@@ -185,12 +185,16 @@ UpdateResult update_loopboy(char ix) {
         }
         break;
   }
+  return ResultOk;
+}
 
+void update_loopboy(char ix) {
+  LoopBoyData *data;
+  data = (LoopBoyData *) &entity_data[ix];
 
   data->d--;
   if (data->d == 0) {
       data->d = 128;
   }
 
-  return ResultOk;
 }

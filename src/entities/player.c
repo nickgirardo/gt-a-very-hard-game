@@ -52,7 +52,7 @@ void draw_player(char ix) {
   wait();
 }
 
-UpdateResult update_player(char ix) {
+CollisionResult update_player(char ix) {
   PlayerData *data;
 
   data = (PlayerData *) &entity_data[ix];

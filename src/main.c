@@ -28,7 +28,7 @@ void noop(char ix) {
   return;
 }
 
-UpdateResult noop_update(char ix) {
+CollisionResult noop_collision(char ix) {
   return ResultOk;
 }
 
@@ -99,9 +99,16 @@ void (*const drawing_fns[])(char) = {
   draw_loopboy,
 };
 
-UpdateResult (*const update_fns[])(char) = {
-  noop_update,
+CollisionResult (*const test_collision[])(char) = {
+  noop_collision,
   update_player,
+  collision_hblockgroup,
+  collision_loopboy,
+};
+
+void (*const update_fns[])(char) = {
+  noop,
+  noop,
   update_hblockgroup,
   update_loopboy,
 };
@@ -151,7 +158,7 @@ main_loop:
     draw_tilemap_partial();
 
     for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
-      switch (update_fns[entities[i]](i)) {
+      switch (test_collision[entities[i]](i)) {
         case ResultFail:
           reset_level();
           goto main_loop;
@@ -159,6 +166,10 @@ main_loop:
           current_level++;
           goto init_new_level;
       }
+    }
+
+    for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
+      update_fns[entities[i]](i);
     }
 
     for (i = 0; i < ENTITY_TABLE_SIZE; i++) {

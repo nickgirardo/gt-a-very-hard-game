@@ -62,7 +62,7 @@ void draw_hblockgroup(char ix) {
   }
 }
 
-UpdateResult update_hblockgroup(char ix) {
+CollisionResult collision_hblockgroup(char ix) {
   HBlockGroupData *data;
   char i;
 
@@ -93,7 +93,14 @@ UpdateResult update_hblockgroup(char ix) {
     }
   }
 
+  return ResultOk;
+}
 
+void update_hblockgroup(char ix) {
+  HBlockGroupData *data;
+  char i;
+
+  data = (HBlockGroupData *) &entity_data[ix];
 
   if ((signed char) data->d_remaining > 0) {
       data->y.hl.h++;
@@ -106,5 +113,4 @@ UpdateResult update_hblockgroup(char ix) {
       data->d_remaining = data->d_total;
   }
 
-  return ResultOk;
 }

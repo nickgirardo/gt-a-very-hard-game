@@ -9,6 +9,7 @@
 
 void init_hblockgroup(char x, char y, char n, char d);
 void draw_hblockgroup(char ix);
-UpdateResult update_hblockgroup(char ix);
+void update_hblockgroup(char ix);
+CollisionResult collision_hblockgroup(char ix);
 
 #endif // HBLOCKGROUP_H_

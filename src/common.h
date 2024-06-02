@@ -26,7 +26,7 @@ typedef enum { LoopBoyLeft, LoopBoyRight, LoopBoyUp, LoopBoyDown } LoopBoyDirect
   box_collision_x(L1, R1, L2, R2) && \\
   box_collision_y(U1, D1, U2, D2)
 
-typedef enum { ResultOk = 0, ResultFail, ResultWin } UpdateResult;
+typedef enum { ResultOk = 0, ResultFail, ResultWin } CollisionResult;
 
 typedef struct LevelDataT {
   unsigned char *tilemap;

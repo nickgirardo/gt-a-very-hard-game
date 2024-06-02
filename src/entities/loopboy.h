@@ -13,7 +13,8 @@
 
 void init_loopboy(char x, char y, char n, LoopBoyDirection dir);
 void draw_loopboy(char ix);
-UpdateResult update_loopboy(char ix);
+void update_loopboy(char ix);
+CollisionResult collision_loopboy(char ix);
 
 
 #endif // LOOPBOYH_H_
