@@ -25,6 +25,9 @@ unsigned short fail_count = 0;
 
 unsigned char needs_draw_fail_count = 2;
 
+#define MAX_DEATH_FREEZE 12
+unsigned char death_freeze = 0;
+
 LevelData levels[3];
 
 void noop(char ix) {
@@ -215,32 +218,42 @@ main_loop:
     PROFILER_START(1);
     update_inputs();
 
-    draw_tilemap_partial();
+    if (death_freeze == 0) {
+      for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
+        switch (test_collision[entities[i]](i)) {
+          case ResultFail:
+            death_freeze = MAX_DEATH_FREEZE;
+            goto main_loop;
+          case ResultWin:
+            current_level++;
+            needs_draw_fail_count = 2;
+            goto init_new_level;
+        }
+      }
 
-    for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
-      switch (test_collision[entities[i]](i)) {
-        case ResultFail:
-          fail_count = inc_bcd(fail_count);
-          needs_draw_fail_count = 2;
-          reset_level();
-          goto main_loop;
-        case ResultWin:
-          current_level++;
-          needs_draw_fail_count = 2;
-          goto init_new_level;
+      for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
+        update_fns[entities[i]](i);
+      }
+    } else {
+      death_freeze--;
+
+      if (death_freeze == 0) {
+        fail_count = inc_bcd(fail_count);
+        reset_level();
+        needs_draw_fail_count = 2;
       }
     }
 
-    for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
-      update_fns[entities[i]](i);
-    }
+    draw_tilemap_partial();
 
     if (needs_draw_fail_count > 0) {
           draw_fail_count();
           needs_draw_fail_count--;
     }
+
     for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
-      drawing_fns[entities[i]](i);
+      // Draw entities in reverse order such that players are drawn on top of other entities
+      drawing_fns[entities[ENTITY_TABLE_SIZE - 1 - i]](ENTITY_TABLE_SIZE - 1 - i);
     }
 
     await_draw_queue();
