@@ -1,4 +1,5 @@
 #include "gt/banking.h"
+#include "gt/feature/text/text.h"
 #include "gt/gametank.h"
 #include "gt/drawing_funcs.h"
 #include "gt/input.h"
@@ -69,6 +70,18 @@ void init_level() {
   init_tilemap(l.tilemap, l.tilemap_decor);
   draw_tilemap_full();
 
+    init_text();
+    text_cursor_x = 1;
+    text_cursor_y = 7;
+    text_use_alt_color = 1;
+    print_text(l.name);
+    flip_pages();
+    init_text();
+    text_cursor_x = 1;
+    text_cursor_y = 7;
+    text_use_alt_color = 1;
+    print_text(l.name);
+
   init_entities(l.entities);
 }
 
@@ -96,9 +109,10 @@ UpdateResult (*const update_fns[])(char) = {
 int main() {
   char i;
 
-  change_rom_bank(BANK_PROG0);
-
   init_graphics();
+  load_font(0);
+
+  change_rom_bank(BANK_PROG0);
 
   flip_pages();
   await_draw_queue();
@@ -110,16 +124,20 @@ int main() {
   levels[0].tilemap_decor = level_one_decor;
   levels[0].entities = level_one_entities;
   levels[0].reset_data = level_one_reset_data;
+  levels[0].name = level_one_name;
 
   levels[1].tilemap = level_two;
   levels[1].tilemap_decor = level_two_decor;
   levels[1].entities = level_two_entities;
   levels[1].reset_data = level_two_reset_data;
+  levels[1].name = level_two_name;
 
   levels[2].tilemap = level_gg;
   levels[2].tilemap_decor = level_gg_decor;
   levels[2].entities = level_gg_entities;
   levels[2].reset_data = level_gg_reset_data;
+  levels[2].name = level_gg_name;
+
 
 init_new_level:
   init_level();

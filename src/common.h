@@ -33,6 +33,7 @@ typedef struct LevelDataT {
   unsigned char *tilemap_decor;
   unsigned char *entities;
   unsigned char *reset_data;
+  unsigned char *name;
 } LevelData;
 
 typedef struct HLT {
