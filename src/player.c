@@ -1,6 +1,6 @@
 #include "player.h"
 #include "common.h"
-#include "gametank.h"
+#include "gt/gametank.h"
 
 void init_player(char x, char y) {
   PlayerData *data;
@@ -40,7 +40,16 @@ void draw_player(char ix) {
 
   data = *((PlayerData *) &entity_data[ix]);
 
-  draw_box(data.x.hl.h, data.y.hl.h, PLAYER_SIZE, PLAYER_SIZE, 92);
+  *dma_flags = flagsMirror | DMA_COLORFILL_ENABLE | DMA_OPAQUE;
+  vram[VX] = data.x.hl.h;
+  vram[VY] = data.y.hl.h;
+  vram[GX] = 0;
+  vram[GY] = 0;
+  vram[WIDTH] = PLAYER_SIZE;
+  vram[HEIGHT] = PLAYER_SIZE;
+  vram[COLOR] = ~92;
+  vram[START] = 1;
+  wait();
 }
 
 UpdateResult update_player(char ix) {

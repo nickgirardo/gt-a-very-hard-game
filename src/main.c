@@ -17,7 +17,7 @@ EntityKind entities[ENTITY_TABLE_SIZE];
 PlayerData *player_data;
 EntityData entity_data[ENTITY_TABLE_SIZE];
 unsigned char tilemap[TILEMAP_SIZE];
-unsigned char tilemap_decor[24];
+unsigned char tilemap_decor[64];
 
 unsigned char current_level = 0;
 
