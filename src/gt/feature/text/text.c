@@ -1,7 +1,7 @@
 #include "text.h"
 
-#include "gametank.h"
-#include "drawing_funcs.h"
+#include "../../gametank.h"
+#include "../../drawing_funcs.h"
 #include "../../../gen/assets/font.h"
 
 
@@ -67,4 +67,29 @@ void print_text(char* text) {
         
         ++text;
     }
+}
+
+void print_char(char c) {
+    if (text_use_alt_color) {
+        c += 128;
+    }
+
+    *dma_flags = (flagsMirror | DMA_GCARRY) & ~(DMA_COLORFILL_ENABLE | DMA_OPAQUE);
+    banksMirror = bankflip | GRAM_PAGE(font_slot);
+    *bank_reg = banksMirror;
+    vram[WIDTH] = TEXT_CHAR_WIDTH;
+    vram[HEIGHT] = TEXT_CHAR_HEIGHT;
+    vram[VY] = text_cursor_y;
+
+    if(text_cursor_x >= (text_print_width + text_print_line_start)) {
+        text_cursor_x -= text_print_width;
+        text_cursor_y += TEXT_CHAR_HEIGHT;
+        vram[VY] = text_cursor_y;
+    }
+    vram[VX] = text_cursor_x;
+    vram[GX] = (c & 0x0F) << 3;
+    vram[GY] = ((c & 0xF0) >> 1);
+    vram[START] = 1;
+    text_cursor_x += TEXT_CHAR_WIDTH;
+    wait();
 }

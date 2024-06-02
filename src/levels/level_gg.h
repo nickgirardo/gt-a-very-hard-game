@@ -43,7 +43,7 @@ const unsigned char level_gg_reset_data[] = {
 84,73,
 };
 
-const unsigned char level_gg_name[] = "Thanks for playing!";
+const unsigned char level_gg_name[] = "Thx 4 playin!!";
 
 #pragma rodata-name (pop)
 

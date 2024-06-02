@@ -21,6 +21,7 @@ unsigned char tilemap[TILEMAP_SIZE];
 unsigned char tilemap_decor[64];
 
 unsigned char current_level = 0;
+unsigned short fail_count = 0;
 
 LevelData levels[3];
 
@@ -63,6 +64,86 @@ void init_entities(const unsigned char *data) {
   }
 }
 
+void draw_level_name(char *name) {
+    init_text();
+    text_cursor_x = 1;
+    text_cursor_y = 7;
+    text_use_alt_color = 1;
+    print_text(name);
+
+    flip_pages();
+
+    init_text();
+    text_cursor_x = 1;
+    text_cursor_y = 7;
+    text_use_alt_color = 1;
+    print_text(name);
+}
+
+unsigned short inc_bcd(unsigned short n) {
+  if ((n & 0x000F) != 0x0009) return n + 0x0001;
+  if ((n & 0x00F0) != 0x0090) return (n + 0x0010) & 0xFFF0;
+  if ((n & 0x0F00) != 0x0900) return (n + 0x0100) & 0xFF00;
+  if ((n & 0xF000) != 0x9000) return n + 0x1000 & 0xF000;
+
+  return 0x9999;
+}
+
+void print_bcd(unsigned short n) {
+  char i;
+  bool has_printed = false;
+
+  if (n == 0) {
+    print_char('0');
+    return;
+  }
+
+  i = n >> 12;
+  if (i != 0) {
+    print_char('0' + i);
+    has_printed = true;
+  }
+  i = (n >> 8) & 15;
+  if (i != 0 || has_printed) {
+    print_char('0' + i);
+    has_printed = true;
+  }
+  i = (n >> 4) & 15;
+  if (i != 0 || has_printed) {
+    print_char('0' + i);
+    has_printed = true;
+  }
+  i = n & 15;
+  if (i != 0 || has_printed) {
+    print_char('0' + i);
+    has_printed = true;
+  }
+}
+
+void draw_fail_count() {
+  char i;
+
+  draw_box(1, 16, 126, 8, 0);
+  await_draw_queue();
+  init_text();
+  text_cursor_x = 1;
+  text_cursor_y = 16;
+  text_use_alt_color = 1;
+  print_text("Fails ");
+  print_bcd(fail_count);
+
+  flip_pages();
+
+  draw_box(1, 16, 126, 8, 0);
+  await_draw_queue();
+  init_text();
+  text_cursor_x = 1;
+  text_cursor_y = 16;
+  text_use_alt_color = 1;
+  print_text("Fails ");
+  print_bcd(fail_count);
+}
+
 void init_level() {
   LevelData l;
   l = levels[current_level];
@@ -70,17 +151,8 @@ void init_level() {
   init_tilemap(l.tilemap, l.tilemap_decor);
   draw_tilemap_full();
 
-    init_text();
-    text_cursor_x = 1;
-    text_cursor_y = 7;
-    text_use_alt_color = 1;
-    print_text(l.name);
-    flip_pages();
-    init_text();
-    text_cursor_x = 1;
-    text_cursor_y = 7;
-    text_use_alt_color = 1;
-    print_text(l.name);
+  draw_level_name(l.name);
+  draw_fail_count();
 
   init_entities(l.entities);
 }
@@ -160,6 +232,8 @@ main_loop:
     for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
       switch (test_collision[entities[i]](i)) {
         case ResultFail:
+          fail_count = inc_bcd(fail_count);
+          draw_fail_count();
           reset_level();
           goto main_loop;
         case ResultWin:
