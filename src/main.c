@@ -12,6 +12,7 @@
 
 #include "levels/level_one.h"
 #include "levels/level_two.h"
+#include "levels/level_three.h"
 #include "levels/level_gg.h"
 
 EntityKind entities[ENTITY_TABLE_SIZE];
@@ -28,7 +29,7 @@ unsigned char needs_draw_fail_count = 2;
 #define MAX_DEATH_FREEZE 12
 unsigned char death_freeze = 0;
 
-LevelData levels[3];
+LevelData levels[4];
 
 void noop(char ix) {
   return;
@@ -55,7 +56,7 @@ void init_entities(const unsigned char *data) {
         init_player(*(++data), *(++data));
         break;
       case EntityHBlockGroup:
-        init_hblockgroup(*(++data), *(++data), *(++data), *(++data));
+        init_hblockgroup(*(++data), *(++data), *(++data), *(++data), *(++data), *(++data));
         break;
       case EntityLoopBoyH:
         init_loopboy(*(++data), *(++data), *(++data), *(++data));
@@ -202,11 +203,17 @@ int main() {
   levels[1].reset_data = level_two_reset_data;
   levels[1].name = level_two_name;
 
-  levels[2].tilemap = level_gg;
-  levels[2].tilemap_decor = level_gg_decor;
-  levels[2].entities = level_gg_entities;
-  levels[2].reset_data = level_gg_reset_data;
-  levels[2].name = level_gg_name;
+  levels[2].tilemap = level_three;
+  levels[2].tilemap_decor = level_three_decor;
+  levels[2].entities = level_three_entities;
+  levels[2].reset_data = level_three_reset_data;
+  levels[2].name = level_three_name;
+
+  levels[3].tilemap = level_gg;
+  levels[3].tilemap_decor = level_gg_decor;
+  levels[3].entities = level_gg_entities;
+  levels[3].reset_data = level_gg_reset_data;
+  levels[3].name = level_gg_name;
 
 
 init_new_level:

@@ -5,7 +5,7 @@
 #include "../gt/banking.h"
 #include "player.h"
 
-void init_hblockgroup(char x, char y, char n, char d) {
+void init_hblockgroup(char x, char y, char n, char d, char vel_hi, char vel_lo) {
   HBlockGroupData *data;
   char i;
 
@@ -22,6 +22,7 @@ void init_hblockgroup(char x, char y, char n, char d) {
       data->n = n;
       data->d_total = d;
       data->d_remaining = d;
+      data->vel = (vel_hi << 8) + vel_lo;
 
       return;
     }
@@ -103,10 +104,11 @@ void update_hblockgroup(char ix) {
   data = (HBlockGroupData *) &entity_data[ix];
 
   if ((signed char) data->d_remaining > 0) {
-      data->y.hl.h++;
+      data->y.c+=data->vel;
       data->d_remaining--;
   } else if ((signed char) data->d_remaining < 0) {
-      data->y.hl.h--;
+    //data->y.hl.h--;
+      data->y.c-=data->vel;
       data->d_remaining++;
   } if (data->d_remaining == 0) {
       data->d_total = -data->d_total;

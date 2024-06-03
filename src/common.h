@@ -65,6 +65,7 @@ typedef struct PlayerDataT {
 typedef struct HBlockGroupDataT {
   Coord x;
   Coord y;
+  unsigned short vel;
   char n;
   char d_total;
   char d_remaining;

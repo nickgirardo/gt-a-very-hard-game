@@ -47,6 +47,4 @@ const unsigned char level_gg_name[] = "Thx 4 playin!!";
 
 #pragma rodata-name (pop)
 
-
-
 #endif // LEVEL_GG_H_

@@ -7,7 +7,7 @@
 #define HBLOCK_COLOR 0xBB
 #define HBLOCK_OFFSET 16
 
-void init_hblockgroup(char x, char y, char n, char d);
+void init_hblockgroup(char x, char y, char n, char d, char vel_hi, char vel_lo);
 void draw_hblockgroup(char ix);
 void update_hblockgroup(char ix);
 CollisionResult collision_hblockgroup(char ix);
