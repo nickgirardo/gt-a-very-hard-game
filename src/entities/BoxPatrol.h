@@ -9,7 +9,7 @@
 #define BOXPATROL_DOUBLE_OFFSET_LOG2 4
 #define BOXPATROL_OFFSET 8
 
-void init_boxpatrol(char x, char y, char w, char h, LoopBoyDirection dir, char offset);
+void init_boxpatrol(char x, char y, char w, char h, Direction dir, char offset);
 void draw_boxpatrol(char ix);
 void update_boxpatrol(char ix);
 CollisionResult collision_boxpatrol(char ix);

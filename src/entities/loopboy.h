@@ -11,7 +11,7 @@
 
 #define LOOPBOY_WRAPPING_FACTOR 0x7F
 
-void init_loopboy(char x, char y, char n, LoopBoyDirection dir);
+void init_loopboy(char x, char y, char n, Direction dir);
 void draw_loopboy(char ix);
 void update_loopboy(char ix);
 CollisionResult collision_loopboy(char ix);

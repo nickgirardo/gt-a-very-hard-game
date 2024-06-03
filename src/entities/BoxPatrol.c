@@ -3,7 +3,7 @@
 #include "../gt/drawing_funcs.h"
 #include "player.h"
 
-void init_boxpatrol(char x, char y, char w, char h, LoopBoyDirection dir, char offset) {
+void init_boxpatrol(char x, char y, char w, char h, Direction dir, char offset) {
   BoxPatrolData *data;
   char i;
 
@@ -42,40 +42,40 @@ void update_boxpatrol(char ix) {
   data = (BoxPatrolData *) &entity_data[ix];
 
   switch (data->dir) {
-    case LoopBoyDown:
+    case DirDown:
       data->y.hl.h++;
 
       data->offset++;
       if (data->offset == data->h) {
         data->offset = 0;
-        data->dir = LoopBoyRight;
+        data->dir = DirRight;
       }
       break;
-    case LoopBoyRight:
+    case DirRight:
       data->x.hl.h++;
 
       data->offset++;
       if (data->offset == data->w) {
         data->offset = 0;
-        data->dir = LoopBoyUp;
+        data->dir = DirUp;
       }
       break;
-    case LoopBoyUp:
+    case DirUp:
       data->y.hl.h--;
 
       data->offset++;
       if (data->offset == data->h) {
         data->offset = 0;
-        data->dir = LoopBoyLeft;
+        data->dir = DirLeft;
       }
       break;
-    case LoopBoyLeft:
+    case DirLeft:
       data->x.hl.h--;
 
       data->offset++;
       if (data->offset == data->w) {
         data->offset = 0;
-        data->dir = LoopBoyDown;
+        data->dir = DirDown;
       }
       break;
   }

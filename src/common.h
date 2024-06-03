@@ -15,8 +15,7 @@
 #define TILE_KILL 0xBB
 #define TILE_GOAL 0x14
 
-// TODO rename to just `Direction`
-typedef enum { LoopBoyLeft, LoopBoyRight, LoopBoyUp, LoopBoyDown } LoopBoyDirection;
+typedef enum { DirLeft, DirRight, DirUp, DirDown } Direction;
 
 #define rand_direction() (rnd() & 3)
 
@@ -46,8 +45,6 @@ typedef union CoordU {
   short c;
   HL hl;
 } Coord;
-
-typedef enum { DirLeft = 0, DirRight, DirUp, DirDown } Direction;
 
 typedef enum {
 EntityEmpty = 0,

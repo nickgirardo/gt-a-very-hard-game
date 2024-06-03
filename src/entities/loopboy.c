@@ -4,7 +4,7 @@
 #include "../gt/gametank.h"
 #include "player.h"
 
-void init_loopboy(char x, char y, char n, LoopBoyDirection dir) {
+void init_loopboy(char x, char y, char n, Direction dir) {
   LoopBoyData *data;
   char i;
 
@@ -65,19 +65,19 @@ void draw_loopboy(char ix) {
       j = ((i << LOOPBOY_DOUBLE_OFFSET_LOG2) + (data.d)) & LOOPBOY_WRAPPING_FACTOR;
 
       switch (data.direction) {
-          case LoopBoyLeft:
+          case DirLeft:
             vram[VY] = data.y.hl.h;
             DRAW_BLOCK_X(data.x.hl.h + (j >> 1));
             break;
-          case LoopBoyRight:
+          case DirRight:
             vram[VY] = data.y.hl.h;
             DRAW_BLOCK_X(data.x.hl.h - (j >> 1));
             break;
-          case LoopBoyUp:
+          case DirUp:
             vram[VX] = data.x.hl.h;
             DRAW_BLOCK_Y(data.y.hl.h + (j >> 1));
             break;
-          case LoopBoyDown:
+          case DirDown:
             vram[VX] = data.x.hl.h;
             DRAW_BLOCK_Y(data.y.hl.h - (j >> 1));
             break;
@@ -101,7 +101,7 @@ CollisionResult collision_loopboy(char ix) {
   // All blocks moving left or right have the same y value
   // All blocks moving up or down have the same x value
   switch (data->direction) {
-      case LoopBoyRight:
+      case DirRight:
         if (box_collision_y(
                 data->y.hl.h,
                 data->y.hl.h + LOOPBOY_SIZE,
@@ -121,7 +121,7 @@ CollisionResult collision_loopboy(char ix) {
             }
         }
         break;
-      case LoopBoyLeft:
+      case DirLeft:
         // All blocks moving left or right have the same y value
         if (box_collision_y(
                 data->y.hl.h,
@@ -142,7 +142,7 @@ CollisionResult collision_loopboy(char ix) {
             }
         }
         break;
-      case LoopBoyDown:
+      case DirDown:
         // All blocks in an hblockgroup are horizontally aligned so only one y check is needed
         if (box_collision_x(
                 data->x.hl.h,
@@ -163,7 +163,7 @@ CollisionResult collision_loopboy(char ix) {
             }
         }
         break;
-      case LoopBoyUp:
+      case DirUp:
         // All blocks in an hblockgroup are horizontally aligned so only one y check is needed
         if (box_collision_x(
                 data->x.hl.h,
