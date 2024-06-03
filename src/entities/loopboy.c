@@ -10,7 +10,7 @@ void init_loopboy(char x, char y, char n, LoopBoyDirection dir) {
 
   for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
     if (entities[i] == EntityEmpty) {
-      entities[i] = EntityLoopBoyH;
+      entities[i] = EntityLoopBoy;
 
       data = (LoopBoyData *) &entity_data[i];
 

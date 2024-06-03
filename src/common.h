@@ -53,8 +53,7 @@ typedef enum {
 EntityEmpty = 0,
 EntityPlayer,
 EntityHBlockGroup,
-// TODO rm H
-EntityLoopBoyH,
+EntityLoopBoy,
 EntityBoxPatrol,
 } EntityKind;
 

@@ -60,7 +60,7 @@ void init_entities(const unsigned char *data) {
       case EntityHBlockGroup:
         init_hblockgroup(*(++data), *(++data), *(++data), *(++data), *(++data), *(++data));
         break;
-      case EntityLoopBoyH:
+      case EntityLoopBoy:
         init_loopboy(*(++data), *(++data), *(++data), *(++data));
         break;
       case EntityBoxPatrol:
