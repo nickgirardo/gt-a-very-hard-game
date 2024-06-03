@@ -15,6 +15,7 @@
 #define TILE_KILL 0xBB
 #define TILE_GOAL 0x14
 
+// TODO rename to just `Direction`
 typedef enum { LoopBoyLeft, LoopBoyRight, LoopBoyUp, LoopBoyDown } LoopBoyDirection;
 
 #define rand_direction() (rnd() & 3)
@@ -23,8 +24,8 @@ typedef enum { LoopBoyLeft, LoopBoyRight, LoopBoyUp, LoopBoyDown } LoopBoyDirect
 #define box_collision_y(U1, D1, U2, D2) (U1 < D2 && D1 > U2)
 
 #define box_collision(L1, R1, U1, D1, L2, R2, U2, D2) \
-  box_collision_x(L1, R1, L2, R2) && \\
-  box_collision_y(U1, D1, U2, D2)
+  (box_collision_x(L1, R1, L2, R2) &&                 \
+   box_collision_y(U1, D1, U2, D2))
 
 typedef enum { ResultOk = 0, ResultFail, ResultWin } CollisionResult;
 
@@ -52,7 +53,9 @@ typedef enum {
 EntityEmpty = 0,
 EntityPlayer,
 EntityHBlockGroup,
+// TODO rm H
 EntityLoopBoyH,
+EntityBoxPatrol,
 } EntityKind;
 
 typedef struct PlayerDataT {
@@ -71,6 +74,7 @@ typedef struct HBlockGroupDataT {
   char d_remaining;
 } HBlockGroupData;
 
+
 typedef struct LoopBoyDataT {
   Coord x;
   Coord y;
@@ -78,6 +82,15 @@ typedef struct LoopBoyDataT {
   char d;
   char direction;
 } LoopBoyData;
+
+typedef struct BoxPatrolDataT {
+  Coord x;
+  Coord y;
+  char w;
+  char h;
+  char dir;
+  char offset;
+} BoxPatrolData;
 
 typedef union EntityDataU {
   PlayerData pd;

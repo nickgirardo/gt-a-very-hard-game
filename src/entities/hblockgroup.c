@@ -107,7 +107,6 @@ void update_hblockgroup(char ix) {
       data->y.c+=data->vel;
       data->d_remaining--;
   } else if ((signed char) data->d_remaining < 0) {
-    //data->y.hl.h--;
       data->y.c-=data->vel;
       data->d_remaining++;
   } if (data->d_remaining == 0) {
