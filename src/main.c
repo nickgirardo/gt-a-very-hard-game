@@ -23,7 +23,7 @@ EntityData entity_data[ENTITY_TABLE_SIZE];
 unsigned char tilemap[TILEMAP_SIZE];
 unsigned char tilemap_decor[64];
 
-unsigned char current_level = 3;
+unsigned char current_level = 0;
 unsigned short fail_count = 0;
 
 unsigned char needs_draw_fail_count = 2;
