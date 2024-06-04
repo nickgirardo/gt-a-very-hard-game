@@ -12,6 +12,7 @@
 #include "entities/secret.h"
 #include "tilemap.h"
 
+#include "levels/level_menu.h"
 #include "levels/level_one.h"
 #include "levels/level_two.h"
 #include "levels/level_three.h"
@@ -33,7 +34,7 @@ unsigned char needs_draw_fail_count = 2;
 #define MAX_DEATH_FREEZE 12
 unsigned char death_freeze = 0;
 
-LevelData levels[5];
+LevelData levels[6];
 
 void noop(char ix) {
   return;
@@ -216,35 +217,41 @@ int main() {
   await_draw_queue();
 
   // Level set up
-  levels[0].tilemap = level_one;
-  levels[0].tilemap_decor = level_one_decor;
-  levels[0].entities = level_one_entities;
-  levels[0].reset_data = level_one_reset_data;
-  levels[0].name = level_one_name;
+  levels[0].tilemap = level_menu;
+  levels[0].tilemap_decor = level_menu_decor;
+  levels[0].entities = level_menu_entities;
+  levels[0].reset_data = level_menu_reset_data;
+  levels[0].name = level_menu_name;
 
-  levels[1].tilemap = level_two;
-  levels[1].tilemap_decor = level_two_decor;
-  levels[1].entities = level_two_entities;
-  levels[1].reset_data = level_two_reset_data;
-  levels[1].name = level_two_name;
+  levels[1].tilemap = level_one;
+  levels[1].tilemap_decor = level_one_decor;
+  levels[1].entities = level_one_entities;
+  levels[1].reset_data = level_one_reset_data;
+  levels[1].name = level_one_name;
 
-  levels[2].tilemap = level_three;
-  levels[2].tilemap_decor = level_three_decor;
-  levels[2].entities = level_three_entities;
-  levels[2].reset_data = level_three_reset_data;
-  levels[2].name = level_three_name;
+  levels[2].tilemap = level_two;
+  levels[2].tilemap_decor = level_two_decor;
+  levels[2].entities = level_two_entities;
+  levels[2].reset_data = level_two_reset_data;
+  levels[2].name = level_two_name;
 
-  levels[3].tilemap = level_four;
-  levels[3].tilemap_decor = level_four_decor;
-  levels[3].entities = level_four_entities;
-  levels[3].reset_data = level_four_reset_data;
-  levels[3].name = level_four_name;
+  levels[3].tilemap = level_three;
+  levels[3].tilemap_decor = level_three_decor;
+  levels[3].entities = level_three_entities;
+  levels[3].reset_data = level_three_reset_data;
+  levels[3].name = level_three_name;
 
-  levels[4].tilemap = level_gg;
-  levels[4].tilemap_decor = level_gg_decor;
-  levels[4].entities = level_gg_entities;
-  levels[4].reset_data = level_gg_reset_data;
-  levels[4].name = level_gg_name;
+  levels[4].tilemap = level_four;
+  levels[4].tilemap_decor = level_four_decor;
+  levels[4].entities = level_four_entities;
+  levels[4].reset_data = level_four_reset_data;
+  levels[4].name = level_four_name;
+
+  levels[5].tilemap = level_gg;
+  levels[5].tilemap_decor = level_gg_decor;
+  levels[5].entities = level_gg_entities;
+  levels[5].reset_data = level_gg_reset_data;
+  levels[5].name = level_gg_name;
 
 
 init_new_level:
