@@ -9,6 +9,7 @@
 #include "entities/hblockgroup.h"
 #include "entities/loopboy.h"
 #include "entities/BoxPatrol.h"
+#include "entities/secret.h"
 #include "tilemap.h"
 
 #include "levels/level_one.h"
@@ -65,6 +66,9 @@ void init_entities(const unsigned char *data) {
         break;
       case EntityBoxPatrol:
         init_boxpatrol(*(++data), *(++data), *(++data), *(++data), *(++data), *(++data));
+        break;
+      case EntitySecret:
+        init_secret(*(++data), *(++data));
         break;
       default:
         // We shouldn't ever hit this branch if our levels are crafted correctly
@@ -159,6 +163,7 @@ void reset_level() {
   l = &levels[current_level];
 
   reset_player(l->reset_data[0], l->reset_data[1]);
+  tilemap_reset_secret();
 }
 
 void (*const drawing_fns[])(char) = {
@@ -167,6 +172,7 @@ void (*const drawing_fns[])(char) = {
   draw_hblockgroup,
   draw_loopboy,
   draw_boxpatrol,
+  draw_secret,
 };
 
 CollisionResult (*const test_collision[])(char) = {
@@ -175,6 +181,7 @@ CollisionResult (*const test_collision[])(char) = {
   collision_hblockgroup,
   collision_loopboy,
   collision_boxpatrol,
+  collision_secret,
 };
 
 void (*const update_fns[])(char) = {
@@ -183,6 +190,7 @@ void (*const update_fns[])(char) = {
   update_hblockgroup,
   update_loopboy,
   update_boxpatrol,
+  update_secret,
 };
 
 int main() {
@@ -242,10 +250,20 @@ main_loop:
     if (death_freeze == 0) {
       for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
         switch (test_collision[entities[i]](i)) {
+          case ResultOk:
+            break;
           case ResultFail:
             death_freeze = MAX_DEATH_FREEZE;
             goto main_loop;
           case ResultWin:
+            current_level++;
+            needs_draw_fail_count = 2;
+            goto init_new_level;
+          case ResultGetSecret:
+            tilemap_get_secret();
+            break;
+          case ResultSecretWin:
+            // TODO do something special here
             current_level++;
             needs_draw_fail_count = 2;
             goto init_new_level;

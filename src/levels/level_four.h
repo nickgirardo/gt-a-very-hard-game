@@ -47,6 +47,7 @@ EntityPlayer,110,44,
 EntityHBlockGroup, 33, 49, 5, 74, 0, 0xA0,
 EntityBoxPatrol, 17, 49, 80, 48, DirDown, 0,
 EntityBoxPatrol, 97, 97, 80, 48, DirUp, 0,
+EntitySecret, 100, 86,
 EntityEmpty,
 };
 

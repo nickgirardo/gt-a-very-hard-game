@@ -140,3 +140,23 @@ void draw_tilemap_full() {
     draw_tilemap_full_inner();
     await_draw_queue();
 }
+
+#define TILEMAP_REPLACE(FROM_TILE, TO_TILE)     \
+do {                                            \
+    register unsigned char ix;                  \
+    ix = 0;                                     \
+    do {                                        \
+        if (tilemap[ix] == FROM_TILE)           \
+            tilemap[ix] = TO_TILE;              \
+        ix++;                                   \
+    } while(ix != (char) TILEMAP_SIZE);         \
+} while (0)
+
+
+void tilemap_get_secret() {
+    TILEMAP_REPLACE(TILE_GOAL, TILE_GOAL_SECRET);
+}
+
+void tilemap_reset_secret() {
+    TILEMAP_REPLACE(TILE_GOAL_SECRET, TILE_GOAL);
+}

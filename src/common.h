@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-#define ENTITY_TABLE_SIZE 8
+#define ENTITY_TABLE_SIZE 10
 
 // Tilemap related definitions
 #define TILE_SIZE 8
@@ -14,6 +14,7 @@
 #define TILE_WALL 0
 #define TILE_KILL 0xBB
 #define TILE_GOAL 0x14
+#define TILE_GOAL_SECRET 0xFC
 
 typedef enum { DirLeft, DirRight, DirUp, DirDown } Direction;
 
@@ -26,7 +27,16 @@ typedef enum { DirLeft, DirRight, DirUp, DirDown } Direction;
   (box_collision_x(L1, R1, L2, R2) &&                 \
    box_collision_y(U1, D1, U2, D2))
 
-typedef enum { ResultOk = 0, ResultFail, ResultWin } CollisionResult;
+#define point_collision(X, Y, L, R, U, D) \
+  ((X > L) && (X < R) && (Y > U) && (Y < D))
+
+typedef enum {
+  ResultOk = 0,
+  ResultFail,
+  ResultWin,
+  ResultGetSecret,
+  ResultSecretWin
+} CollisionResult;
 
 typedef struct LevelDataT {
   unsigned char *tilemap;
@@ -47,11 +57,12 @@ typedef union CoordU {
 } Coord;
 
 typedef enum {
-EntityEmpty = 0,
-EntityPlayer,
-EntityHBlockGroup,
-EntityLoopBoy,
-EntityBoxPatrol,
+  EntityEmpty = 0,
+  EntityPlayer,
+  EntityHBlockGroup,
+  EntityLoopBoy,
+  EntityBoxPatrol,
+  EntitySecret,
 } EntityKind;
 
 typedef struct PlayerDataT {
@@ -88,10 +99,17 @@ typedef struct BoxPatrolDataT {
   char offset;
 } BoxPatrolData;
 
+typedef struct SecretDataT {
+  char x;
+  char y;
+  bool collected;
+} SecretData;
+
 typedef union EntityDataU {
   PlayerData pd;
   HBlockGroupData hbgd;
-  LoopBoyData lbhd;
+  LoopBoyData lbd;
+  SecretData sd;
 } EntityData;
 
 extern EntityKind entities[ENTITY_TABLE_SIZE];

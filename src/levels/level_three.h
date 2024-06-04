@@ -36,11 +36,12 @@ const unsigned char level_three_decor[] = {
 const unsigned char level_three_entities[] = {
 EntityPlayer,12,44,
 EntityHBlockGroup, 33, 41, 4, 40, 0, 0xA0,
-EntityHBlockGroup, 41, 65, 4, -40, 0, 0xA0,
-EntityHBlockGroup, 97, 41, 2, 98, 0, 0xA0,
-EntityHBlockGroup, 105, 105, 1, -98, 0, 0xA0,
+EntityHBlockGroup, 41, 65, 4, (unsigned char) -40, 0, 0xA0,
+EntityHBlockGroup, 97, 41, 2, 100, 0, 0xA0,
+EntityHBlockGroup, 105, 105, 1, (unsigned char) -100, 0, 0xA0,
 EntityHBlockGroup, 33, 81, 4, 40, 0, 0xA0,
-EntityHBlockGroup, 41, 105, 4, -40, 0, 0xA0,
+EntityHBlockGroup, 41, 105, 4, (unsigned char) -40, 0, 0xA0,
+EntitySecret, 119, 92,
 EntityEmpty,
 };
 

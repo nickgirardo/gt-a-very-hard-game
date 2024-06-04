@@ -45,6 +45,7 @@ EntityLoopBoy, 33, 41, 6, DirLeft,
 EntityLoopBoy, 97, 105, 6, DirRight,
 EntityLoopBoy, 33, 105, 6, DirDown,
 EntityLoopBoy, 97, 41, 6, DirUp,
+EntitySecret, 100, 115,
 EntityEmpty,
 };
 

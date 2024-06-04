@@ -99,6 +99,9 @@ CollisionResult update_player(char ix) {
       case TILE_GOAL:
         return ResultWin;
 
+      case TILE_GOAL_SECRET:
+        return ResultSecretWin;
+
       default:
         tileB = tilemap[tx + ((ty + 1) << 4)];
 
