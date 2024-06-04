@@ -24,8 +24,9 @@ EntityData entity_data[ENTITY_TABLE_SIZE];
 unsigned char tilemap[TILEMAP_SIZE];
 unsigned char tilemap_decor[64];
 
-unsigned char current_level = 0;
-unsigned short fail_count = 0;
+unsigned char current_level;
+unsigned char secrets_collected;
+unsigned short fail_count;
 
 unsigned char needs_draw_fail_count = 2;
 
@@ -48,6 +49,12 @@ void clear_entities() {
   for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
     entities[i] = EntityEmpty;
   }
+}
+
+void init_game() {
+  current_level = STARTING_LEVEL;
+  fail_count = 0;
+  secrets_collected = 0;
 }
 
 void init_entities(const unsigned char *data) {
@@ -199,6 +206,8 @@ int main() {
   init_graphics();
   load_font(0);
 
+  init_game();
+
   change_rom_bank(BANK_PROG0);
 
   flip_pages();
@@ -263,7 +272,7 @@ main_loop:
             tilemap_get_secret();
             break;
           case ResultSecretWin:
-            // TODO do something special here
+            secrets_collected++;
             current_level++;
             needs_draw_fail_count = 2;
             goto init_new_level;

@@ -5,6 +5,9 @@
 
 #define ENTITY_TABLE_SIZE 10
 
+// Mostly defining this for debugging purposes
+#define STARTING_LEVEL 0
+
 // Tilemap related definitions
 #define TILE_SIZE 8
 #define TILEMAP_WIDTH 16
