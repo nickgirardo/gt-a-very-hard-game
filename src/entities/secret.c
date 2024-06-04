@@ -14,7 +14,6 @@ void init_secret(char x, char y) {
 
       data->x = x;
       data->y  = y;
-      data->collected = false;
 
       return;
     }
@@ -41,8 +40,6 @@ CollisionResult collision_secret(char ix) {
   SecretData data;
 
   data = *((SecretData *) &entity_data[ix]);
-
-  if (data.collected == true) return ResultOk;
 
   if (point_collision(
           data.x,

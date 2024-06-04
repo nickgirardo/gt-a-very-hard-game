@@ -102,7 +102,6 @@ typedef struct BoxPatrolDataT {
 typedef struct SecretDataT {
   char x;
   char y;
-  bool collected;
 } SecretData;
 
 typedef union EntityDataU {
