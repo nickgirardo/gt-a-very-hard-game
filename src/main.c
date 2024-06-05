@@ -34,7 +34,8 @@ unsigned char current_level;
 unsigned char secrets_collected;
 unsigned short fail_count;
 
-unsigned char needs_draw_fail_count = 2;
+unsigned char needs_draw_fail_count;
+unsigned char needs_draw_full_level;
 
 #define MAX_DEATH_FREEZE 12
 unsigned char death_freeze = 0;
@@ -61,6 +62,9 @@ void init_game() {
   current_level = STARTING_LEVEL;
   fail_count = 0;
   secrets_collected = 0;
+
+  needs_draw_fail_count = 2;
+  needs_draw_full_level = 2;
 }
 
 void init_entities(const unsigned char *data) {
@@ -96,14 +100,6 @@ void init_entities(const unsigned char *data) {
 }
 
 void draw_level_name(char *name) {
-    init_text();
-    text_cursor_x = 1;
-    text_cursor_y = 7;
-    text_use_alt_color = 1;
-    print_text(name);
-
-    flip_pages();
-
     init_text();
     text_cursor_x = 1;
     text_cursor_y = 7;
@@ -167,9 +163,7 @@ void init_level() {
   l = levels[current_level];
 
   init_tilemap(l.tilemap, l.tilemap_decor);
-  draw_tilemap_full();
-
-  draw_level_name(l.name);
+  needs_draw_full_level = 2;
 
   init_entities(l.entities);
 }
@@ -318,7 +312,15 @@ main_loop:
       }
     }
 
-    draw_tilemap_partial();
+    if (needs_draw_full_level > 0) {
+      draw_tilemap_full();
+      draw_level_name(levels[current_level].name);
+
+      needs_draw_full_level--;
+    } else {
+      draw_tilemap_partial();
+    }
+
 
     if (needs_draw_fail_count > 0) {
           draw_fail_count();
