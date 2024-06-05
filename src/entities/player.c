@@ -119,6 +119,9 @@ CollisionResult update_player(char ix) {
           case TILE_GOAL:
             return ResultWin;
 
+          case TILE_GOAL_SECRET:
+            return ResultSecretWin;
+
           default: break;
         }
         break;
@@ -143,6 +146,8 @@ CollisionResult update_player(char ix) {
       case TILE_GOAL:
         return ResultWin;
 
+      case TILE_GOAL_SECRET:
+        return ResultSecretWin;
 
       default:
         tileB = tilemap[tx + ((ty + 1) << 4)];
@@ -160,6 +165,9 @@ CollisionResult update_player(char ix) {
 
           case TILE_GOAL:
             return ResultWin;
+
+          case TILE_GOAL_SECRET:
+            return ResultSecretWin;
 
           default: break;
         }
@@ -181,11 +189,14 @@ CollisionResult update_player(char ix) {
         data->vy.c = 0;
         break;
 
-        case TILE_KILL:
-          return ResultFail;
+      case TILE_KILL:
+        return ResultFail;
 
-        case TILE_GOAL:
-          return ResultWin;
+      case TILE_GOAL:
+        return ResultWin;
+
+      case TILE_GOAL_SECRET:
+        return ResultSecretWin;
 
       default:
         tileB = tilemap[(tx + 1) + (ty  << 4)];
@@ -203,6 +214,9 @@ CollisionResult update_player(char ix) {
 
           case TILE_GOAL:
             return ResultWin;
+
+          case TILE_GOAL_SECRET:
+            return ResultSecretWin;
 
           default: break;
         }
@@ -222,11 +236,14 @@ CollisionResult update_player(char ix) {
         data->vy.c = 0;
         break;
 
-        case TILE_KILL:
-          return ResultFail;
+      case TILE_KILL:
+        return ResultFail;
 
-        case TILE_GOAL:
-          return ResultWin;
+      case TILE_GOAL:
+        return ResultWin;
+
+      case TILE_GOAL_SECRET:
+        return ResultSecretWin;
 
       default:
         tileB = tilemap[(tx + 1) + (ty << 4)];
@@ -244,6 +261,9 @@ CollisionResult update_player(char ix) {
 
           case TILE_GOAL:
             return ResultWin;
+
+          case TILE_GOAL_SECRET:
+            return ResultSecretWin;
 
           default: break;
         }
