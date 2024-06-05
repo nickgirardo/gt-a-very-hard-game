@@ -10,6 +10,7 @@
 #include "entities/loopboy.h"
 #include "entities/BoxPatrol.h"
 #include "entities/secret.h"
+#include "entities/menu.h"
 #include "tilemap.h"
 
 #include "levels/level_menu.h"
@@ -77,6 +78,9 @@ void init_entities(const unsigned char *data) {
         break;
       case EntitySecret:
         init_secret(*(++data), *(++data));
+        break;
+      case EntityMenu:
+        init_menu();
         break;
       default:
         // We shouldn't ever hit this branch if our levels are crafted correctly
@@ -181,6 +185,7 @@ void (*const drawing_fns[])(char) = {
   draw_loopboy,
   draw_boxpatrol,
   draw_secret,
+  draw_menu,
 };
 
 CollisionResult (*const test_collision[])(char) = {
@@ -190,6 +195,7 @@ CollisionResult (*const test_collision[])(char) = {
   collision_loopboy,
   collision_boxpatrol,
   collision_secret,
+  noop_collision,
 };
 
 void (*const update_fns[])(char) = {
@@ -199,6 +205,7 @@ void (*const update_fns[])(char) = {
   update_loopboy,
   update_boxpatrol,
   update_secret,
+  update_menu,
 };
 
 int main() {

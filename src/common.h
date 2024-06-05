@@ -8,6 +8,8 @@
 // Mostly defining this for debugging purposes
 #define STARTING_LEVEL 0
 
+#define COLOR_BG 6
+
 // Tilemap related definitions
 #define TILE_SIZE 8
 #define TILEMAP_WIDTH 16
@@ -32,6 +34,12 @@ typedef enum { DirLeft, DirRight, DirUp, DirDown } Direction;
 
 #define point_collision(X, Y, L, R, U, D) \
   ((X > L) && (X < R) && (Y > U) && (Y < D))
+
+typedef enum {
+  MenuPlay,
+  MenuScores,
+  MenuCredits
+} MenuOption;
 
 typedef enum {
   ResultOk = 0,
@@ -66,6 +74,7 @@ typedef enum {
   EntityLoopBoy,
   EntityBoxPatrol,
   EntitySecret,
+  EntityMenu,
 } EntityKind;
 
 typedef struct PlayerDataT {
@@ -106,6 +115,12 @@ typedef struct SecretDataT {
   char x;
   char y;
 } SecretData;
+
+typedef struct MenuDataT {
+  MenuOption selection;
+  char blink_timer;
+  bool completed;
+} MenuData;
 
 typedef union EntityDataU {
   PlayerData pd;

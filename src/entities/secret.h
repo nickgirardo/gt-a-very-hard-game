@@ -4,7 +4,7 @@
 #include "../common.h"
 
 // For debugging purposes
-#define RENDER_SECRETS
+// #define RENDER_SECRETS
 
 void init_secret(char x, char y);
 void draw_secret(char ix);
