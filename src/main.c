@@ -3,6 +3,8 @@
 #include "gt/gametank.h"
 #include "gt/drawing_funcs.h"
 #include "gt/input.h"
+#include "gt/dynawave.h"
+#include "gt/music.h"
 
 #include "common.h"
 #include "entities/player.h"
@@ -19,6 +21,8 @@
 #include "levels/level_three.h"
 #include "levels/level_four.h"
 #include "levels/level_gg.h"
+
+#include "gen/assets/music.h"
 
 EntityKind entities[ENTITY_TABLE_SIZE];
 PlayerData *player_data;
@@ -214,9 +218,14 @@ int main() {
   init_graphics();
   load_font(0);
 
-  init_game();
+  init_dynawave();
+  init_music();
+
+  play_song(&ASSET__music__pressure_mid, REPEAT_LOOP);
 
   change_rom_bank(BANK_PROG0);
+
+  init_game();
 
   flip_pages();
   await_draw_queue();
@@ -268,6 +277,8 @@ init_new_level:
 main_loop:
   while (1) {
     PROFILER_START(1);
+    tick_music();
+
     update_inputs();
 
     if (death_freeze == 0) {

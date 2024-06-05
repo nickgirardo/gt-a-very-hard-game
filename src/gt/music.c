@@ -308,6 +308,7 @@ void tick_music() {
     }
 
     flush_audio_params();
+    pop_rom_bank();
 }
 
 void stop_music() {

@@ -6,6 +6,8 @@
 #include "gt/banking.h"
 #include "gt/drawing_funcs.h"
 
+#pragma code-name (push, "PROG0")
+
 void init_tilemap(const unsigned char *map, const unsigned char *decor) {
     register unsigned char ix;
 
@@ -160,3 +162,5 @@ void tilemap_get_secret() {
 void tilemap_reset_secret() {
     TILEMAP_REPLACE(TILE_GOAL_SECRET, TILE_GOAL);
 }
+
+#pragma code-name (pop)
