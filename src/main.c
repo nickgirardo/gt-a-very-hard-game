@@ -287,6 +287,7 @@ main_loop:
           case ResultOk:
             break;
           case ResultFail:
+            play_sound_effect(&ASSET__music__sfx_bin, 2);
             death_freeze = MAX_DEATH_FREEZE;
             goto main_loop;
           case ResultWin:
