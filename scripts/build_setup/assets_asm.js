@@ -6,8 +6,12 @@ const assetsDir = 'assets';
 const extensionMap = {
     'bmp' : 'gtg.deflate',
     'mid' : 'gtm2',
-    'json' : 'gsi'
+    'json' : 'gsi',
 }
+
+const ignoreList = [
+    'asset.cfg',
+];
 
 function transformFilename(filename) {
     const name = filename.split('.').slice(0, -1);
@@ -42,7 +46,9 @@ function sliceLargeBitmaps(dir) {
 }
 
 function generateAssetsAssemblyFile(dir) {
-    const nameList = fs.readdirSync(dir).flatMap(sliceLargeBitmaps(dir));
+    const nameList = fs.readdirSync(dir)
+                       .flatMap(sliceLargeBitmaps(dir))
+                       .filter((fname) => !ignoreList.includes(fname));
     console.log(nameList);
     const path = dir.split('/');
     const dirName = path[path.length - 1];
