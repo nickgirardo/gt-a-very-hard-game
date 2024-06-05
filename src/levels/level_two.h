@@ -53,6 +53,6 @@ const unsigned char level_two_reset_data[] = {
 84,73,
 };
 
-const unsigned char level_two_name[] = "Level 2";
+const char level_two_name[] = "Level 2";
 
 #endif // LEVEL_TWO_H_

@@ -45,7 +45,7 @@ const unsigned char level_menu_reset_data[] = {
 21,41,
 };
 
-const unsigned char level_menu_name[] = "A Very Hard Game";
+const char level_menu_name[] = "A Very Hard Game";
 
 #pragma rodata-name (pop)
 

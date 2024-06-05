@@ -46,7 +46,7 @@ typedef enum {
   ResultFail,
   ResultWin,
   ResultGetSecret,
-  ResultSecretWin
+  ResultSecretWin,
 } CollisionResult;
 
 typedef struct LevelDataT {
@@ -54,7 +54,7 @@ typedef struct LevelDataT {
   unsigned char *tilemap_decor;
   unsigned char *entities;
   unsigned char *reset_data;
-  unsigned char *name;
+  char *name;
 } LevelData;
 
 typedef struct HLT {

@@ -55,7 +55,7 @@ const unsigned char level_four_reset_data[] = {
 110,44,
 };
 
-const unsigned char level_four_name[] = "Level 4";
+const char level_four_name[] = "Level 4";
 
 #pragma rodata-name (pop)
 

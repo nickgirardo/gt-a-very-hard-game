@@ -84,7 +84,7 @@ void draw_tilemap_full_inner() {
     } while(i != (char) TILEMAP_SIZE);
 
     for (i = 1; i <= tilemap_decor[0];) {
-        draw_box(tilemap_decor[i++], tilemap_decor[i++], tilemap_decor[i++], tilemap_decor[i++], DECOR_COLOR);
+        draw_box(tilemap_decor[i++], tilemap_decor[i++], tilemap_decor[i++], tilemap_decor[i++], COLOR_BG);
     }
     await_draw_queue();
 }
