@@ -62,6 +62,8 @@ void load_spritesheet(char* spriteData, char srcBank, char ramBank) {
     banksMirror = oldBanks;
     *dma_flags = flagsMirror;
     *bank_reg = banksMirror;
+
+    pop_rom_bank();
 }
 
 void clear_spritebank(char bank) {

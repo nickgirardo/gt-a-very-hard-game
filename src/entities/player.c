@@ -2,6 +2,8 @@
 
 #include "../gt/gametank.h"
 
+#pragma code-name (push, "PROG0")
+
 void init_player(char x, char y) {
   PlayerData *data;
   char i;
@@ -275,3 +277,5 @@ CollisionResult update_player(char ix) {
 
   return ResultOk;
 }
+
+#pragma code-name (pop)

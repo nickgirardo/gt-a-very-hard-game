@@ -31,6 +31,8 @@ void clear_save_sector() {
     }
     *dma_flags = flagsMirror;
     asm("CLI");
+
+    pop_rom_bank();
 }
 
 void unlock_bypass() {
@@ -65,6 +67,8 @@ void save_write(char* src, char* dest, char len) {
     lock_bypass();
     *dma_flags = flagsMirror;
     asm("CLI");
+
+    pop_rom_bank();
 }
 
 
