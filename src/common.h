@@ -23,6 +23,12 @@
 #define TILE_GOAL 0x14
 #define TILE_GOAL_SECRET 0xFC
 
+typedef enum {
+ModeGame,
+ModeCredits,
+ModeScores,
+} MajorMode;
+
 typedef enum { DirLeft, DirRight, DirUp, DirDown } Direction;
 
 #define rand_direction() (rnd() & 3)
@@ -139,6 +145,7 @@ typedef union EntityDataU {
   SecretRewardData srd;
 } EntityData;
 
+extern MajorMode major_mode;
 extern EntityKind entities[ENTITY_TABLE_SIZE];
 extern PlayerData *player_data;
 extern EntityData entity_data[ENTITY_TABLE_SIZE];

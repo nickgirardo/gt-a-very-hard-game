@@ -32,6 +32,7 @@ EntityData entity_data[ENTITY_TABLE_SIZE];
 unsigned char tilemap[TILEMAP_SIZE];
 unsigned char tilemap_decor[64];
 
+MajorMode major_mode;
 unsigned char current_level;
 unsigned char secrets_collected;
 unsigned short fail_count;
@@ -61,6 +62,7 @@ void clear_entities() {
 }
 
 void init_game() {
+  major_mode = ModeGame;
   current_level = STARTING_LEVEL;
   fail_count = 0;
   secrets_collected = 0;
@@ -286,61 +288,74 @@ main_loop:
 
     update_inputs();
 
-    if (death_freeze == 0) {
-      for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
-        switch (test_collision[entities[i]](i)) {
-          case ResultOk:
-            break;
-          case ResultFail:
-            play_sound_effect(&ASSET__music__sfx_bin, 2);
-            death_freeze = MAX_DEATH_FREEZE;
-            goto main_loop;
-          case ResultWin:
-            current_level++;
-            needs_draw_fail_count = 2;
-            goto init_new_level;
-          case ResultGetSecret:
-            tilemap_get_secret();
-            break;
-          case ResultSecretWin:
-            secrets_collected++;
-            current_level++;
-            needs_draw_fail_count = 2;
-            goto init_new_level;
+    switch (major_mode) {
+      case ModeCredits:
+      case ModeScores:
+        draw_box(0, 0, 80, 80, 0);
+        await_draw_queue();
+        flip_pages();
+        if (player1_new_buttons & (INPUT_MASK_A | INPUT_MASK_START)) {
+          init_game();
         }
-      }
+        break;
+      case ModeGame:
+        if (death_freeze == 0) {
+          for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
+            switch (test_collision[entities[i]](i)) {
+              case ResultOk:
+                break;
+              case ResultFail:
+                play_sound_effect(&ASSET__music__sfx_bin, 2);
+                death_freeze = MAX_DEATH_FREEZE;
+                goto main_loop;
+              case ResultWin:
+                current_level++;
+                needs_draw_fail_count = 2;
+                goto init_new_level;
+              case ResultGetSecret:
+                tilemap_get_secret();
+                break;
+              case ResultSecretWin:
+                secrets_collected++;
+                current_level++;
+                needs_draw_fail_count = 2;
+                goto init_new_level;
+            }
+          }
 
-      for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
-        update_fns[entities[i]](i);
-      }
-    } else {
-      death_freeze--;
+          for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
+            update_fns[entities[i]](i);
+          }
+        } else {
+          death_freeze--;
 
-      if (death_freeze == 0) {
-        fail_count = inc_bcd(fail_count);
-        reset_level();
-        needs_draw_fail_count = 2;
-      }
-    }
+          if (death_freeze == 0) {
+            fail_count = inc_bcd(fail_count);
+            reset_level();
+            needs_draw_fail_count = 2;
+          }
+        }
 
-    if (needs_draw_full_level > 0) {
-      draw_tilemap_full();
-      draw_level_name(levels[current_level].name);
+        if (needs_draw_full_level > 0) {
+          draw_tilemap_full();
+          draw_level_name(levels[current_level].name);
 
-      needs_draw_full_level--;
-    } else {
-      draw_tilemap_partial();
-    }
+          needs_draw_full_level--;
+        } else {
+          draw_tilemap_partial();
+        }
 
 
-    if (needs_draw_fail_count > 0) {
-          draw_fail_count();
-          needs_draw_fail_count--;
-    }
+        if (needs_draw_fail_count > 0) {
+              draw_fail_count();
+              needs_draw_fail_count--;
+        }
 
-    for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
-      // Draw entities in reverse order such that players are drawn on top of other entities
-      drawing_fns[entities[ENTITY_TABLE_SIZE - 1 - i]](ENTITY_TABLE_SIZE - 1 - i);
+        for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
+          // Draw entities in reverse order such that players are drawn on top of other entities
+          drawing_fns[entities[i]](i);
+        }
+        break;
     }
 
     await_draw_queue();

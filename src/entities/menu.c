@@ -111,10 +111,10 @@ void update_menu(char ix) {
               init_player(21, 41);
               break;
           case MenuScores:
-              while(1){}
+              major_mode = ModeScores;
               break;
           case MenuCredits:
-              while(1){}
+              major_mode = ModeCredits;
               break;
       }
   } else if (player1_new_buttons & INPUT_MASK_DOWN) {
