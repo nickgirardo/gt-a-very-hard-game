@@ -1,3 +1,4 @@
+#include "entities/secret_reward.h"
 #include "gt/banking.h"
 #include "gt/feature/text/text.h"
 #include "gt/gametank.h"
@@ -13,6 +14,7 @@
 #include "entities/BoxPatrol.h"
 #include "entities/secret.h"
 #include "entities/menu.h"
+#include "entities/secret_reward.h"
 #include "tilemap.h"
 
 #include "levels/level_menu.h"
@@ -89,6 +91,12 @@ void init_entities(const unsigned char *data) {
         break;
       case EntityMenu:
         init_menu();
+        break;
+      case EntitySecretReward:
+        if (secrets_collected == MAX_SECRETS)
+          init_secret_reward(*(++data), *(++data));
+        else
+          data += 2;
         break;
       default:
         // We shouldn't ever hit this branch if our levels are crafted correctly
@@ -184,6 +192,7 @@ void (*const drawing_fns[])(char) = {
   draw_boxpatrol,
   draw_secret,
   draw_menu,
+  draw_secret_reward,
 };
 
 CollisionResult (*const test_collision[])(char) = {
@@ -193,6 +202,7 @@ CollisionResult (*const test_collision[])(char) = {
   collision_loopboy,
   collision_boxpatrol,
   collision_secret,
+  noop_collision,
   noop_collision,
 };
 
@@ -204,6 +214,7 @@ void (*const update_fns[])(char) = {
   update_boxpatrol,
   update_secret,
   update_menu,
+  update_secret_reward,
 };
 
 int main() {

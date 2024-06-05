@@ -13,7 +13,7 @@ void init_secret(char x, char y) {
       data = (SecretData *) &entity_data[i];
 
       data->x = x;
-      data->y  = y;
+      data->y = y;
 
       return;
     }

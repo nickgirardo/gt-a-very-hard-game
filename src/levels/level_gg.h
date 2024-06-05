@@ -36,6 +36,7 @@ const unsigned char level_gg_decor[] = {
 
 const unsigned char level_gg_entities[] = {
 EntityPlayer,59,61,
+EntitySecretReward,17,96,
 EntityEmpty,
 };
 

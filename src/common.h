@@ -8,6 +8,8 @@
 // Mostly defining this for debugging purposes
 #define STARTING_LEVEL 0
 
+#define MAX_SECRETS 5
+
 #define COLOR_BG 6
 
 // Tilemap related definitions
@@ -75,6 +77,7 @@ typedef enum {
   EntityBoxPatrol,
   EntitySecret,
   EntityMenu,
+  EntitySecretReward,
 } EntityKind;
 
 typedef struct PlayerDataT {
@@ -116,6 +119,12 @@ typedef struct SecretDataT {
   char y;
 } SecretData;
 
+typedef struct SecretRewardDataT {
+  char x;
+  char y;
+  bool visited;
+} SecretRewardData;
+
 typedef struct MenuDataT {
   MenuOption selection;
   char blink_timer;
@@ -127,6 +136,7 @@ typedef union EntityDataU {
   HBlockGroupData hbgd;
   LoopBoyData lbd;
   SecretData sd;
+  SecretRewardData srd;
 } EntityData;
 
 extern EntityKind entities[ENTITY_TABLE_SIZE];
