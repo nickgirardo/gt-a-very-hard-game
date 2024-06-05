@@ -34,10 +34,10 @@ const unsigned char level_one_decor[] = {
 };
 
 const unsigned char level_one_entities[] = {
-EntityPlayer,12,100,
 EntityHBlockGroup, 41, 41, 4, 64, 1, 0,
 EntityHBlockGroup, 33, 105, 4, (unsigned char) -64, 1, 0,
 EntitySecret, 69, 69,
+EntityPlayer,12,100,
 EntityEmpty,
 };
 

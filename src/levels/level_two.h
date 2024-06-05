@@ -40,12 +40,12 @@ const unsigned char level_two_decor[] = {
 };
 
 const unsigned char level_two_entities[] = {
-EntityPlayer,84,73,
 EntityLoopBoy, 33, 41, 6, DirLeft,
 EntityLoopBoy, 97, 105, 6, DirRight,
 EntityLoopBoy, 33, 105, 6, DirDown,
 EntityLoopBoy, 97, 41, 6, DirUp,
 EntitySecret, 100, 115,
+EntityPlayer,84,73,
 EntityEmpty,
 };
 
