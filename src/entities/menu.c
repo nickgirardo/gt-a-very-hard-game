@@ -94,7 +94,6 @@ MenuOption next_menu_option(MenuOption m) {
 
 void update_menu(char ix) {
   MenuData *data;
-  char new_buttons;
 
   data = ((MenuData *) &entity_data[ix]);
 
@@ -104,8 +103,7 @@ void update_menu(char ix) {
 
   data->blink_timer++;
 
-  new_buttons = ~player1_old_buttons & player1_buttons;
-  if (new_buttons & (INPUT_MASK_A | INPUT_MASK_START)) {
+  if (player1_new_buttons & (INPUT_MASK_A | INPUT_MASK_START)) {
       switch (data->selection) {
           case MenuPlay:
               data->completed = true;
@@ -119,10 +117,10 @@ void update_menu(char ix) {
               while(1){}
               break;
       }
-  } else if (new_buttons & INPUT_MASK_DOWN) {
+  } else if (player1_new_buttons & INPUT_MASK_DOWN) {
     data->blink_timer = 0;
     data->selection = next_menu_option(data->selection);
-  } else if (new_buttons & INPUT_MASK_UP) {
+  } else if (player1_new_buttons & INPUT_MASK_UP) {
     data->blink_timer = 0;
     data->selection = prev_menu_option(data->selection);
   }

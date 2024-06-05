@@ -1,13 +1,13 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-extern short player1_buttons, player1_old_buttons;
+extern short player1_buttons, player1_old_buttons, player1_new_buttons;
 
 // If I ever need two player input, uncomment the following line
 // #define TWO_PLAYER_INPUT
 
 #ifdef TWO_PLAYER_INPUT
-extern short player2_buttons, player2_old_buttons;
+extern short player2_buttons, player2_old_buttons, player2_new_buttons;
 #endif // TWO_PLAYER_INPUT
 
 #define INPUT_MASK_UP		2056

@@ -1,9 +1,9 @@
 #include "input.h"
 #include "gametank.h"
 
-short player1_buttons = 0, player1_old_buttons = 0;
+short player1_buttons = 0, player1_old_buttons = 0, player1_new_buttons = 0;
 #ifdef TWO_PLAYER_INPUT
-short player2_buttons = 0, player2_old_buttons = 0;
+short player2_buttons = 0, player2_old_buttons = 0, player2_new_buttons = 0;
 #endif
 
 
@@ -20,6 +20,7 @@ void update_inputs(){
     player1_old_buttons = player1_buttons;
     player1_buttons = ~((((short) inputsB) << 8) | inputsA);
     player1_buttons &= INPUT_MASK_ALL_KEYS;
+    player1_new_buttons = ~player1_old_buttons & player1_buttons;
 
 #ifdef TWO_PLAYER_INPUT
     inputsA = *gamepad_2;
@@ -27,6 +28,7 @@ void update_inputs(){
     player2_old_buttons = player2_buttons;
     player2_buttons = ~((((short) inputsB) << 8) | inputsA);
     player2_buttons &= INPUT_MASK_ALL_KEYS;
+    player2_new_buttons = ~player2_old_buttons & player2_buttons;
 #endif
 }
 #pragma optimize (pop)
