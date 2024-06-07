@@ -3,6 +3,9 @@
 #include "../gt/input.h"
 #include "../gt/drawing_funcs.h"
 #include "../gt/feature/text/text.h"
+
+#include "../credits.h"
+
 #include "player.h"
 
 void init_menu() {
@@ -114,7 +117,7 @@ void update_menu(char ix) {
               major_mode = ModeScores;
               break;
           case MenuCredits:
-              major_mode = ModeCredits;
+              init_credits();
               break;
       }
   } else if (player1_new_buttons & INPUT_MASK_DOWN) {

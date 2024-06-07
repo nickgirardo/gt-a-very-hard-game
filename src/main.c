@@ -8,6 +8,10 @@
 #include "gt/music.h"
 
 #include "common.h"
+
+#include "credits.h"
+
+#include "tilemap.h"
 #include "entities/player.h"
 #include "entities/hblockgroup.h"
 #include "entities/loopboy.h"
@@ -15,7 +19,6 @@
 #include "entities/secret.h"
 #include "entities/menu.h"
 #include "entities/secret_reward.h"
-#include "tilemap.h"
 
 #include "levels/level_menu.h"
 #include "levels/level_one.h"
@@ -61,16 +64,6 @@ void clear_entities() {
   }
 }
 
-void init_game() {
-  major_mode = ModeGame;
-  current_level = STARTING_LEVEL;
-  fail_count = 0;
-  secrets_collected = 0;
-
-  needs_draw_fail_count = 2;
-  needs_draw_full_level = 2;
-}
-
 void init_entities(const unsigned char *data) {
   clear_entities();
 
@@ -113,7 +106,7 @@ void draw_level_name(char *name) {
     init_text();
     text_cursor_x = 1;
     text_cursor_y = 7;
-    text_use_alt_color = 1;
+    text_color = TEXT_COLOR_WHITE;
     print_text(name);
 }
 
@@ -163,7 +156,7 @@ void draw_fail_count() {
   init_text();
   text_cursor_x = 1;
   text_cursor_y = 16;
-  text_use_alt_color = 1;
+  text_color = TEXT_COLOR_WHITE;
   print_text("Fails ");
   print_bcd(fail_count);
 }
@@ -184,6 +177,18 @@ void reset_level() {
 
   reset_player(l->reset_data[0], l->reset_data[1]);
   tilemap_reset_secret();
+}
+
+void init_game() {
+  major_mode = ModeGame;
+  current_level = STARTING_LEVEL;
+  fail_count = 0;
+  secrets_collected = 0;
+
+  needs_draw_fail_count = 2;
+  needs_draw_full_level = 2;
+
+  init_level();
 }
 
 void (*const drawing_fns[])(char) = {
@@ -232,8 +237,6 @@ int main() {
 
   change_rom_bank(BANK_PROG0);
 
-  init_game();
-
   flip_pages();
   await_draw_queue();
   flip_pages();
@@ -276,9 +279,7 @@ int main() {
   levels[5].reset_data = level_gg_reset_data;
   levels[5].name = level_gg_name;
 
-
-init_new_level:
-  init_level();
+  init_game();
 
   // Run forever
 main_loop:
@@ -290,13 +291,10 @@ main_loop:
 
     switch (major_mode) {
       case ModeCredits:
+        run_credits();
+        break;
       case ModeScores:
-        draw_box(0, 0, 80, 80, 0);
-        await_draw_queue();
-        flip_pages();
-        if (player1_new_buttons & (INPUT_MASK_A | INPUT_MASK_START)) {
-          init_game();
-        }
+        while(1) {}
         break;
       case ModeGame:
         if (death_freeze == 0) {
@@ -311,7 +309,8 @@ main_loop:
               case ResultWin:
                 current_level++;
                 needs_draw_fail_count = 2;
-                goto init_new_level;
+                init_level();
+                goto main_loop;
               case ResultGetSecret:
                 tilemap_get_secret();
                 break;
@@ -319,7 +318,8 @@ main_loop:
                 secrets_collected++;
                 current_level++;
                 needs_draw_fail_count = 2;
-                goto init_new_level;
+                init_level();
+                goto main_loop;
             }
           }
 

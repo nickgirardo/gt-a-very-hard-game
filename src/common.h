@@ -24,9 +24,9 @@
 #define TILE_GOAL_SECRET 0xFC
 
 typedef enum {
-ModeGame,
-ModeCredits,
-ModeScores,
+  ModeGame,
+  ModeCredits,
+  ModeScores,
 } MajorMode;
 
 typedef enum { DirLeft, DirRight, DirUp, DirDown } Direction;
@@ -151,6 +151,7 @@ extern PlayerData *player_data;
 extern EntityData entity_data[ENTITY_TABLE_SIZE];
 extern unsigned char tilemap[TILEMAP_SIZE];
 extern unsigned char tilemap_decor[64];
+extern void init_game();
 extern void reset_level();
 
 #endif // COMMON_H_
