@@ -6,6 +6,8 @@
 
 #include "common.h"
 
+#pragma code-name (push, "PROG0")
+
 char credits_stage;
 
 void init_credits() {
@@ -43,9 +45,21 @@ void run_credits() {
             text_cursor_x = 2;
             text_cursor_y = 9;
             print_text("Special Thanks:\n\n\rClyde Shaffer\n\rTons of help\n\rwith everything\n\n\rdarthbeep\n\rPlay testing and\n\rfeedback");
+            if (player1_new_buttons & INPUT_MASK_C) {
+                credits_stage = 3;
+            } else if (player1_new_buttons & (INPUT_MASK_A | INPUT_MASK_START)) {
+                init_game();
+            }
+            break;
+        case 3:
+            text_cursor_x = 2;
+            text_cursor_y = 9;
+            print_text("why do they call\n\rit oven when\n\ryou of in the\n\rcold food of\n\rout the hot eat the food");
             if (player1_new_buttons & (INPUT_MASK_A | INPUT_MASK_START)) {
                 init_game();
             }
             break;
     }
 }
+
+#pragma code-name (pop)
