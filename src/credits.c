@@ -26,25 +26,22 @@ void run_credits() {
 
     switch (credits_stage) {
         case 0:
-            text_cursor_x = 2;
-            text_cursor_y = 9;
-            print_text("A Very Hard Game\n\n\rCreated by Nick Girardo\n\n\rInspired by \n\r\"World's Hardest\n\rGame\"");
+            set_cursor(2,9);
+            print_text("A Very Hard Game\n\n\rCreated by Nick Girardo\n\n\rInspired by\n\r\"World's\n\rHardest Game\"");
             if (player1_new_buttons & (INPUT_MASK_A | INPUT_MASK_START)) {
                 credits_stage = 1;
             }
             break;
         case 1:
-            text_cursor_x = 2;
-            text_cursor_y = 9;
+            set_cursor(2,9);
             print_text("TODO Music credits");
             if (player1_new_buttons & (INPUT_MASK_A | INPUT_MASK_START)) {
                 credits_stage = 2;
             }
             break;
         case 2:
-            text_cursor_x = 2;
-            text_cursor_y = 9;
-            print_text("Special Thanks:\n\n\rClyde Shaffer\n\rTons of help\n\rwith everything\n\n\rdarthbeep\n\rPlay testing and\n\rfeedback");
+            set_cursor(2,9);
+            print_text("Special Thanks:\n\n\rClyde Shaffer\n\rTons of help\n\rwith everything\n\n\rdarthbeep\n\rPlay testing and\n\rfeedback\n\n\rHackManhattan");
             if (player1_new_buttons & INPUT_MASK_C) {
                 credits_stage = 3;
             } else if (player1_new_buttons & (INPUT_MASK_A | INPUT_MASK_START)) {
@@ -52,9 +49,8 @@ void run_credits() {
             }
             break;
         case 3:
-            text_cursor_x = 2;
-            text_cursor_y = 9;
-            print_text("why do they call\n\rit oven when\n\ryou of in the\n\rcold food of\n\rout the hot eat the food");
+            set_cursor(2,9);
+            print_text("why do they call\n\rit oven when you\n\rof in the cold\n\rfood of out the\n\rhot eat the food");
             if (player1_new_buttons & (INPUT_MASK_A | INPUT_MASK_START)) {
                 init_game();
             }

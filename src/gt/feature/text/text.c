@@ -5,6 +5,7 @@
 #include "../../../gen/assets/font.h"
 
 
+#define SPACE_WIDTH 6
 #define TEXT_CHAR_WIDTH 8
 #define TEXT_CHAR_HEIGHT 8
 #define TEXT_LINE_HEIGHT 8
@@ -14,7 +15,10 @@ char text_cursor_x, text_cursor_y;
 char text_print_width, text_print_line_start;
 char text_color;
 
+char internal_cursor_x;
+
 void init_text() {
+    internal_cursor_x = 0;
     text_cursor_x = 0;
     text_cursor_y = 0;
     text_print_width = 128;
@@ -25,6 +29,14 @@ void init_text() {
 void load_font(char slot) {
     font_slot = slot;
     load_spritesheet(&ASSET__font__bios8_bmp, slot);
+}
+
+void set_cursor(char x, char y) {
+    internal_cursor_x = x;
+    text_cursor_x = x;
+    text_cursor_y = y;
+
+    text_print_width = 128 - x;
 }
 
 char text_tmp;
@@ -38,7 +50,7 @@ void print_text(char* text) {
     while(*text != 0) {
         switch(*text) {
             case ' ':
-                text_cursor_x += TEXT_CHAR_WIDTH;
+                text_cursor_x += SPACE_WIDTH;
                 break;
             case '\n':
                 text_cursor_y += TEXT_CHAR_HEIGHT;
@@ -49,8 +61,8 @@ void print_text(char* text) {
                 break;
             default:
                 text_tmp = *text + text_color;
-                if(text_cursor_x >= (text_print_width + text_print_line_start)) {
-                    text_cursor_x -= text_print_width;
+                if((text_cursor_x + TEXT_CHAR_WIDTH) >= (text_print_width + text_print_line_start)) {
+                    text_cursor_x = internal_cursor_x;
                     text_cursor_y += TEXT_CHAR_HEIGHT;
                     vram[VY] = text_cursor_y;
                 }

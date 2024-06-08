@@ -8,6 +8,8 @@ void init_text();
 
 void load_font(char slot);
 
+void set_cursor(char x, char y);
+
 void print_text(char* text);
 void print_char(char c);
 
