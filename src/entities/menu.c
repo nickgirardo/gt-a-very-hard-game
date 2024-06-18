@@ -8,6 +8,8 @@
 
 #include "player.h"
 
+#pragma code-name (push, "PROG0")
+
 void init_menu() {
   MenuData *data;
   char i;
@@ -129,3 +131,5 @@ void update_menu(char ix) {
   }
 
 }
+
+#pragma code-name (pop)

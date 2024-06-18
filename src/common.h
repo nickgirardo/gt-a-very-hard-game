@@ -8,6 +8,8 @@
 // Mostly defining this for debugging purposes
 #define STARTING_LEVEL 0
 
+#define LEVEL_COUNT 6
+
 #define MAX_SECRETS 5
 
 #define COLOR_BG 6

@@ -46,7 +46,7 @@ unsigned char needs_draw_full_level;
 #define MAX_DEATH_FREEZE 12
 unsigned char death_freeze = 0;
 
-LevelData levels[6];
+LevelData levels[LEVEL_COUNT];
 
 void noop(char ix) {
   return;
@@ -224,6 +224,16 @@ void (*const update_fns[])(char) = {
   update_secret_reward,
 };
 
+#define complete_level()                            \
+  do {                                              \
+    current_level++;                                \
+    if (current_level == LEVEL_COUNT) {             \
+      current_level = STARTING_LEVEL;               \
+    }                                               \
+    needs_draw_fail_count = 2;                      \
+    init_level();                                   \
+  } while(0);
+
 int main() {
   char i;
 
@@ -307,18 +317,14 @@ main_loop:
                 death_freeze = MAX_DEATH_FREEZE;
                 goto main_loop;
               case ResultWin:
-                current_level++;
-                needs_draw_fail_count = 2;
-                init_level();
+                complete_level();
                 goto main_loop;
               case ResultGetSecret:
                 tilemap_get_secret();
                 break;
               case ResultSecretWin:
                 secrets_collected++;
-                current_level++;
-                needs_draw_fail_count = 2;
-                init_level();
+                complete_level();
                 goto main_loop;
             }
           }
