@@ -224,14 +224,15 @@ void (*const update_fns[])(char) = {
   update_secret_reward,
 };
 
-#define complete_level()                            \
-  do {                                              \
-    current_level++;                                \
-    if (current_level == LEVEL_COUNT) {             \
-      current_level = STARTING_LEVEL;               \
-    }                                               \
-    needs_draw_fail_count = 2;                      \
-    init_level();                                   \
+#define complete_level()                              \
+  do {                                                \
+    if (current_level == LEVEL_COUNT - 1) {           \
+      init_game();                                    \
+    } else {                                          \
+      current_level++;                                \
+      needs_draw_fail_count = 2;                      \
+      init_level();                                   \
+    }                                                 \
   } while(0);
 
 int main() {
@@ -290,7 +291,6 @@ int main() {
   levels[5].name = level_gg_name;
 
   init_game();
-
   // Run forever
 main_loop:
   while (1) {
