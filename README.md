@@ -1,12 +1,8 @@
-# My GameTank Game
+# A Very Hard Game
 
-Build it with the "make" command
+A game built for the [GameTank](https://gametank.zone)!
 
-Import art/music by adding it to a folder inside the "assets" directory, and then run "make import" to update generated project files.
-
-If you have pulled and built the GameTankEmulator repo in an adjacent folder, run "make emulate" to test the game.
-
-src/main.c contains the code that will run after the console powers on
+Inspired by the classic flash game [World's Hardest Game](https://www.coolmathgames.com/0-worlds-hardest-game).
 
 ## Build requirements:
 
