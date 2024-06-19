@@ -40,7 +40,7 @@ EntityHBlockGroup, 97, 41, 2, 100, 0, 0xA0,
 EntityHBlockGroup, 105, 105, 1, (unsigned char) -100, 0, 0xA0,
 EntityHBlockGroup, 33, 81, 4, 40, 0, 0xA0,
 EntityHBlockGroup, 41, 105, 4, (unsigned char) -40, 0, 0xA0,
-EntitySecret, 119, 92,
+EntitySecret, 97, 76,
 EntityPlayer,12,44,
 EntityEmpty,
 };
