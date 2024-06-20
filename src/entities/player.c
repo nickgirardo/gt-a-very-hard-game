@@ -21,6 +21,9 @@ void init_player(char x, char y) {
       data->vx.c = 0;
       data->vy.c = 0;
 
+      data->r = 0;
+      data->d = 0;
+
       player_data = data;
 
       return;
@@ -35,6 +38,9 @@ void reset_player(char x, char y) {
   player_data->x.hl.l = 0;
   player_data->y.hl.h = y;
   player_data->y.hl.l = 0;
+
+  player_data->r = x + PLAYER_SIZE;
+  player_data->d = y + PLAYER_SIZE;
 }
 
 void draw_player(char ix) {
@@ -274,6 +280,9 @@ CollisionResult update_player(char ix) {
   }
 
   data->y.c += data->vy.c;
+
+  data->r = data->x.hl.h + PLAYER_SIZE;
+  data->d = data->y.hl.h + PLAYER_SIZE;
 
   return ResultOk;
 }

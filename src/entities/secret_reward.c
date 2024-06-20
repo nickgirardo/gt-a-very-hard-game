@@ -63,9 +63,9 @@ void update_secret_reward(char ix) {
                     data->y,
                     data->y + SR_SIZE,
                     player_data->x.hl.h,
-                    player_data->x.hl.h + PLAYER_SIZE,
+                    player_data->r,
                     player_data->y.hl.h,
-                    player_data->y.hl.h + PLAYER_SIZE)) {
+                    player_data->d)) {
       data->visited = true;
   }
 }

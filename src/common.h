@@ -93,6 +93,9 @@ typedef struct PlayerDataT {
   Coord y;
   Coord vx;
   Coord vy;
+  // Caching these values for faster collision detection
+  unsigned char r;
+  unsigned char d;
 } PlayerData;
 
 typedef struct HBlockGroupDataT {

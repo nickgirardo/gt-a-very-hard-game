@@ -75,20 +75,19 @@ CollisionResult collision_hblockgroup(char ix) {
           data->y.hl.h,
           data->y.hl.h + HBLOCK_SIZE,
           player_data->y.hl.h,
-          player_data->y.hl.h + PLAYER_SIZE) &&
+          player_data->d) &&
       box_collision_x(
           data->x.hl.h,
           (data->x.hl.h + (HBLOCK_OFFSET * (data->n - 1))) + HBLOCK_SIZE,
           player_data->x.hl.h,
-          player_data->x.hl.h + PLAYER_SIZE)
-  ) {
+          player_data->r)) {
     // TODO I think with some bit cleverness we can avoid a lot of work here
     for (i = 0; i < data->n; i++) {
         if (box_collision_x(
                 data->x.hl.h + (i * HBLOCK_OFFSET),
                 data->x.hl.h + (i * HBLOCK_OFFSET) + HBLOCK_SIZE,
                 player_data->x.hl.h,
-                player_data->x.hl.h + PLAYER_SIZE)) {
+                player_data->r)) {
             return ResultFail;
         }
     }

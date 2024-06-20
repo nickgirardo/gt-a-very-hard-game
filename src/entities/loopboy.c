@@ -95,8 +95,6 @@ CollisionResult collision_loopboy(char ix) {
   data = (LoopBoyData *) &entity_data[ix];
 
 
-  await_draw_queue();
-
   // Test for collisions with the player
   // All blocks moving left or right have the same y value
   // All blocks moving up or down have the same x value
@@ -106,7 +104,7 @@ CollisionResult collision_loopboy(char ix) {
                 data->y.hl.h,
                 data->y.hl.h + LOOPBOY_SIZE,
                 player_data->y.hl.h,
-                player_data->y.hl.h + PLAYER_SIZE)) {
+                player_data->d)) {
             // TODO I think with some bit cleverness we can avoid a lot of work here
             for (i = 0; i < data->n; i++) {
                 j = (((i << LOOPBOY_DOUBLE_OFFSET_LOG2) + (data->d)) & LOOPBOY_WRAPPING_FACTOR) >> 1;
@@ -115,7 +113,7 @@ CollisionResult collision_loopboy(char ix) {
                         data->x.hl.h - j,
                         data->x.hl.h - j + LOOPBOY_SIZE,
                         player_data->x.hl.h,
-                        player_data->x.hl.h + PLAYER_SIZE)) {
+                        player_data->r)) {
                     return ResultFail;
                 }
             }
@@ -127,7 +125,7 @@ CollisionResult collision_loopboy(char ix) {
                 data->y.hl.h,
                 data->y.hl.h + LOOPBOY_SIZE,
                 player_data->y.hl.h,
-                player_data->y.hl.h + PLAYER_SIZE)) {
+                player_data->d)) {
             // TODO I think with some bit cleverness we can avoid a lot of work here
             for (i = 0; i < data->n; i++) {
                 j = (((i << LOOPBOY_DOUBLE_OFFSET_LOG2) + (data->d)) & LOOPBOY_WRAPPING_FACTOR) >> 1;
@@ -136,7 +134,7 @@ CollisionResult collision_loopboy(char ix) {
                         data->x.hl.h + j,
                         data->x.hl.h + j + LOOPBOY_SIZE,
                         player_data->x.hl.h,
-                        player_data->x.hl.h + PLAYER_SIZE)) {
+                        player_data->r)) {
                     return ResultFail;
                 }
             }
@@ -148,7 +146,7 @@ CollisionResult collision_loopboy(char ix) {
                 data->x.hl.h,
                 data->x.hl.h + LOOPBOY_SIZE,
                 player_data->x.hl.h,
-                player_data->x.hl.h + PLAYER_SIZE)) {
+                player_data->r)) {
             // TODO I think with some bit cleverness we can avoid a lot of work here
             for (i = 0; i < data->n; i++) {
                 j = (((i << LOOPBOY_DOUBLE_OFFSET_LOG2) + (data->d)) & LOOPBOY_WRAPPING_FACTOR) >> 1;
@@ -157,7 +155,7 @@ CollisionResult collision_loopboy(char ix) {
                         data->y.hl.h - j,
                         data->y.hl.h - j + LOOPBOY_SIZE,
                         player_data->y.hl.h,
-                        player_data->y.hl.h + PLAYER_SIZE)) {
+                        player_data->d)) {
                     return ResultFail;
                 }
             }
@@ -169,7 +167,7 @@ CollisionResult collision_loopboy(char ix) {
                 data->x.hl.h,
                 data->x.hl.h + LOOPBOY_SIZE,
                 player_data->x.hl.h,
-                player_data->x.hl.h + PLAYER_SIZE)) {
+                player_data->r)) {
             // TODO I think with some bit cleverness we can avoid a lot of work here
             for (i = 0; i < data->n; i++) {
                 j = (((i << LOOPBOY_DOUBLE_OFFSET_LOG2) + (data->d)) & LOOPBOY_WRAPPING_FACTOR) >> 1;
@@ -178,13 +176,14 @@ CollisionResult collision_loopboy(char ix) {
                         data->y.hl.h + j,
                         data->y.hl.h + j + LOOPBOY_SIZE,
                         player_data->y.hl.h,
-                        player_data->y.hl.h + PLAYER_SIZE)) {
+                        player_data->d)) {
                     return ResultFail;
                 }
             }
         }
         break;
   }
+
   return ResultOk;
 }
 

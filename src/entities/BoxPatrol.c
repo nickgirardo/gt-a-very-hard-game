@@ -91,10 +91,9 @@ CollisionResult collision_boxpatrol(char ix) {
                     data.y.hl.h,
                     data.y.hl.h + BOXPATROL_SIZE,
                     player_data->x.hl.h,
-                    player_data->x.hl.h + PLAYER_SIZE,
+                    player_data->r,
                     player_data->y.hl.h,
-                    player_data->y.hl.h + PLAYER_SIZE
-      )) {
+                    player_data->d)) {
     return ResultFail;
   }
 
