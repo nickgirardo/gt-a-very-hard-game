@@ -43,11 +43,7 @@ void draw_secret_reward(char ix) {
 
   text_cursor_x = 2;
   text_cursor_y = 119;
-  print_text("A SUPER PLAYER!");
-
-  text_cursor_x = 120;
-  text_cursor_y = 119;
-  print_char('!');
+  print_text("A SUPER PLAYER!!");
 }
 
 void update_secret_reward(char ix) {
