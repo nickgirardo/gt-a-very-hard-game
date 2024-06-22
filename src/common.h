@@ -6,9 +6,9 @@
 #define ENTITY_TABLE_SIZE 10
 
 // Mostly defining this for debugging purposes
-#define STARTING_LEVEL 0
+#define STARTING_LEVEL 5
 
-#define LEVEL_COUNT 6
+#define LEVEL_COUNT 7
 
 #define MAX_SECRETS 5
 
@@ -24,6 +24,9 @@
 #define TILE_KILL 0xBB
 #define TILE_GOAL 0x14
 #define TILE_GOAL_SECRET 0xFC
+
+#define SCORE_ENTRIES 10
+#define SCORE_NAME_LENGTH 10
 
 typedef enum {
   ModeGame,
@@ -86,6 +89,7 @@ typedef enum {
   EntitySecret,
   EntityMenu,
   EntitySecretReward,
+  EntityScoreEntry,
 } EntityKind;
 
 typedef struct PlayerDataT {
@@ -142,13 +146,25 @@ typedef struct MenuDataT {
   bool completed;
 } MenuData;
 
+typedef struct ScoreEntryDataT {
+  unsigned short score;
+  unsigned char score_ix;
+  char entry[SCORE_NAME_LENGTH];
+} ScoreEntryData;
+
 typedef union EntityDataU {
   PlayerData pd;
   HBlockGroupData hbgd;
   LoopBoyData lbd;
   SecretData sd;
   SecretRewardData srd;
+  ScoreEntryData sed;
 } EntityData;
+
+typedef struct ScoreEntryT {
+  unsigned short score;
+  char name[SCORE_NAME_LENGTH];
+} ScoreEntry;
 
 extern MajorMode major_mode;
 extern EntityKind entities[ENTITY_TABLE_SIZE];

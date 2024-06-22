@@ -13,6 +13,9 @@ void set_cursor(char x, char y);
 void print_text(char* text);
 void print_char(char c);
 
+void print_bcd(unsigned short n);
+void print_bcd_zp(unsigned short n);
+
 extern char text_cursor_x, text_cursor_y, text_print_width, text_print_line_start;
 extern char text_color;
 

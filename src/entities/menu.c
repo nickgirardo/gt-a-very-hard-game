@@ -5,6 +5,7 @@
 #include "../gt/feature/text/text.h"
 
 #include "../credits.h"
+#include "../scores.h"
 
 #include "player.h"
 
@@ -116,7 +117,11 @@ void update_menu(char ix) {
               init_player(21, 41);
               break;
           case MenuScores:
-              major_mode = ModeScores;
+              // TODO point to score tables here
+              if (player1_buttons & INPUT_MASK_C)
+                init_scores(0, "SECRET SCORES!");
+              else
+                init_scores(0, "    SCORES!");
               break;
           case MenuCredits:
               init_credits();

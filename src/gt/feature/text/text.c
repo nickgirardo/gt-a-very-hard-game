@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include "text.h"
 
 #include "../../gametank.h"
@@ -99,4 +100,48 @@ void print_char(char c) {
     vram[START] = 1;
     text_cursor_x += TEXT_CHAR_WIDTH;
     wait();
+}
+
+void print_bcd(unsigned short n) {
+  char i;
+  bool has_printed = false;
+
+  if (n == 0) {
+    print_char('0');
+    return;
+  }
+
+  i = n >> 12;
+  if (i != 0) {
+    print_char('0' + i);
+    has_printed = true;
+  }
+  i = (n >> 8) & 15;
+  if (i != 0 || has_printed) {
+    print_char('0' + i);
+    has_printed = true;
+  }
+  i = (n >> 4) & 15;
+  if (i != 0 || has_printed) {
+    print_char('0' + i);
+    has_printed = true;
+  }
+  i = n & 15;
+  if (i != 0 || has_printed) {
+    print_char('0' + i);
+    has_printed = true;
+  }
+}
+
+void print_bcd_zp(unsigned short n) {
+  char i;
+
+  i = n >> 12;
+  print_char('0' + i);
+  i = (n >> 8) & 15;
+  print_char('0' + i);
+  i = (n >> 4) & 15;
+  print_char('0' + i);
+  i = n & 15;
+  print_char('0' + i);
 }

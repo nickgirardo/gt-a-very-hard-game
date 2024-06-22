@@ -1,3 +1,4 @@
+#include "entities/score_entry.h"
 #include "entities/secret_reward.h"
 #include "gt/banking.h"
 #include "gt/feature/text/text.h"
@@ -11,6 +12,7 @@
 
 #include "credits.h"
 
+#include "scores.h"
 #include "tilemap.h"
 #include "entities/player.h"
 #include "entities/hblockgroup.h"
@@ -26,6 +28,7 @@
 #include "levels/level_three.h"
 #include "levels/level_four.h"
 #include "levels/level_gg.h"
+#include "levels/level_scores.h"
 
 #include "gen/assets/music.h"
 
@@ -42,6 +45,9 @@ unsigned short fail_count;
 
 unsigned char needs_draw_fail_count;
 unsigned char needs_draw_full_level;
+
+ScoreEntry normal_scores[SCORE_ENTRIES];
+ScoreEntry secret_scores[SCORE_ENTRIES];
 
 #define MAX_DEATH_FREEZE 12
 unsigned char death_freeze = 0;
@@ -93,6 +99,9 @@ void init_entities(const unsigned char *data) {
         else
           data += 2;
         break;
+      case EntityScoreEntry:
+        init_score_entry(fail_count);
+        break;
       default:
         // We shouldn't ever hit this branch if our levels are crafted correctly
         // Just hard-lock
@@ -117,37 +126,6 @@ unsigned short inc_bcd(unsigned short n) {
   if ((n & 0xF000) != 0x9000) return n + 0x1000 & 0xF000;
 
   return 0x9999;
-}
-
-void print_bcd(unsigned short n) {
-  char i;
-  bool has_printed = false;
-
-  if (n == 0) {
-    print_char('0');
-    return;
-  }
-
-  i = n >> 12;
-  if (i != 0) {
-    print_char('0' + i);
-    has_printed = true;
-  }
-  i = (n >> 8) & 15;
-  if (i != 0 || has_printed) {
-    print_char('0' + i);
-    has_printed = true;
-  }
-  i = (n >> 4) & 15;
-  if (i != 0 || has_printed) {
-    print_char('0' + i);
-    has_printed = true;
-  }
-  i = n & 15;
-  if (i != 0 || has_printed) {
-    print_char('0' + i);
-    has_printed = true;
-  }
 }
 
 void draw_fail_count() {
@@ -200,6 +178,7 @@ void (*const drawing_fns[])(char) = {
   draw_secret,
   draw_menu,
   draw_secret_reward,
+  draw_score_entry,
 };
 
 CollisionResult (*const test_collision[])(char) = {
@@ -211,6 +190,7 @@ CollisionResult (*const test_collision[])(char) = {
   collision_secret,
   noop_collision,
   noop_collision,
+  update_score_entry,
 };
 
 void (*const update_fns[])(char) = {
@@ -222,6 +202,7 @@ void (*const update_fns[])(char) = {
   update_secret,
   update_menu,
   update_secret_reward,
+  noop,
 };
 
 #define complete_level()                              \
@@ -244,7 +225,7 @@ int main() {
   init_dynawave();
   init_music();
 
-  play_song(&ASSET__music__pressure_mid, REPEAT_LOOP);
+  // play_song(&ASSET__music__pressure_mid, REPEAT_LOOP);
 
   change_rom_bank(BANK_PROG0);
 
@@ -290,6 +271,12 @@ int main() {
   levels[5].reset_data = level_gg_reset_data;
   levels[5].name = level_gg_name;
 
+  levels[6].tilemap = level_scores;
+  levels[6].tilemap_decor = level_scores_decor;
+  levels[6].entities = level_scores_entities;
+  levels[6].reset_data = level_scores_reset_data;
+  levels[6].name = level_scores_name;
+
   init_game();
   // Run forever
 main_loop:
@@ -304,7 +291,7 @@ main_loop:
         run_credits();
         break;
       case ModeScores:
-        while(1) {}
+        run_scores();
         break;
       case ModeGame:
         if (death_freeze == 0) {
