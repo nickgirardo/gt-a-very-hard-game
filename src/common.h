@@ -148,7 +148,7 @@ typedef struct MenuDataT {
 
 typedef struct ScoreEntryDataT {
   unsigned short score;
-  unsigned char score_ix;
+  unsigned char cursor;
   char entry[SCORE_NAME_LENGTH];
 } ScoreEntryData;
 

@@ -6,11 +6,15 @@
 
 #pragma code-name (push, "PROG0")
 
-char next_char[64] = {
-0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49, 0x4a, 0x4b, 0x4c, 0x4d, 0x4e, 0x4f, 0x50,
-0x51, 0x52, 0x53, 0x54, 0x55, 0x56, 0x57, 0x58, 0x59, 0x5a, 0x5b, 0x5c, 0x5d, 0x5e, 0x5f, 0x60,
-0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0x69, 0x6a, 0x6b, 0x6c, 0x6d, 0x6e, 0x6f, 0x70,
-0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79, 0x7a, 0x7b, 0x7c, 0x7d, 0x7e, 0x7f, 0x00,
+#define ENTRY_CHAR_MAP_LENGTH 96
+
+char entry_to_char[ENTRY_CHAR_MAP_LENGTH] = {
+0x00, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49, 0x4a, 0x4b, 0x4c, 0x4d, 0x4e, 0x4f,
+0x50, 0x51, 0x52, 0x53, 0x54, 0x55, 0x56, 0x57, 0x58, 0x59, 0x5a, 0x61, 0x62, 0x63, 0x64, 0x65,
+0x66, 0x67, 0x68, 0x69, 0x6a, 0x6b, 0x6c, 0x6d, 0x6e, 0x6f, 0x70, 0x71, 0x72, 0x73, 0x74, 0x75,
+0x76, 0x77, 0x78, 0x79, 0x7a, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x21,
+0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2a, 0x2b, 0x2c, 0x2d, 0x2e, 0x2f, 0x40, 0x3a,
+0x3b, 0x3c, 0x3d, 0x3e, 0x3f, 0x5b, 0x5c, 0x5d, 0x5e, 0x5f, 0x7b, 0x7c, 0x7d, 0x7e, 0x21, 0x60,
 };
 
 void init_score_entry(unsigned short score) {
@@ -24,16 +28,18 @@ void init_score_entry(unsigned short score) {
       data = (ScoreEntryData *) &entity_data[i];
       data->score = score;
 
-      data->entry[0] = 0x61;
-      data->entry[1] = 0x62;
-      data->entry[2] = 0x63;
-      data->entry[3] = 0x64;
-      data->entry[4] = 0x65;
-      data->entry[5] = 0x66;
-      data->entry[6] = 0x67;
-      data->entry[7] = 0x68;
-      data->entry[8] = 0x69;
-      data->entry[9] = 0x6a;
+      data->cursor = 0;
+
+      data->entry[0] = 0;
+      data->entry[1] = 0;
+      data->entry[2] = 0;
+      data->entry[3] = 0;
+      data->entry[4] = 0;
+      data->entry[5] = 0;
+      data->entry[6] = 0;
+      data->entry[7] = 0;
+      data->entry[8] = 0;
+      data->entry[9] = 0;
 
       return;
     }
@@ -54,12 +60,33 @@ void draw_score_entry(char ix) {
   init_text();
   text_color = TEXT_COLOR_WHITE;
 
-  text_cursor_y = 40;
   text_cursor_x = 24;
+  text_cursor_y = 40;
   print_text("GREAT JOB!");
-  text_cursor_y = 50;
+
   text_cursor_x = 8;
+  text_cursor_y = 50;
   print_text("Enter your name");
+
+  text_cursor_x = 24;
+  text_cursor_y = 70;
+  for (i = 0; i < SCORE_NAME_LENGTH; i++) {
+    print_char(entry_to_char[data.entry[i]]);
+  }
+
+  text_cursor_x = 24 + (data.cursor << 3);
+  text_cursor_y = 80;
+  print_char('^');
+
+  text_cursor_x = 24;
+  text_cursor_y = 100;
+  print_bcd(data.entry[data.cursor]);
+
+  for (i = 0; i < SCORE_NAME_LENGTH; i++) {
+    draw_box(24 + (i << 3), 78, 6, 1, 7);
+  }
+
+  await_draw_queue();
 
 }
 
@@ -68,7 +95,30 @@ CollisionResult update_score_entry(char ix) {
 
   data = (ScoreEntryData *) &entity_data[ix];
 
-  if (player1_new_buttons & (INPUT_MASK_A | INPUT_MASK_START)) {
+  if (player1_new_buttons & (INPUT_MASK_RIGHT | INPUT_MASK_A)) {
+    // NOTE not doing bounds checking here! Below we will check if we've hit the end of the entry
+    data->cursor++;
+  } else if (player1_new_buttons & INPUT_MASK_B) {
+    data->entry[data->cursor] = 0;
+    if (data->cursor != 0)
+      data->cursor--;
+  } else if (player1_new_buttons & INPUT_MASK_LEFT) {
+    if (data->cursor != 0)
+      data->cursor--;
+  } else if (player1_new_buttons & INPUT_MASK_UP) {
+    if (data->entry[data->cursor] == ENTRY_CHAR_MAP_LENGTH - 1)
+      data->entry[data->cursor] = 0;
+    else
+      data->entry[data->cursor]++;
+  } else if (player1_new_buttons & INPUT_MASK_DOWN) {
+    if (data->entry[data->cursor] == 0)
+      data->entry[data->cursor] = ENTRY_CHAR_MAP_LENGTH - 1;
+    else
+      data->entry[data->cursor]--;
+  }
+
+  // Are we all done?
+  if (player1_new_buttons & INPUT_MASK_START || data->cursor == SCORE_NAME_LENGTH) {
     // Return Win when we're done with name entry
     return ResultWin;
   }
