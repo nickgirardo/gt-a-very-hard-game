@@ -29,14 +29,14 @@ void init_loopboy(char x, char y, char n, Direction dir) {
   // This should never be reached!!
 }
 
-#define PREP_DRAW_BLOCK(y)                    \
-    do {                                      \
+#define PREP_DRAW_BLOCK(y)                                            \
+  do {                                                                \
         *dma_flags = flagsMirror | DMA_COLORFILL_ENABLE | DMA_OPAQUE; \
-        vram[GX] = 0;                         \
-        vram[GY] = 0;                         \
-        vram[WIDTH] = LOOPBOY_SIZE;          \
-        vram[HEIGHT] = LOOPBOY_SIZE;         \
-        vram[COLOR] = ~LOOPBOY_COLOR;        \
+        vram[GX] = 0;                                                 \
+        vram[GY] = 0;                                                 \
+        vram[WIDTH] = LOOPBOY_SIZE;                                   \
+        vram[HEIGHT] = LOOPBOY_SIZE;                                  \
+        vram[COLOR] = ~LOOPBOY_COLOR;                                 \
     } while (0)
 
 #define DRAW_BLOCK_X(x)                                     \
