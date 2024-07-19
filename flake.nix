@@ -25,28 +25,34 @@
           cp -r . $out/bin
         '';
       };
-      cc65_ = cc65.outputs.packages.${system}.default;
       avhg = pkgs.stdenv.mkDerivation {
         inherit system;
         name = "A Very Hard Game";
 
         src = gitignore.lib.gitignoreSource ./.;
 
-        nativeBuildInputs = with pkgs; [ gnumake zip nodejs zopfli ];
+        nativeBuildInputs = [
+          cc65.outputs.packages.x86_64-linux.default
+          pkgs.gnumake
+          pkgs.zip
+          pkgs.nodejs
+          pkgs.zopfli
+        ];
 
-        preBuildPhase = ''
-            node ${node_scripts}/bin/build_setup/import_assets.js
-        '';
+        NODE_SCRIPTS="${node_scripts}/bin";
+        CC65_LIB="${cc65.outputs.packages.${system}.default}/share/cc65/lib";
 
-        buildPhase = ''
-            runHook preBuildPhase
+        phases = [
+          "unpackPhase"
+          "patchPhase"
+          "preBuildPhase"
+          "buildPhase"
+          "installPhase"
+        ];
 
-            export PATH="${cc65_}/bin:$PATH"
-            export NODE_SCRIPTS="${node_scripts}/bin"
-            export CC65_LIB="${cc65_}/share/cc65/lib"
+        preBuildPhase = "node $NODE_SCRIPTS/build_setup/import_assets.js";
 
-            make bin/game.gtr
-        '';
+        buildPhase = "make bin/game.gtr";
 
         installPhase = ''
             mkdir -p $out/bin
@@ -59,9 +65,8 @@
       apps.${system} = let
         emu = pkgs.writeShellApplication {
           name = "emulate";
-          text = ''
-            ${GameTankEmulator.outputs.packages.${system}.default}/bin/GameTankEmulator ${avhg}/bin/game.gtr
-          '';
+          runtimeInputs = [ GameTankEmulator.outputs.packages.${system}.default ];
+          text = "GameTankEmulator ${avhg}/bin/game.gtr";
         };
         emulate = {
           type = "app";
