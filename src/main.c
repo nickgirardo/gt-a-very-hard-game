@@ -225,7 +225,7 @@ int main() {
   init_dynawave();
   init_music();
 
-  // play_song(&ASSET__music__pressure_mid, REPEAT_LOOP);
+  play_song(&ASSET__music__pressure_mid, REPEAT_LOOP);
 
   change_rom_bank(BANK_PROG0);
 
