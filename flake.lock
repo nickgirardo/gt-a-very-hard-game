@@ -1,0 +1,84 @@
+{
+  "nodes": {
+    "cc65": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1721330284,
+        "narHash": "sha256-PkzVbH9EKCjGPmbAsS/a2gxkDyqRhthYxzZtpJBjzBU=",
+        "owner": "nickgirardo",
+        "repo": "nix-cc65-unstable",
+        "rev": "b6ce9c5b4dfe5622dc9460da673a907326a23f74",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nickgirardo",
+        "repo": "nix-cc65-unstable",
+        "rev": "b6ce9c5b4dfe5622dc9460da673a907326a23f74",
+        "type": "github"
+      }
+    },
+    "gitignore": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1709087332,
+        "narHash": "sha256-HG2cCnktfHsKV0s4XW83gU3F57gaTljL9KNSuG6bnQs=",
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "rev": "637db329424fd7e46cf4185293b9cc8c88c95394",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1721322227,
+        "narHash": "sha256-OLCPEFVcb7x9xLPDDRd0TDMVmVhdTnhX27WGFNDrcuk=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "2a57b049d44d14b3cba98746e8b66ac0bc4c2963",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "release-24.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1721329042,
+        "narHash": "sha256-kUthEWmOYMRrfdukM0uqoiR6ClUIOy1n3AjYJ7X6eh8=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "232edbd4b6d9fba4017359dc5f23765e94370c7c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "release-24.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "cc65": "cc65",
+        "gitignore": "gitignore",
+        "nixpkgs": "nixpkgs_2"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

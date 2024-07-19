@@ -9,7 +9,8 @@ build/*.bin
 bin
 build
 src/gen
-scripts/converters/node_modules
+scripts/node_modules
 bankMakeList
 gametank-2M.cfg
 imgui.ini
+result

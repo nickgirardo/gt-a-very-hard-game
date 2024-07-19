@@ -1,8 +1,7 @@
 {
-  "name": "fiend-scripts",
+  "name": "setup-scripts",
   "version": "1.0.0",
-  "description": "build scripts for Accursed Fiend",
-  "main": "index.js",
+  "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

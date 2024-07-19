@@ -18,6 +18,8 @@ EMUPATH=../GameTankEmulator
 
 FLASHTOOL = ../GTFO
 
+NODE_SCRIPTS ?= scripts
+
 SDIR = src
 ODIR = build
 
@@ -40,7 +42,8 @@ BINOBJS = $(patsubst %,$(ODIR)/%,$(BINSRC))
 CFLAGS = -t none -Osr --cpu 65c02 --codesize 500 --static-locals -I src/gt
 AFLAGS = --cpu 65C02 --bin-include-dir lib --bin-include-dir $(ODIR)/assets
 LFLAGS = -C gametank-2M.cfg -m $(ODIR)/out.map -vm
-LLIBS = lib/gametank.lib
+
+LLIBS = $(CC65_LIB)/none.lib
 
 C_SRCS := $(shell $(FIND) src -name "*.c")
 COBJS = $(patsubst src/%,$(ODIR)/%,$(C_SRCS:c=o))
@@ -67,14 +70,15 @@ $(BANKS): $(ASSETOBJS) $(AOBJS) $(COBJS) $(LLIBS) gametank-2M.cfg
 .PRECIOUS: $(ODIR)/assets/%.gtg
 $(ODIR)/assets/%.gtg: assets/%.bmp | node_modules
 	@mkdir -p $(@D)
-	cd scripts/converters ;\
-	zopfli --deflate $(shell cd scripts/converters && node sprite_convert.js ../../$< ../../$@)
+	node $(NODE_SCRIPTS)/converters/sprite_convert.js $< $@
+
+$(ODIR)/assets/%.gtg.deflate: $(ODIR)/assets/%.bmp
+	zopfli --deflate $<
 
 .PRECIOUS: $(ODIR)/assets/%.gtm2
 $(ODIR)/assets/%.gtm2: assets/%.mid | node_modules
 	@mkdir -p $(@D)
-	cd scripts/converters ;\
-	node midiconvert.js ../../$< ../../$@
+	node $(NODE_SCRIPTS)/converters/midiconvert.js $< $@
 
 .PRECIOUS: $(ODIR)/assets/%.deflate
 $(ODIR)/assets/%.deflate: $(ODIR)/assets/%
@@ -128,8 +132,6 @@ gametank-2M.cfg: import
 src/gen/assets/%: import
 
 scripts/%/node_modules:
-	cd scripts/$* ;\
-	npm install
 
 dummy%:
 	@:
@@ -148,8 +150,6 @@ flash: $(BANKS)
 
 emulate: bin/$(TARGET)
 	$(EMUPATH)/build/GameTankEmulator bin/$(TARGET)
-
-node_modules: scripts/build_setup/node_modules scripts/converters/node_modules
 
 import: node_modules
 	node ./scripts/build_setup/import_assets.js
