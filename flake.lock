@@ -1,8 +1,27 @@
 {
   "nodes": {
-    "GameTankEmulator": {
+    "GTFO": {
       "inputs": {
         "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1721432295,
+        "narHash": "sha256-gBxFudx0dXJnN1mBjFVZUCNE2CQdo90hQ72Fm7j2YiE=",
+        "owner": "nickgirardo",
+        "repo": "nix-GTFO",
+        "rev": "e159f175b9ef3c2698f8c81a6843fac2fd3fcef0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nickgirardo",
+        "repo": "nix-GTFO",
+        "rev": "e159f175b9ef3c2698f8c81a6843fac2fd3fcef0",
+        "type": "github"
+      }
+    },
+    "GameTankEmulator": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "lastModified": 1721328933,
@@ -21,7 +40,7 @@
     },
     "cc65": {
       "inputs": {
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "lastModified": 1721330284,
@@ -76,6 +95,22 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1721162132,
+        "narHash": "sha256-kH2unTqd/LlqG1NGbuUlRkDmXwCf80PNLNCjO3acQqI=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "265595f550a572703d10a9db94a9ded793f21dfc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "release-24.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1721322227,
         "narHash": "sha256-OLCPEFVcb7x9xLPDDRd0TDMVmVhdTnhX27WGFNDrcuk=",
         "owner": "nixos",
@@ -90,7 +125,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1721329042,
         "narHash": "sha256-kUthEWmOYMRrfdukM0uqoiR6ClUIOy1n3AjYJ7X6eh8=",
@@ -108,10 +143,11 @@
     },
     "root": {
       "inputs": {
+        "GTFO": "GTFO",
         "GameTankEmulator": "GameTankEmulator",
         "cc65": "cc65",
         "gitignore": "gitignore",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_4"
       }
     }
   },

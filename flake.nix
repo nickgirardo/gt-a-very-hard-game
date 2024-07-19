@@ -9,9 +9,10 @@
     };
     cc65.url = "github:nickgirardo/nix-cc65-unstable/b6ce9c5b4dfe5622dc9460da673a907326a23f74";
     GameTankEmulator.url = "github:nickgirardo/nix-GameTankEmulator/12b36c60a5f0da85405b6c02df8b5e911079481d";
+    GTFO.url = "github:nickgirardo/nix-GTFO/e159f175b9ef3c2698f8c81a6843fac2fd3fcef0";
   };
 
-  outputs = { self, nixpkgs, gitignore, cc65, GameTankEmulator }:
+  outputs = { self, nixpkgs, gitignore, cc65, GameTankEmulator, GTFO }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
@@ -56,7 +57,7 @@
 
         installPhase = ''
             mkdir -p $out/bin
-            cp bin/game.gtr $out/bin
+            cp -r bin $out
         '';
       };
 
@@ -72,8 +73,23 @@
           type = "app";
           program = "${emu}/bin/emulate";
         };
+        flash_ = pkgs.writeShellApplication {
+          name = "flash";
+          runtimeInputs = [ GTFO.outputs.packages.${system}.default ];
+          text = ''
+               if [ "$#" -ne 1 ]; then
+                  echo "Please specify the port to flash onto"
+                  exit 1
+               fi
+               GTFO -p "$1" ${avhg}/bin/game.gtr.bank*
+            '';
+        };
+        flash = {
+          type = "app";
+          program = "${flash_}/bin/flash";
+        };
       in {
-        inherit emulate;
+        inherit emulate flash;
         default = emulate;
       };
     };
