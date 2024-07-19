@@ -8,9 +8,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     cc65.url = "github:nickgirardo/nix-cc65-unstable/b6ce9c5b4dfe5622dc9460da673a907326a23f74";
+    GameTankEmulator.url = "github:nickgirardo/nix-GameTankEmulator/12b36c60a5f0da85405b6c02df8b5e911079481d";
   };
 
-  outputs = { self, nixpkgs, gitignore, cc65 }:
+  outputs = { self, nixpkgs, gitignore, cc65, GameTankEmulator }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
@@ -25,8 +26,7 @@
         '';
       };
       cc65_ = cc65.outputs.packages.${system}.default;
-    in {
-      packages.${system}.default = pkgs.stdenv.mkDerivation {
+      avhg = pkgs.stdenv.mkDerivation {
         inherit system;
         name = "A Very Hard Game";
 
@@ -52,6 +52,24 @@
         '';
 
         installPhase = "ls -la";
+      };
+
+    in {
+      packages.${system}.default = avhg;
+      apps.${system} = let
+        emu = pkgs.writeShellApplication {
+          name = "emulate";
+          text = ''
+            ${GameTankEmulator.outputs.packages.${system}.default}/bin/GameTankEmulator ${avhg}/bin/game.gtr
+          '';
+        };
+        emulate = {
+          type = "app";
+          program = "${emu}/bin/emulate";
+        };
+      in {
+        inherit emulate;
+        default = emulate;
       };
     };
 }
