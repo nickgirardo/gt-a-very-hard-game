@@ -6,7 +6,7 @@
 #define ENTITY_TABLE_SIZE 10
 
 // Mostly defining this for debugging purposes
-#define STARTING_LEVEL 5
+#define STARTING_LEVEL 0
 
 #define LEVEL_COUNT 7
 
