@@ -32,7 +32,7 @@
         src = gitignore.lib.gitignoreSource ./.;
 
         nativeBuildInputs = [
-          cc65.outputs.packages.x86_64-linux.default
+          cc65.outputs.packages.${system}.default
           pkgs.gnumake
           pkgs.zip
           pkgs.nodejs
