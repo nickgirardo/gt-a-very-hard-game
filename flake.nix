@@ -46,12 +46,12 @@
             export CC65_LIB="${cc65_}/share/cc65/lib"
 
             make bin/game.gtr
+        '';
 
+        installPhase = ''
             mkdir -p $out/bin
             cp bin/game.gtr $out/bin
         '';
-
-        installPhase = "ls -la";
       };
 
     in {
