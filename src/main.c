@@ -54,11 +54,11 @@ unsigned char death_freeze = 0;
 
 LevelData levels[LEVEL_COUNT];
 
-void noop(char ix) {
+void noop(void) {
   return;
 }
 
-CollisionResult noop_collision(char ix) {
+CollisionResult noop_collision(void) {
   return ResultOk;
 }
 
@@ -111,12 +111,12 @@ void init_entities(const unsigned char *data) {
   }
 }
 
-void draw_level_name(char *name) {
+void draw_level_name(const char *name) {
     init_text();
     text_cursor_x = 1;
     text_cursor_y = 7;
     text_color = TEXT_COLOR_WHITE;
-    print_text(name);
+    print_text((char *)name);
 }
 
 unsigned short inc_bcd(unsigned short n) {
@@ -170,7 +170,7 @@ void init_game() {
 }
 
 void (*const drawing_fns[])(char) = {
-  noop,
+  (void (*const)(char))noop,
   draw_player,
   draw_hblockgroup,
   draw_loopboy,
@@ -182,27 +182,27 @@ void (*const drawing_fns[])(char) = {
 };
 
 CollisionResult (*const test_collision[])(char) = {
-  noop_collision,
+  (CollisionResult (*const)(char))noop_collision,
   update_player,
   collision_hblockgroup,
   collision_loopboy,
   collision_boxpatrol,
   collision_secret,
-  noop_collision,
-  noop_collision,
+  (CollisionResult (*const)(char))noop_collision,
+  (CollisionResult (*const)(char))noop_collision,
   update_score_entry,
 };
 
 void (*const update_fns[])(char) = {
-  noop,
-  noop,
+  (void (*const)(char))noop,
+  (void (*const)(char))noop,
   update_hblockgroup,
   update_loopboy,
   update_boxpatrol,
-  update_secret,
+  (void (*const)(char))noop,
   update_menu,
   update_secret_reward,
-  noop,
+  (void (*const)(char))noop,
 };
 
 #define complete_level()                              \

@@ -24,8 +24,6 @@ void wait();
 
 void init_dynawave()
 {
-    int offset, shiftcount;
-    char pagecount;
     *audio_rate = 0x7F;
 
     change_rom_bank(128);
@@ -38,7 +36,7 @@ void init_dynawave()
     while(*WAVE_TABLE_LOCATION == 0) {
         
     }
-    wavetable_page = 0x3000 + *WAVE_TABLE_LOCATION;
+    wavetable_page = (char *)0x3000 + *WAVE_TABLE_LOCATION;
     sine_offset = *((char*)0x3003);
 }
 

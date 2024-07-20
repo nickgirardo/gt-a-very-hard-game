@@ -50,7 +50,7 @@ void init_score_entry(unsigned short score) {
 
 void draw_score_entry(char ix) {
   ScoreEntryData data;
-  unsigned char i, j;
+  unsigned char i;
 
   data = *((ScoreEntryData *) &entity_data[ix]);
 

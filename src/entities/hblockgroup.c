@@ -98,7 +98,6 @@ CollisionResult collision_hblockgroup(char ix) {
 
 void update_hblockgroup(char ix) {
   HBlockGroupData *data;
-  char i;
 
   data = (HBlockGroupData *) &entity_data[ix];
 

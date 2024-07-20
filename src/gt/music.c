@@ -144,7 +144,7 @@ void play_song(const unsigned char* song, char bank_num, char loop) {
     push_song_stack();
     music_state.bank = bank_num;
     change_rom_bank(music_state.bank);
-    music_state.cursor = song;
+    music_state.cursor = (unsigned char*)song;
 
     for(n = 0; n < NUM_FM_OPS; ++n) {
         audio_amplitudes[n] = 0;
@@ -323,7 +323,7 @@ void stop_music() {
     //flush_audio_params();
 }
 
-void play_sound_effect(char* sfx_ptr, char sfx_bank, char priority) {
+void play_sound_effect(unsigned char* sfx_ptr, char sfx_bank, char priority) {
     if(priority < sound_effect_priority) return;
     sound_effect_priority = priority;
     sound_effect_bank = sfx_bank;

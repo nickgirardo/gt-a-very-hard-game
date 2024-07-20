@@ -63,11 +63,11 @@ typedef enum {
 } CollisionResult;
 
 typedef struct LevelDataT {
-  unsigned char *tilemap;
-  unsigned char *tilemap_decor;
-  unsigned char *entities;
-  unsigned char *reset_data;
-  char *name;
+  const unsigned char *tilemap;
+  const unsigned char *tilemap_decor;
+  const unsigned char *entities;
+  const unsigned char *reset_data;
+  const char *name;
 } LevelData;
 
 typedef struct HLT {

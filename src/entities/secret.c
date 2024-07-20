@@ -21,20 +21,15 @@ void init_secret(char x, char y) {
 };
 
 // Secrets are not drawn
-void draw_secret(char ix) {
 #ifdef RENDER_SECRETS
+void draw_secret(char ix) {
   SecretData data;
 
   data = *((SecretData *) &entity_data[ix]);
   draw_box(data.x, data.y, 1, 1, 1);
+  return;
+}
 #endif
-  return;
-}
-
-// Secrets have no non-collision updates
-void update_secret(char ix) {
-  return;
-}
 
 CollisionResult collision_secret(char ix) {
   SecretData data;
