@@ -10,14 +10,23 @@
 ScoreEntry *scores;
 char *name;
 
+unsigned char needs_draw;
+
 void init_scores(ScoreEntry *_scores, char *_name) {
     major_mode = ModeScores;
     scores = _scores;
     name = _name;
+
+    needs_draw = 2;
 }
 
 void run_scores() {
     unsigned char i, j;
+
+    if (needs_draw == 0)
+      return;
+
+    needs_draw--;
 
     clear_screen(0);
     clear_border(0);
@@ -29,8 +38,6 @@ void run_scores() {
 
     text_cursor_y = 10;
     text_cursor_x = 10;
-    // text_cursor_x = 40;
-    // TODO name here
     print_text(name);
 
     text_cursor_y = 22;
