@@ -175,4 +175,7 @@ extern unsigned char tilemap_decor[64];
 extern void init_game();
 extern void reset_level();
 
+extern ScoreEntry normal_scores[SCORE_ENTRIES];
+extern ScoreEntry secret_scores[SCORE_ENTRIES];
+
 #endif // COMMON_H_

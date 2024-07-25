@@ -119,9 +119,9 @@ void update_menu(char ix) {
           case MenuScores:
               // TODO point to score tables here
               if (player1_buttons & INPUT_MASK_C)
-                init_scores(0, "SECRET SCORES!");
+                init_scores(secret_scores, "SECRET SCORES!");
               else
-                init_scores(0, "    SCORES!");
+                init_scores(normal_scores, "    SCORES!");
               break;
           case MenuCredits:
               init_credits();
