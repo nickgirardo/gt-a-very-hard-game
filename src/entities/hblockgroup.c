@@ -5,6 +5,8 @@
 #include "../gt/banking.h"
 #include "player.h"
 
+#pragma code-name (push, "PROG0")
+
 void init_hblockgroup(char x, char y, char n, char d, char vel_hi, char vel_lo) {
   HBlockGroupData *data;
   char i;
@@ -113,3 +115,5 @@ void update_hblockgroup(char ix) {
   }
 
 }
+
+#pragma code-name (pop)

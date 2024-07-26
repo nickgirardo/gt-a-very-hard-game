@@ -3,6 +3,8 @@
 #include "../gt/drawing_funcs.h"
 #include "player.h"
 
+#pragma code-name (push, "PROG0")
+
 void init_boxpatrol(char x, char y, char w, char h, Direction dir, char offset) {
   BoxPatrolData *data;
   char i;
@@ -99,3 +101,5 @@ CollisionResult collision_boxpatrol(char ix) {
 
   return ResultOk;
 }
+
+#pragma code-name (pop)
