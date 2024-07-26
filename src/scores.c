@@ -25,6 +25,8 @@ void init_scores() {
 
   if (saved_magic_number == MAGIC_NUMBER) {
     // load saved scores
+    memcpy(&normal_scores, &saved_normal_scores, SCORE_ENTRIES * sizeof(ScoreEntry));
+    memcpy(&secret_scores, &saved_secret_scores, SCORE_ENTRIES * sizeof(ScoreEntry));
   } else {
     // initialize score table
     i = MAGIC_NUMBER;
