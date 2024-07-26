@@ -219,6 +219,8 @@ void (*const update_fns[])(char) = {
 int main() {
   char i;
 
+  init_scores();
+
   init_graphics();
   load_font(0);
 
