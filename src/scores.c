@@ -3,6 +3,7 @@
 #include <string.h>
 #include "common.h"
 
+#include "gt/gametank.h"
 #include "gt/drawing_funcs.h"
 #include "gt/persist.h"
 #include "gt/feature/text/text.h"
@@ -15,10 +16,63 @@ char *name;
 unsigned char needs_draw;
 
 #pragma code-name (push, "SAVE")
-unsigned char saved_magic_number;
+char saved_magic_number;
 ScoreEntry saved_normal_scores[SCORE_ENTRIES];
 ScoreEntry saved_secret_scores[SCORE_ENTRIES];
 #pragma code-name (pop)
+
+char get_new_score_index(ScoreEntry *score_table, unsigned short score) {
+  signed char i;
+  // Default ret to -1, it will be updated as we find new better scores
+  // -1 will be returned if no scores are better than the new score
+  signed char ret = -1;
+
+  for (i = SCORE_ENTRIES - 1; i >= 0; i--) {
+    if (score < score_table[i].score) {
+      ret = i;
+    } else {
+      return ret;
+    }
+  }
+
+  return ret;
+}
+
+// Copy the scores from normal RAM to persistant storage
+void persist_scores() {
+  char i = MAGIC_NUMBER;
+
+  clear_save_sector();
+  save_write(&i, &saved_magic_number, sizeof(unsigned char));
+
+  save_write(&normal_scores, &saved_normal_scores, SCORE_ENTRIES * sizeof(ScoreEntry));
+  save_write(&secret_scores, &saved_secret_scores, SCORE_ENTRIES * sizeof(ScoreEntry));
+}
+
+void save_new_score(ScoreEntry *score_table, unsigned short score, const char *name) {
+  signed char score_ix, i;
+
+  score_ix = get_new_score_index(score_table, score);
+
+  // This new score is worse than all existing scores :(
+  // It should not be saved so there is no work left to be done
+  if (score_ix == -1)
+    return;
+
+  // Move all scores worse than the new score down a slot
+  // This removes the old worst score from the list by overwriting it
+  for (i = SCORE_ENTRIES - 2; i > score_ix; i--) {
+    memcpy(&score_table[i + 1], &score_table[i], sizeof(ScoreEntry));
+  }
+
+  // Write the new score into its slot
+  score_table[score_ix].score = score;
+  memcpy(score_table[score_ix].name, name, SCORE_NAME_LENGTH * sizeof(char));
+
+
+  // Write the updated tables to persistent storage
+  persist_scores();
+}
 
 void init_scores() {
   unsigned char i;
@@ -28,12 +82,6 @@ void init_scores() {
     memcpy(&normal_scores, &saved_normal_scores, SCORE_ENTRIES * sizeof(ScoreEntry));
     memcpy(&secret_scores, &saved_secret_scores, SCORE_ENTRIES * sizeof(ScoreEntry));
   } else {
-    // initialize score table
-    i = MAGIC_NUMBER;
-
-    clear_save_sector();
-    save_write(&i, &saved_magic_number, sizeof(unsigned char));
-
     normal_scores[0].score = 0x9999;
     normal_scores[0].name[0] = 't';
     normal_scores[0].name[1] = 'e';
@@ -63,8 +111,7 @@ void init_scores() {
       memcpy(&secret_scores[i], &secret_scores[0], sizeof(ScoreEntry));
     }
 
-    save_write(&normal_scores, &saved_normal_scores, SCORE_ENTRIES * sizeof(ScoreEntry));
-    save_write(&secret_scores, &saved_secret_scores, SCORE_ENTRIES * sizeof(ScoreEntry));
+    persist_scores();
   }
 }
 
