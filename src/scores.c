@@ -68,10 +68,6 @@ void save_new_score(ScoreEntry *score_table, unsigned short score, const char *n
   // Write the new score into its slot
   score_table[score_ix].score = score;
   memcpy(score_table[score_ix].name, name, SCORE_NAME_LENGTH * sizeof(char));
-
-
-  // Write the updated tables to persistent storage
-  persist_scores();
 }
 
 void init_scores() {

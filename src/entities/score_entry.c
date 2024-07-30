@@ -130,6 +130,8 @@ CollisionResult update_score_entry(char ix) {
     if (secrets_collected == MAX_SECRETS)
 	save_new_score(secret_scores, data->score, data->entry);
 
+    persist_scores();
+
     // Return Win when we're done with name entry
     return ResultWin;
   }
