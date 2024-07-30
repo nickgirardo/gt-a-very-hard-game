@@ -78,10 +78,6 @@ void draw_score_entry(char ix) {
   text_cursor_y = 80;
   print_char('^');
 
-  text_cursor_x = 24;
-  text_cursor_y = 100;
-  print_bcd(data.entry[data.cursor]);
-
   for (i = 0; i < SCORE_NAME_LENGTH; i++) {
     draw_box(24 + (i << 3), 78, 6, 1, 7);
   }
