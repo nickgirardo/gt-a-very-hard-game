@@ -8,5 +8,6 @@ void init_scores();
 void enter_score_mode(ScoreEntry *scores, char *name);
 void run_scores();
 
+void save_new_score(ScoreEntry *score_table, unsigned short score, const char *name);
 
 #endif // SCORES_H_

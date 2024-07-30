@@ -4,6 +4,8 @@
 #include "../gt/feature/text/text.h"
 #include "../gt/drawing_funcs.h"
 
+#include "../scores.h"
+
 #pragma code-name (push, "PROG0")
 
 #define ENTRY_CHAR_MAP_LENGTH 96
@@ -88,6 +90,7 @@ void draw_score_entry(char ix) {
 
 CollisionResult update_score_entry(char ix) {
   ScoreEntryData *data;
+  char i;
 
   data = (ScoreEntryData *) &entity_data[ix];
 
@@ -115,6 +118,18 @@ CollisionResult update_score_entry(char ix) {
 
   // Are we all done?
   if (player1_new_buttons & INPUT_MASK_START || data->cursor == SCORE_NAME_LENGTH) {
+    // Convert the entry numbers to their actual char values
+    for (i = 0; i < SCORE_NAME_LENGTH; i++) {
+      data->entry[i] = entry_to_char[data->entry[i]];
+    }
+
+    // Always save scores to the normal scores table
+    save_new_score(normal_scores, data->score, data->entry);
+
+    // Only save scores to the secret scores table if all secrets have been collected
+    if (secrets_collected == MAX_SECRETS)
+	save_new_score(secret_scores, data->score, data->entry);
+
     // Return Win when we're done with name entry
     return ResultWin;
   }

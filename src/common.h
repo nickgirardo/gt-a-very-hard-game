@@ -178,4 +178,6 @@ extern void reset_level();
 extern ScoreEntry normal_scores[SCORE_ENTRIES];
 extern ScoreEntry secret_scores[SCORE_ENTRIES];
 
+extern unsigned char secrets_collected;
+
 #endif // COMMON_H_
