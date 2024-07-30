@@ -6,6 +6,7 @@
 #include "gt/gametank.h"
 #include "gt/drawing_funcs.h"
 #include "gt/persist.h"
+#include "gt/input.h"
 #include "gt/feature/text/text.h"
 
 #define MAGIC_NUMBER 42
@@ -121,6 +122,10 @@ void enter_score_mode(ScoreEntry *_scores, char *_name) {
 
 void run_scores() {
     unsigned char i, j;
+
+    // Finished with checking out scores
+    if (player1_new_buttons & INPUT_MASK_START || player1_new_buttons & INPUT_MASK_A)
+      init_game();
 
     if (needs_draw == 0)
       return;
