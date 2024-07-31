@@ -62,7 +62,7 @@ void save_new_score(ScoreEntry *score_table, unsigned short score, const char *n
 
   // Move all scores worse than the new score down a slot
   // This removes the old worst score from the list by overwriting it
-  for (i = SCORE_ENTRIES - 2; i > score_ix; i--) {
+  for (i = SCORE_ENTRIES - 2; i >= score_ix; i--) {
     memcpy(&score_table[i + 1], &score_table[i], sizeof(ScoreEntry));
   }
 
