@@ -80,28 +80,28 @@ void init_scores() {
     memcpy(&secret_scores, &saved_secret_scores, SCORE_ENTRIES * sizeof(ScoreEntry));
   } else {
     normal_scores[0].score = 0x9999;
-    normal_scores[0].name[0] = 't';
-    normal_scores[0].name[1] = 'e';
-    normal_scores[0].name[2] = 's';
-    normal_scores[0].name[3] = 't';
-    normal_scores[0].name[4] = '_';
-    normal_scores[0].name[5] = 'n';
-    normal_scores[0].name[6] = 'a';
-    normal_scores[0].name[7] = 'm';
-    normal_scores[0].name[8] = 'e';
-    normal_scores[0].name[9] = '!';
+    normal_scores[0].name[0] = '.';
+    normal_scores[0].name[1] = '.';
+    normal_scores[0].name[2] = '.';
+    normal_scores[0].name[3] = '.';
+    normal_scores[0].name[4] = '.';
+    normal_scores[0].name[5] = '.';
+    normal_scores[0].name[6] = '.';
+    normal_scores[0].name[7] = '.';
+    normal_scores[0].name[8] = '.';
+    normal_scores[0].name[9] = '.';
 
-    secret_scores[0].score = 0x6789;
-    secret_scores[0].name[0] = 's';
-    secret_scores[0].name[1] = 'e';
-    secret_scores[0].name[2] = 'c';
-    secret_scores[0].name[3] = 'r';
-    secret_scores[0].name[4] = 'e';
-    secret_scores[0].name[5] = 't';
-    secret_scores[0].name[6] = '!';
-    secret_scores[0].name[7] = '!';
-    secret_scores[0].name[8] = '!';
-    secret_scores[0].name[9] = '!';
+    secret_scores[0].score = 0x9999;
+    secret_scores[0].name[0] = '.';
+    secret_scores[0].name[1] = '.';
+    secret_scores[0].name[2] = '.';
+    secret_scores[0].name[3] = '.';
+    secret_scores[0].name[4] = '.';
+    secret_scores[0].name[5] = '.';
+    secret_scores[0].name[6] = '.';
+    secret_scores[0].name[7] = '.';
+    secret_scores[0].name[8] = '.';
+    secret_scores[0].name[9] = '.';
 
     for (i = 1; i < SCORE_ENTRIES; i++) {
       memcpy(&normal_scores[i], &normal_scores[0], sizeof(ScoreEntry));
