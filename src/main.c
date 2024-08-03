@@ -307,6 +307,7 @@ main_loop:
                 death_freeze = MAX_DEATH_FREEZE;
                 goto main_loop;
               case ResultWin:
+                play_sound_effect(&ASSET__sfx__win_bin, 2);
                 complete_level();
                 goto main_loop;
               case ResultGetSecret:
@@ -314,6 +315,7 @@ main_loop:
                 tilemap_get_secret();
                 break;
               case ResultSecretWin:
+                play_sound_effect(&ASSET__sfx__win_bin, 2);
                 secrets_collected++;
                 complete_level();
                 goto main_loop;
