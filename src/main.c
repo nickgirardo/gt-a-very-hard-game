@@ -31,6 +31,7 @@
 #include "levels/level_scores.h"
 
 #include "gen/assets/music.h"
+#include "gen/assets/sfx.h"
 
 EntityKind entities[ENTITY_TABLE_SIZE];
 PlayerData *player_data;
@@ -227,7 +228,7 @@ int main() {
   init_dynawave();
   init_music();
 
-  play_song(&ASSET__music__pressure_mid, REPEAT_LOOP);
+  play_song(&ASSET__music__avhg_mid, REPEAT_LOOP);
 
   change_rom_bank(BANK_PROG0);
 
@@ -302,7 +303,7 @@ main_loop:
               case ResultOk:
                 break;
               case ResultFail:
-                play_sound_effect(&ASSET__music__sfx_bin, 2);
+                play_sound_effect(&ASSET__sfx__fail_bin, 2);
                 death_freeze = MAX_DEATH_FREEZE;
                 goto main_loop;
               case ResultWin:
