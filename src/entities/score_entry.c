@@ -1,8 +1,11 @@
 #include "score_entry.h"
 
 #include "../gt/input.h"
+#include "../gt/music.h"
 #include "../gt/feature/text/text.h"
 #include "../gt/drawing_funcs.h"
+
+#include "../gen/assets/sfx.h"
 
 #include "../scores.h"
 
@@ -93,6 +96,18 @@ CollisionResult update_score_entry(char ix) {
   char i;
 
   data = (ScoreEntryData *) &entity_data[ix];
+
+  // Play a sfx if any of the relevant buttons are pressed
+  if (player1_new_buttons &
+      (INPUT_MASK_RIGHT |
+       INPUT_MASK_LEFT |
+       INPUT_MASK_UP |
+       INPUT_MASK_DOWN |
+       INPUT_MASK_A |
+       INPUT_MASK_B |
+       INPUT_MASK_START)) {
+    play_sound_effect(&ASSET__sfx__menu_bin, 2);
+  }
 
   if (player1_new_buttons & (INPUT_MASK_RIGHT | INPUT_MASK_A)) {
     // NOTE not doing bounds checking here! Below we will check if we've hit the end of the entry

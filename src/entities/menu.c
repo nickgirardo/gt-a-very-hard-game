@@ -2,7 +2,10 @@
 
 #include "../gt/input.h"
 #include "../gt/drawing_funcs.h"
+#include "../gt/music.h"
 #include "../gt/feature/text/text.h"
+
+#include "../gen/assets/sfx.h"
 
 #include "../credits.h"
 #include "../scores.h"
@@ -112,25 +115,29 @@ void update_menu(char ix) {
   if (player1_new_buttons & (INPUT_MASK_A | INPUT_MASK_START)) {
       switch (data->selection) {
           case MenuPlay:
+              play_sound_effect(&ASSET__sfx__menu_bin, 2);
               data->completed = true;
               // TODO hardcoding for now
               init_player(21, 41);
               break;
           case MenuScores:
-              // TODO point to score tables here
+              play_sound_effect(&ASSET__sfx__menu_bin, 2);
               if (player1_buttons & INPUT_MASK_C)
                 enter_score_mode(secret_scores, "SECRET SCORES!");
               else
                 enter_score_mode(normal_scores, "    SCORES!");
               break;
           case MenuCredits:
+              play_sound_effect(&ASSET__sfx__menu_bin, 2);
               init_credits();
               break;
       }
   } else if (player1_new_buttons & INPUT_MASK_DOWN) {
+    play_sound_effect(&ASSET__sfx__menu_bin, 2);
     data->blink_timer = 0;
     data->selection = next_menu_option(data->selection);
   } else if (player1_new_buttons & INPUT_MASK_UP) {
+    play_sound_effect(&ASSET__sfx__menu_bin, 2);
     data->blink_timer = 0;
     data->selection = prev_menu_option(data->selection);
   }
