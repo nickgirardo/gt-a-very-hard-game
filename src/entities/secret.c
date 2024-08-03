@@ -14,6 +14,7 @@ void init_secret(char x, char y) {
 
       data->x = x;
       data->y = y;
+      data->collected = false;
 
       return;
     }
@@ -32,17 +33,18 @@ void draw_secret(char ix) {
 #endif
 
 CollisionResult collision_secret(char ix) {
-  SecretData data;
+  SecretData *data;
 
-  data = *((SecretData *) &entity_data[ix]);
+  data = (SecretData *) &entity_data[ix];
 
-  if (point_collision(
-          data.x,
-          data.y,
+  if (!data->collected && point_collision(
+          data->x,
+          data->y,
           player_data->x.hl.h,
           player_data->r,
           player_data->y.hl.h,
           player_data->d)) {
+    data->collected = true;
     return ResultGetSecret;
   }
 

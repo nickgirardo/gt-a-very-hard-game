@@ -310,6 +310,7 @@ main_loop:
                 complete_level();
                 goto main_loop;
               case ResultGetSecret:
+                play_sound_effect(&ASSET__sfx__secret_bin, 2);
                 tilemap_get_secret();
                 break;
               case ResultSecretWin:
