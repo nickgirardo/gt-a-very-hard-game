@@ -61,8 +61,67 @@
         '';
       };
 
+      web-emulator = let
+        SDL2_rev = "release-2.28.4";
+        SDL2 = pkgs.fetchzip {
+          url = "https://github.com/libsdl-org/SDL/archive/${SDL2_rev}.zip";
+          hash = "sha256-1+1m0s3pBCTu924J/4aIu4IHk/N88x2djWDEsDpAJn4=";
+        };
+        GTE_rev = "dafde8e09e4f5a5135f4ec393f1c35952df8a847";
+      in pkgs.stdenv.mkDerivation {
+        inherit system;
+        name = "AVHG Web Emulator";
+
+        src = pkgs.fetchgit {
+          url = "https://github.com/clydeshaffer/GameTankEmulator.git";
+          rev = GTE_rev;
+          sha256 = "sha256-G5/OBAcnR2oGRTL0Uijrxzcpow37rKYc5NMJR6DdiFI=";
+          fetchSubmodules = true;
+        };
+
+        nativeBuildInputs = [
+          avhg
+          pkgs.emscripten
+          pkgs.gnumake
+          pkgs.zip
+          pkgs.unzip
+        ];
+
+        phases = [
+          "unpackPhase"
+          "patchPhase"
+          "configurePhase"
+          "buildPhase"
+          "installPhase"
+        ];
+
+        # Envars for building the emulator
+        MANUAL_COMMIT_HASH=GTE_rev;
+        EMCC_LOCAL_PORTS="sdl2=${SDL2}";
+        ROMFILE="roms/avhg.gtr";
+
+        buildPhase = ''
+          mkdir -p $NIX_BUILD_TOP/cache
+
+          # Set our rom up
+          # TODO this will fail if the destination name already exists in roms/
+          cp ${avhg}/bin/game.gtr $ROMFILE
+
+          EM_CACHE=$NIX_BUILD_TOP/cache OS=wasm make dist
+        '';
+
+        installPhase = ''
+          mkdir -p $out/dist
+          unzip dist/GTE_wasm.zip -d $out/dist
+          cp dist/GTE_wasm.zip $out
+        '';
+      };
+
     in {
-      packages.${system}.default = avhg;
+      packages.${system} = {
+          inherit avhg web-emulator;
+          default = avhg;
+      };
       apps.${system} = let
         emu = pkgs.writeShellApplication {
           name = "emulate";
@@ -72,6 +131,20 @@
         emulate = {
           type = "app";
           program = "${emu}/bin/emulate";
+        };
+        emu-web = pkgs.writeShellApplication {
+          name = "emulate-web";
+          runtimeInputs = [ pkgs.caddy ];
+          text = ''
+            # Takes the port as first argument
+            # Default to port 8080
+            PORT="''${1:-8080}"
+            caddy file-server --listen :"$PORT" --root ${web-emulator.outPath}/dist
+          '';
+        };
+        emulate-web = {
+          type = "app";
+          program = "${emu-web}/bin/emulate-web";
         };
         flash_ = pkgs.writeShellApplication {
           name = "flash";
@@ -89,7 +162,7 @@
           program = "${flash_}/bin/flash";
         };
       in {
-        inherit emulate flash;
+        inherit emulate emulate-web flash;
         default = emulate;
       };
     };
