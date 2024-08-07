@@ -8,7 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     cc65.url = "github:nickgirardo/nix-cc65-unstable/b6ce9c5b4dfe5622dc9460da673a907326a23f74";
-    GameTankEmulator.url = "github:nickgirardo/nix-GameTankEmulator/12b36c60a5f0da85405b6c02df8b5e911079481d";
+    GameTankEmulator.url = "github:nickgirardo/nix-GameTankEmulator/b079c32200dddf99ddf76d071e982368d6086a18";
     GTFO.url = "github:nickgirardo/nix-GTFO/e159f175b9ef3c2698f8c81a6843fac2fd3fcef0";
   };
 
@@ -61,62 +61,11 @@
         '';
       };
 
-      web-emulator = let
-        SDL2_rev = "release-2.28.4";
-        SDL2 = pkgs.fetchzip {
-          url = "https://github.com/libsdl-org/SDL/archive/${SDL2_rev}.zip";
-          hash = "sha256-1+1m0s3pBCTu924J/4aIu4IHk/N88x2djWDEsDpAJn4=";
-        };
-        GTE_rev = "dafde8e09e4f5a5135f4ec393f1c35952df8a847";
-      in pkgs.stdenv.mkDerivation {
-        inherit system;
-        name = "AVHG Web Emulator";
-
-        src = pkgs.fetchgit {
-          url = "https://github.com/clydeshaffer/GameTankEmulator.git";
-          rev = GTE_rev;
-          sha256 = "sha256-G5/OBAcnR2oGRTL0Uijrxzcpow37rKYc5NMJR6DdiFI=";
-          fetchSubmodules = true;
-        };
-
-        nativeBuildInputs = [
-          avhg
-          pkgs.emscripten
-          pkgs.gnumake
-          pkgs.zip
-          pkgs.unzip
-        ];
-
-        phases = [
-          "unpackPhase"
-          "patchPhase"
-          "configurePhase"
-          "buildPhase"
-          "installPhase"
-        ];
-
-        # Envars for building the emulator
-        MANUAL_COMMIT_HASH=GTE_rev;
-        EMCC_LOCAL_PORTS="sdl2=${SDL2}";
-        ROMFILE="roms/avhg.gtr";
-
-        buildPhase = ''
-          mkdir -p $NIX_BUILD_TOP/cache
-
-          # Set our rom up
-          # TODO this will fail if the destination name already exists in roms/
-          cp ${avhg}/bin/game.gtr $ROMFILE
-
-          EM_CACHE=$NIX_BUILD_TOP/cache OS=wasm make dist
-        '';
-
-        installPhase = ''
-          mkdir -p $out/dist
-          unzip dist/GTE_wasm.zip -d $out/dist
-          cp dist/GTE_wasm.zip $out
-        '';
-      };
-
+      # TODO do I need to mark avhg as a dependency?
+      web-emulator = GameTankEmulator.outputs.packages.${system}.gte-web.overrideAttrs (final: prev: {
+        ROMFILE_SRC = "${avhg}/bin/game.gtr";
+        ROMFILE = "roms/avhg.gtr";
+      });
     in {
       packages.${system} = {
           inherit avhg web-emulator;
