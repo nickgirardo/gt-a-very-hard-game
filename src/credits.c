@@ -39,7 +39,7 @@ void run_credits() {
       print_text("A Very Hard Game\n\n\rCreated by Nick Girardo\n\n\rInspired by\n\r\"World's\n\rHardest Game\"\n\n\n\n\n\n\rv-rc2");
       break;
     case 1:
-      print_text("Music:\n\n\rBlackfish \"Hapy Dangerous\"");
+      print_text("Music:\n\n\rBlackfish \"Hapy Dangerous\"\n\n\rCC BY-SA");
       break;
     case 2:
       print_text("Special Thanks:\n\n\rClyde Shaffer\n\rTons of help\n\rwith everything\n\n\rdarthbeep\n\rPlay testing and\n\rfeedback\n\n\rHackManhattan");
