@@ -7,8 +7,8 @@
       url = "github:hercules-ci/gitignore.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    cc65.url = "github:nickgirardo/nix-cc65-unstable/b6ce9c5b4dfe5622dc9460da673a907326a23f74";
-    GameTankEmulator.url = "github:nickgirardo/nix-GameTankEmulator/b079c32200dddf99ddf76d071e982368d6086a18";
+    cc65.url = "github:nickgirardo/nix-cc65-unstable/18b6c7417518c54bb95a2071782f2603d883edc9";
+    GameTankEmulator.url = "github:nickgirardo/nix-GameTankEmulator/2e4950d668e1110add3ab7b6407bed718073d8cd";
     GTFO.url = "github:nickgirardo/nix-GTFO/e159f175b9ef3c2698f8c81a6843fac2fd3fcef0";
   };
 

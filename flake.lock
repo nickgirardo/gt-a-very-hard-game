@@ -24,17 +24,17 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1722984400,
+        "lastModified": 1722992240,
         "narHash": "sha256-f9hPDhjs+CiggEy7SFqANfMv0T0He5rqdBQoAy9FUGk=",
         "owner": "nickgirardo",
         "repo": "nix-GameTankEmulator",
-        "rev": "b079c32200dddf99ddf76d071e982368d6086a18",
+        "rev": "2e4950d668e1110add3ab7b6407bed718073d8cd",
         "type": "github"
       },
       "original": {
         "owner": "nickgirardo",
         "repo": "nix-GameTankEmulator",
-        "rev": "b079c32200dddf99ddf76d071e982368d6086a18",
+        "rev": "2e4950d668e1110add3ab7b6407bed718073d8cd",
         "type": "github"
       }
     },
@@ -43,17 +43,17 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1721330284,
-        "narHash": "sha256-PkzVbH9EKCjGPmbAsS/a2gxkDyqRhthYxzZtpJBjzBU=",
+        "lastModified": 1722992218,
+        "narHash": "sha256-AYJN2OlG2qbKOqbhi7WH859REt1h2KDXAZ+LgbWDuqc=",
         "owner": "nickgirardo",
         "repo": "nix-cc65-unstable",
-        "rev": "b6ce9c5b4dfe5622dc9460da673a907326a23f74",
+        "rev": "18b6c7417518c54bb95a2071782f2603d883edc9",
         "type": "github"
       },
       "original": {
         "owner": "nickgirardo",
         "repo": "nix-cc65-unstable",
-        "rev": "b6ce9c5b4dfe5622dc9460da673a907326a23f74",
+        "rev": "18b6c7417518c54bb95a2071782f2603d883edc9",
         "type": "github"
       }
     },
