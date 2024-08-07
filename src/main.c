@@ -284,7 +284,6 @@ int main() {
   // Run forever
 main_loop:
   while (1) {
-    PROFILER_START(1);
     tick_music();
 
     update_inputs();
@@ -358,7 +357,6 @@ main_loop:
     }
 
     await_draw_queue();
-    PROFILER_END(1);
     sleep(1);
     flip_pages();
   }
