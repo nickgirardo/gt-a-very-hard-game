@@ -8,7 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     cc65.url = "github:nickgirardo/nix-cc65-unstable/18b6c7417518c54bb95a2071782f2603d883edc9";
-    GameTankEmulator.url = "github:nickgirardo/nix-GameTankEmulator/c0b0e6ef3ba31e4bf672245283a3bb66573747b0";
+    GameTankEmulator.url = "github:nickgirardo/nix-GameTankEmulator/b28f5a0580d8c441aefc8fa86bb3a67775a4a49c";
     GTFO.url = "github:nickgirardo/nix-GTFO/e159f175b9ef3c2698f8c81a6843fac2fd3fcef0";
   };
 
@@ -65,9 +65,14 @@
       web-emulator = GameTankEmulator.outputs.packages.${system}.gte-web.overrideAttrs (final: prev: {
         rom = "${avhg}/bin/game.gtr";
       });
+
+      web-emulator-embed = GameTankEmulator.outputs.packages.${system}.gte-web.overrideAttrs (final: prev: {
+        rom = "${avhg}/bin/game.gtr";
+        WEB_SHELL = "embedded.html";
+      });
     in {
       packages.${system} = {
-          inherit avhg web-emulator;
+          inherit avhg web-emulator web-emulator-embed;
           default = avhg;
       };
       apps.${system} = let
