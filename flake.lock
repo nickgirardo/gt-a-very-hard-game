@@ -24,17 +24,17 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1722992240,
-        "narHash": "sha256-f9hPDhjs+CiggEy7SFqANfMv0T0He5rqdBQoAy9FUGk=",
+        "lastModified": 1723309167,
+        "narHash": "sha256-k25Hd2ASAsvQb6ioMsjxbrJSv0mRGX7Z8926GXs2YV8=",
         "owner": "nickgirardo",
         "repo": "nix-GameTankEmulator",
-        "rev": "2e4950d668e1110add3ab7b6407bed718073d8cd",
+        "rev": "c0b0e6ef3ba31e4bf672245283a3bb66573747b0",
         "type": "github"
       },
       "original": {
         "owner": "nickgirardo",
         "repo": "nix-GameTankEmulator",
-        "rev": "2e4950d668e1110add3ab7b6407bed718073d8cd",
+        "rev": "c0b0e6ef3ba31e4bf672245283a3bb66573747b0",
         "type": "github"
       }
     },

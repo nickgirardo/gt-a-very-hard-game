@@ -8,7 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     cc65.url = "github:nickgirardo/nix-cc65-unstable/18b6c7417518c54bb95a2071782f2603d883edc9";
-    GameTankEmulator.url = "github:nickgirardo/nix-GameTankEmulator/2e4950d668e1110add3ab7b6407bed718073d8cd";
+    GameTankEmulator.url = "github:nickgirardo/nix-GameTankEmulator/c0b0e6ef3ba31e4bf672245283a3bb66573747b0";
     GTFO.url = "github:nickgirardo/nix-GTFO/e159f175b9ef3c2698f8c81a6843fac2fd3fcef0";
   };
 
@@ -63,8 +63,7 @@
 
       # TODO do I need to mark avhg as a dependency?
       web-emulator = GameTankEmulator.outputs.packages.${system}.gte-web.overrideAttrs (final: prev: {
-        ROMFILE_SRC = "${avhg}/bin/game.gtr";
-        ROMFILE = "roms/avhg.gtr";
+        rom = "${avhg}/bin/game.gtr";
       });
     in {
       packages.${system} = {
