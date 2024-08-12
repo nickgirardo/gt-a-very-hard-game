@@ -8,7 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     cc65.url = "github:nickgirardo/nix-cc65-unstable/18b6c7417518c54bb95a2071782f2603d883edc9";
-    GameTankEmulator.url = "github:nickgirardo/nix-GameTankEmulator/b28f5a0580d8c441aefc8fa86bb3a67775a4a49c";
+    GameTankEmulator.url = "github:nickgirardo/nix-GameTankEmulator/743b7589f33b40f99b346d6604ca132da6666522";
     GTFO.url = "github:nickgirardo/nix-GTFO/e159f175b9ef3c2698f8c81a6843fac2fd3fcef0";
   };
 
