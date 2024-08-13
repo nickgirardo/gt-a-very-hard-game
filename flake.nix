@@ -8,7 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     cc65.url = "github:nickgirardo/nix-cc65-unstable/18b6c7417518c54bb95a2071782f2603d883edc9";
-    GameTankEmulator.url = "github:nickgirardo/nix-GameTankEmulator/743b7589f33b40f99b346d6604ca132da6666522";
+    GameTankEmulator.url = "github:nickgirardo/nix-GameTankEmulator/9cb5a1114f788ff8f3cb3fae6ec258db6c9e9f7f";
     GTFO.url = "github:nickgirardo/nix-GTFO/e159f175b9ef3c2698f8c81a6843fac2fd3fcef0";
   };
 
@@ -68,7 +68,7 @@
 
       web-emulator-embed = GameTankEmulator.outputs.packages.${system}.gte-web.overrideAttrs (final: prev: {
         rom = "${avhg}/bin/game.gtr";
-        WEB_SHELL = "embedded.html";
+        WEB_SHELL = "web/embedded.html";
       });
     in {
       packages.${system} = {
