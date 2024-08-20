@@ -58,12 +58,17 @@
         installPhase = ''
             mkdir -p $out/bin
             cp -r bin $out
+
+            mkdir -p $out/web
+            cp -r web $out
         '';
       };
 
       # TODO do I need to mark avhg as a dependency?
       web-emulator = GameTankEmulator.outputs.packages.${system}.gte-web.overrideAttrs (final: prev: {
         rom = "${avhg}/bin/game.gtr";
+        WEB_SHELL = "${avhg}/web/shell.html";
+        WEB_ASSETS = "${avhg}/web/assets/";
       });
 
       web-emulator-embed = GameTankEmulator.outputs.packages.${system}.gte-web.overrideAttrs (final: prev: {
