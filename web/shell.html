@@ -31,12 +31,50 @@ canvas {
     right: 0;
 }
 
-#loader #loader-label,
+#loading #loading-label,
 #error #error-label {
     font-weight: bold;
     width: max-content;
     margin: 0 auto;
 }
+
+#loader {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    margin: 1rem auto;
+
+    width: 512px;
+    height: 1rem;
+
+    background-color: #bababa;
+}
+
+#loader::after {
+    content: '';
+    position: absolute;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    animation: animloader 3s linear infinite;
+
+    width: 128px;
+    height: 1rem;
+
+    background-color: #32323a;
+}
+
+@keyframes animloader {
+    0% {
+        left: 0;
+        transform: translateX(-100%);
+    }
+    100% {
+        left: 100%;
+        transform: translateX(0%);
+    }
+}
+
 
 #error {
     color: red;
@@ -98,12 +136,22 @@ canvas {
     a {
         color: #e89908;
     }
+
+
+    #loader {
+        background-color: #d9d9d9;
+    }
+
+    #loader::after {
+        background-color: #eee;
+    }
 }
     </style>
   </head>
   <body>
-    <div id="loader">
-         <div id="loader-label">Loading Assets…</div>
+    <div id="loading">
+         <div id="loading-label">Loading Assets…</div>
+         <span id="loader"></span>
     </div>
     <div id="error" hidden>
          <div id="error-label">Something went wrong!</div>
@@ -163,7 +211,7 @@ canvas {
         canvas: (() => document.getElementById('canvas'))(),
         setStatus: (status) => {
             if (!status.length)
-                loader.hidden = true;
+                loading.hidden = true;
             if (status.startsWith('Exception'))
                error.hidden = false;
         },
