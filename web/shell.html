@@ -33,13 +33,13 @@ canvas {
 
 #loader #loader-label,
 #error #error-label {
-       font-weight: bold;
-       width: max-content;
-       margin: 0 auto;
+    font-weight: bold;
+    width: max-content;
+    margin: 0 auto;
 }
 
 #error {
-       color: red;
+    color: red;
 }
 
 @media only screen and (orientation:landscape) {
@@ -52,7 +52,7 @@ canvas {
     }
 
     body {
-         margin: 2rem;
+        margin: 2rem;
     }
 
     .description {
@@ -61,8 +61,8 @@ canvas {
     }
 
     canvas {
-           width: 512px;
-           height: 512px;
+        width: 512px;
+        height: 512px;
     }
 }
 
@@ -80,7 +80,7 @@ canvas {
     }
 
     body {
-         margin: 0;
+        margin: 0;
     }
 
     .landscapeOnly {
@@ -88,7 +88,17 @@ canvas {
     }
 }
 
+@media (prefers-color-scheme: dark) {
+    html {
+        background-color: #32323a;
+        color: #eee;
 
+    }
+
+    a {
+        color: #e89908;
+    }
+}
     </style>
   </head>
   <body>
