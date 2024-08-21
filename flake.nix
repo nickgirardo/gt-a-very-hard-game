@@ -8,7 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     cc65.url = "github:nickgirardo/nix-cc65-unstable/18b6c7417518c54bb95a2071782f2603d883edc9";
-    GameTankEmulator.url = "github:nickgirardo/nix-GameTankEmulator/9cb5a1114f788ff8f3cb3fae6ec258db6c9e9f7f";
+    GameTankEmulator.url = "github:nickgirardo/nix-GameTankEmulator/a72f7eb6cba1191a81ac353cd46fe9bd26ef1d5e";
     GTFO.url = "github:nickgirardo/nix-GTFO/e159f175b9ef3c2698f8c81a6843fac2fd3fcef0";
   };
 
@@ -69,6 +69,7 @@
         rom = "${avhg}/bin/game.gtr";
         WEB_SHELL = "${avhg}/web/shell.html";
         WEB_ASSETS = "${avhg}/web/assets/";
+        WINDOW_TITLE = "A Very Hard Game";
       });
 
       web-emulator-embed = GameTankEmulator.outputs.packages.${system}.gte-web.overrideAttrs (final: prev: {
