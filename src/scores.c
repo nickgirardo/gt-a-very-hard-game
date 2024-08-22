@@ -5,6 +5,7 @@
 
 #include "gt/gametank.h"
 #include "gt/drawing_funcs.h"
+#include "gt/banking.h"
 #include "gt/persist.h"
 #include "gt/input.h"
 #include "gt/music.h"
@@ -19,11 +20,11 @@ char *name;
 
 unsigned char needs_draw;
 
-#pragma code-name (push, "SAVE")
+#pragma bss-name (push, "SAVE")
 char saved_magic_number;
 ScoreEntry saved_normal_scores[SCORE_ENTRIES];
 ScoreEntry saved_secret_scores[SCORE_ENTRIES];
-#pragma code-name (pop)
+#pragma bss-name (pop)
 
 char get_new_score_index(ScoreEntry *score_table, unsigned short score) {
   signed char i;
@@ -77,6 +78,7 @@ void save_new_score(ScoreEntry *score_table, unsigned short score, const char *n
 void init_scores() {
   unsigned char i;
 
+  change_rom_bank(SAVE_BANK_NUM);
   if (saved_magic_number == MAGIC_NUMBER) {
     // load saved scores
     memcpy(&normal_scores, &saved_normal_scores, SCORE_ENTRIES * sizeof(ScoreEntry));
@@ -113,6 +115,7 @@ void init_scores() {
 
     persist_scores();
   }
+  pop_rom_bank();
 }
 
 void enter_score_mode(ScoreEntry *_scores, char *_name) {
