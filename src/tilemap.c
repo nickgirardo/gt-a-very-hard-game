@@ -34,7 +34,7 @@ void init_tilemap(const unsigned char *map, const unsigned char *decor) {
         vram[HEIGHT] = 8;                     \
     } while (0)
 
-#define DRAW_TILE(x, y, c)                                        \
+#define DRAW_TILE(x, c)                                           \
     do {                                                          \
     vram[VX] = x;                                                 \
     vram[COLOR] = ~c;                                             \
@@ -53,7 +53,7 @@ void draw_tilemap_full() {
     PREP_DRAW_TILE();
 
     do {
-        DRAW_TILE(x, y, tilemap[i]);
+        DRAW_TILE(x, tilemap[i]);
         i++;
 
         x += TILE_SIZE;
@@ -102,7 +102,7 @@ void draw_tilemap_partial() {
 
     do {
         if (tilemap[i] != 0) {
-            DRAW_TILE(x, y, tilemap[i]);
+            DRAW_TILE(x, tilemap[i]);
             // NOTE the blitter takes 1 cycle per pixel
             // Without these nops the blitter would not be finished before we queue
             // another blit operation
