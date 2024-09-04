@@ -24,10 +24,9 @@ const unsigned char level_three[TILEMAP_SIZE] = {
 };
 
 const unsigned char level_three_decor[] = {
-24,
+20,
 1, 24, 126, 15,
 1, 39, 6, 74,
-1, 113, 126, 14,
 1, 113, 126, 14,
 121, 39, 6, 74,
 7, 73, 88, 6,
