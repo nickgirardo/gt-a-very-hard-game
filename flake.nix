@@ -77,6 +77,10 @@
         WEB_SHELL = "web/embedded.html";
       });
     in {
+      devShells.${system}.default = pkgs.mkShell {
+        buildInputs = [ cc65.outputs.packages.${system}.default pkgs.gnumake pkgs.nodejs pkgs.zip pkgs.zopfli ];
+        CC65_LIB="${cc65.outputs.packages.${system}.default}/share/cc65/lib";
+      };
       packages.${system} = {
           inherit avhg web-emulator web-emulator-embed;
           default = avhg;
