@@ -152,10 +152,23 @@ void init_level() {
 
 void reset_level() {
   LevelData *l;
+  SecretData *data;
+  char i;
+
   l = &levels[current_level];
 
   reset_player(l->reset_data[0], l->reset_data[1]);
   tilemap_reset_secret();
+
+  // Reset collected secrets
+  for (i = 0; i < ENTITY_TABLE_SIZE; i++) {
+    if (entities[i] == EntitySecret) {
+      data = (SecretData *) &entity_data[i];
+      data->collected = false;
+
+      break;
+    }
+  }
 }
 
 void init_game() {
