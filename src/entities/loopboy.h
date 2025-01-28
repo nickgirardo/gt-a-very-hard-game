@@ -4,7 +4,7 @@
 #include "../common.h"
 
 #define LOOPBOY_SIZE 6
-#define LOOPBOY_COLOR 0xBB
+#define LOOPBOY_COLOR 0xBA
 #define LOOPBOY_DOUBLE_OFFSET 16
 #define LOOPBOY_DOUBLE_OFFSET_LOG2 4
 #define LOOPBOY_OFFSET 8

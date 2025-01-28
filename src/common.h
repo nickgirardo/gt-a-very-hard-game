@@ -22,8 +22,8 @@
 
 #define TILE_WALL 0
 #define TILE_KILL 0xBB
-#define TILE_GOAL 0x14
-#define TILE_GOAL_SECRET 0xFC
+#define TILE_GOAL 0xFC
+#define TILE_GOAL_SECRET 0xDC
 
 #define SCORE_ENTRIES 10
 #define SCORE_NAME_LENGTH 10

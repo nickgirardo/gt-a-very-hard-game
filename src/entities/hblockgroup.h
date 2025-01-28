@@ -4,7 +4,7 @@
 #include "../common.h"
 
 #define HBLOCK_SIZE 6
-#define HBLOCK_COLOR 0xBB
+#define HBLOCK_COLOR 0xBA
 #define HBLOCK_OFFSET 16
 
 // TODO just take a short instead of 2 chars
