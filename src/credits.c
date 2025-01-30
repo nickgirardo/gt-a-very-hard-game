@@ -36,7 +36,7 @@ void run_credits() {
 
     switch (credits_stage) {
     case 0:
-      print_text("A Very Hard Game\n\n\rCreated by Nick Girardo\n\n\rInspired by\n\r\"World's\n\rHardest Game\"\n\n\n\n\n\n\rv-rc4");
+      print_text("A Very Hard Game\n\n\rCreated by Nick Girardo\n\n\rInspired by\n\r\"World's\n\rHardest Game\"\n\n\n\n\n\n\rv-1.1");
       break;
     case 1:
       print_text("Music:\n\n\rBlackfish \"Hapy Dangerous\"\n\n\rCC BY-SA");
